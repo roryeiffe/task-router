@@ -108,3 +108,5 @@ TBD
 Reach Goals:
 	search friends by name/email
 	modal for submitting tasks
+	Tree grows when tasks are completed, shrinks when tasks are not completed
+	Time completed for task
