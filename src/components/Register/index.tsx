@@ -1,6 +1,17 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import Pokemon from "./PokemonCard";
+import PokemonCard from "./PokemonCard";
+
+interface IPokemon {
+  id: number;
+  name: string;
+  sprites: Sprites;
+}
+
+interface Sprites {
+  front_default: string;
+  back_default: string;
+}
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -11,9 +22,11 @@ const Register = () => {
     starterId: 1,
   });
 
-  const [pokemon, setPokemon] = useState([]);
+  // list of all start pokemon:
+  const [pokemon, setPokemon] = useState<any>([]);
 
   useEffect(() => {
+    console.log("useEffect");
     // mapping of region to starterId's:
     const generations: any = {
       kanto: [1, 4, 7],
@@ -27,19 +40,22 @@ const Register = () => {
     };
 
     var pokemonTemp: any = [];
+    // iterate through each region and get the pokemon:
     for (const region in generations) {
+      // get the pokemon for each region:
       for (let i = 0; i < generations[region].length; i++) {
         var pokemonId: number = generations[region][i];
         axios
           .get("https://pokeapi.co/api/v2/pokemon/" + pokemonId + "/")
           .then((res) => {
+            // add the pokemon to the list:
             pokemonTemp.push(res.data);
           });
       }
     }
-    console.log(pokemonTemp);
     setPokemon(pokemonTemp);
-  }, []);
+  
+  },[]);
 
   // update the state when input changes
   function onChangeHandler(event: any) {
@@ -103,14 +119,20 @@ const Register = () => {
           />
         </div>
 
-        {pokemon.map((pokemon) => {
-          return (
-            <div>
-              <h1>pokemon</h1>
-              <Pokemon pokemon={pokemon} />
-            </div>
-          );
-        })}
+        {console.log(pokemon.length)}
+        {console.log(pokemon)}
+
+        <div className="row">
+          <h1>Choose your starter pokemon:</h1>
+          {pokemon.map((pokemon:IPokemon) => (
+            // <div>
+            //   <h1>pokemon</h1>
+            //   <PokemonCard pokemon={pokemon} />
+            // </div>
+            <h1>{pokemon.name}</h1>
+          ))}
+          <h1>End</h1>
+        </div>
 
         <input type="submit" value="Register" className="btn btn-primary" />
       </form>

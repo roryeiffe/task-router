@@ -1,18 +1,8 @@
 import React from "react";
+import { Pokemon } from "pokenode-ts";
 
 interface Props {
-    pokemon: Pokemon
-}
-
-interface Pokemon {
-  id: number;
-  name: string;
-  sprites: Sprites;
-}
-
-interface Sprites {
-    front_default: string;
-    back_default: string;
+    pokemon: any
 }
 
 const PokemonCard = (props:Props) => {
