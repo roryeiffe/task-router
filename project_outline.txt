@@ -218,3 +218,6 @@ Redux State:
 	For now, I think we can just store user info
 	And then whenever we need info, we can make the axios calls
 	Because trying to store so much data in redux might be a lot.
+
+Misc. Design Ideas:
+ - display pokemon in card form and on sidebar

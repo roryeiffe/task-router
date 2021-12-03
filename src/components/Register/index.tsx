@@ -1,24 +1,57 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Pokemon from "./PokemonCard";
 
 const Register = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
-    mobile: ""
+    mobile: "",
+    starterId: 1,
   });
 
-  function onChangeHandler(event:any) {
+  const [pokemon, setPokemon] = useState([]);
+
+  useEffect(() => {
+    // mapping of region to starterId's:
+    const generations: any = {
+      kanto: [1, 4, 7],
+      johto: [152, 155, 158],
+      hoenn: [252, 255, 258],
+      sinnoh: [387, 390, 393],
+      unova: [495, 498, 501],
+      kalos: [650, 653, 656],
+      alola: [722, 725, 728],
+      galar: [810, 813, 816],
+    };
+
+    var pokemonTemp: any = [];
+    for (const region in generations) {
+      for (let i = 0; i < generations[region].length; i++) {
+        var pokemonId: number = generations[region][i];
+        axios
+          .get("https://pokeapi.co/api/v2/pokemon/" + pokemonId + "/")
+          .then((res) => {
+            pokemonTemp.push(res.data);
+          });
+      }
+    }
+    console.log(pokemonTemp);
+    setPokemon(pokemonTemp);
+  }, []);
+
+  // update the state when input changes
+  function onChangeHandler(event: any) {
     setUser({
       ...user,
       [event.target.name]: event.target.value,
     });
   }
 
-  function onSubmitHandler(event:any) {
+  // submit the form:
+  function onSubmitHandler(event: any) {
     event.preventDefault();
-    
   }
 
   return (
@@ -69,6 +102,16 @@ const Register = () => {
             required
           />
         </div>
+
+        {pokemon.map((pokemon) => {
+          return (
+            <div>
+              <h1>pokemon</h1>
+              <Pokemon pokemon={pokemon} />
+            </div>
+          );
+        })}
+
         <input type="submit" value="Register" className="btn btn-primary" />
       </form>
     </div>
