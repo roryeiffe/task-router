@@ -1,7 +1,11 @@
 Todo List Project Potential Outline:
 
 General Idea:
-	The idea of this app is for users to keep track of tasks they complete throughout the day. Each task has an associated point value which, when completed, adds to the user's total points and level. (example: doing laundry would give the user 10 points and getting 50 points would raise the user from level 1 to level 2). We also want to implement friend functionality where the user can "friend" people and be able to view their daily tasks and rank
+	The idea of this app is for users to keep track of tasks they complete throughout the day. 
+	Each task has an associated point value which, when completed, adds to the user's total points 
+	and level. (example: doing laundry would give the user 10 points and getting 50 points would 
+	raise the user from level 1 to level 2). We also want to implement friend functionality where
+	the user can "friend" people and be able to view their daily tasks and rank
 
 Pages (Front-End):
  - Login - login to your account
@@ -36,7 +40,8 @@ Pages (Front-End):
 	<List>
 	<form add task>
 		<select task>
-		<input duration>
+		<Start Date>
+		<Due Date
 	</form>
 Friends List - View a list of all friends, have the option to view their daily schedule
 	<input search for friend by email or name>
@@ -87,8 +92,9 @@ Database tables:
 	TaskMapping {
 		userId: integer foreign key to User(id),
 		taskId: integer foreign key to Task(id),
-		date: Date,
-		status ENUM('pending', 'completed')
+		startDate: Date
+		dueDate: Date,
+		status ENUM('pending', 'completed'),
 	}
 	// a friend request from one user to another:
 	FriendRequest {
@@ -110,3 +116,42 @@ Reach Goals:
 	modal for submitting tasks
 	Tree grows when tasks are completed, shrinks when tasks are not completed
 	Time completed for task
+
+
+Work Divions:
+
+Phase 1 (Front-end stuff using hard-coded values)
+Job 1 - 
+	Login and Register Pages, Profile Page
+	For now, just the visuals and keep track of form data in state, so 
+	that when we are ready to connect it to back-end, we can just plug it into
+	an axios function.
+	On Profile Page, display the user information from redux state, (I hard-coded in some default values
+	in store/index.tsx)
+Job 2 - 
+	Task dropdown, add task form, add task template Form
+	Just hardcode in the data for now, make sure it roughly matches the data types
+	from the MYSQL tables
+	Task dropdown and task form - (Task Mapping object in MYSQL)
+	Task Template From - (Task object in MYSQL)
+	Display all the tasks for that current day, later we might be able to a day display 
+Job 3 - 
+	Friend request form, view current friends, view incoming friend requests
+	Again, hardcode in values for now and then we'll connect it to the axios calls later
+	Friend request form - takes in email
+	View Current friends - just display each friend, level, and a link to their daily schedule
+	List current friends with a button to approve/deny
+
+Phase 2 Spring
+TBD
+
+Phase 3 Extra stuff
+	Tree thingy
+	7 day calendar display
+	search for friends by email
+	other special stuff we can think of
+
+Redux State:
+	For now, I think we can just store user info
+	And then whenever we need info, we can make the axios calls
+	Because trying to store so much data in redux might be a lot.

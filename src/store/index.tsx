@@ -2,7 +2,15 @@ import {createStore} from 'redux';
 
 // initial state:
 const initialState = {
-    
+    user : {
+        id: 1,
+        email: 'email@gmail.com',
+        name: 'User 1',
+        password: 'password123',
+        phone: 555555,
+        level: 0,
+        points: 0
+    }
     
 }
 
