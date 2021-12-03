@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import PokemonCard from "./PokemonCard";
+import {PokemonClient} from 'pokenode-ts';
 
 interface IPokemon {
   id: number;
@@ -13,6 +14,8 @@ interface Sprites {
   back_default: string;
 }
 
+
+
 const Register = () => {
   const [user, setUser] = useState({
     name: "",
@@ -22,40 +25,51 @@ const Register = () => {
     starterId: 1,
   });
 
-  // list of all start pokemon:
-  const [pokemon, setPokemon] = useState<any>([]);
+  const defaultPokemon = {
+    name: ''
+  }
+
+  // represents which region we want to display:
+  const [region, setRegion] = useState("kanto");
+  // each region will only display 3 pokemon:
+  const [pokemon1, setPokemon1] = useState<any>(defaultPokemon)
+  const [pokemon2, setPokemon2] = useState<any>(defaultPokemon)
+  const [pokemon3, setPokemon3] = useState<any>(defaultPokemon)
+
+  // set the state when we click a new region:
+  const regionChange = (e: any) => {
+    e.preventDefault();
+    setRegion(e.target.value);
+  };
 
   useEffect(() => {
     console.log("useEffect");
     // mapping of region to starterId's:
     const generations: any = {
-      kanto: [1, 4, 7],
-      johto: [152, 155, 158],
-      hoenn: [252, 255, 258],
-      sinnoh: [387, 390, 393],
-      unova: [495, 498, 501],
-      kalos: [650, 653, 656],
-      alola: [722, 725, 728],
-      galar: [810, 813, 816],
+      'kanto': [1, 4, 7],
+      'johto': [152, 155, 158],
+      'hoenn': [252, 255, 258],
+      'sinnoh': [387, 390, 393],
+      'unova': [495, 498, 501],
+      'kalos': [650, 653, 656],
+      'alola': [722, 725, 728],
+      'galar': [810, 813, 816],
     };
-
-    var pokemonTemp: any = [];
-    // iterate through each region and get the pokemon:
-    for (const region in generations) {
-      // get the pokemon for each region:
-      for (let i = 0; i < generations[region].length; i++) {
-        var pokemonId: number = generations[region][i];
-        axios
-          .get("https://pokeapi.co/api/v2/pokemon/" + pokemonId + "/")
-          .then((res) => {
-            // add the pokemon to the list:
-            pokemonTemp.push(res.data);
-          });
-      }
-    }
-    setPokemon(pokemonTemp);
-  
-  },[]);
+    // get the pokemon from the api:
+    const api = new PokemonClient();
+    // First pokemon:
+    var pokemonId: number = generations[region][0];
+    api.getPokemonById(pokemonId)
+    .then((pokemon: any) => {setPokemon1(pokemon);})
+    // second pokemon:
+    pokemonId = generations[region][1];
+    axios.get("https://pokeapi.co/api/v2/pokemon/" + pokemonId + "/")
+    .then((response) => {setPokemon2(response.data);})
+    // third pokemon:
+    pokemonId = generations[region][2];
+    axios.get("https://pokeapi.co/api/v2/pokemon/" + pokemonId + "/")
+    .then((response) => {setPokemon3(response.data);})
+  }, [region]);
 
   // update the state when input changes
   function onChangeHandler(event: any) {
@@ -119,19 +133,22 @@ const Register = () => {
           />
         </div>
 
-        {console.log(pokemon.length)}
-        {console.log(pokemon)}
-
+        <h1>Choose your starter pokemon:</h1>
+        <select value = {region} onChange = {regionChange}>
+          <option value="kanto">Kanto</option>
+          <option value="johto">Johto</option>
+          <option value="hoenn">Hoenn</option>
+          <option value="sinnoh">Sinnoh</option>
+          <option value="unova">Unova</option>
+          <option value="kalos">Kalos</option>
+          <option value="alola">Alola</option>
+          <option value="galar">Galar</option>
+        </select>
         <div className="row">
-          <h1>Choose your starter pokemon:</h1>
-          {pokemon.map((pokemon:IPokemon) => (
-            // <div>
-            //   <h1>pokemon</h1>
-            //   <PokemonCard pokemon={pokemon} />
-            // </div>
-            <h1>{pokemon.name}</h1>
-          ))}
-          <h1>End</h1>
+          <br />
+            <PokemonCard pokemon={pokemon1} />
+            <PokemonCard pokemon={pokemon2} />
+            <PokemonCard pokemon={pokemon3} />
         </div>
 
         <input type="submit" value="Register" className="btn btn-primary" />

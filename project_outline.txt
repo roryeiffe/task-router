@@ -221,3 +221,4 @@ Redux State:
 
 Misc. Design Ideas:
  - display pokemon in card form and on sidebar
+ - on hover pokemon turn around
