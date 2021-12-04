@@ -1,3 +1,4 @@
+import PokeCorner from './Pokecorner';
 // pages:
 import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
@@ -6,11 +7,14 @@ import FriendPage from './pages/FriendPage';
 import TaskPage from './pages/Task';
 import ProfilePage from './pages/Profile';
 import './App.css';
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
+        {PokeCorner.getPkmnNameById(38)}
+        {PokeCorner.getPokemonSprite.front(38)}
       <Routes>
         <Route path = '/' element = {<HomePage/>}/>
         <Route path = '/login' element = {<LoginPage/>}/>
