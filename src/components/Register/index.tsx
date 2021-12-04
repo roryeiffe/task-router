@@ -2,17 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import PokemonCard from "./PokemonCard";
 import {PokemonClient} from 'pokenode-ts';
-
-interface IPokemon {
-  id: number;
-  name: string;
-  sprites: Sprites;
-}
-
-interface Sprites {
-  front_default: string;
-  back_default: string;
-}
+import { useDispatch } from "react-redux";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -22,13 +12,14 @@ const Register = () => {
     mobile: "",
     starterId: 1,
   });
-
   // represents which region we want to display:
   const [region, setRegion] = useState("kanto");
   // each region will only display 3 pokemon:
   const [pokemon1, setPokemon1] = useState<any>({})
   const [pokemon2, setPokemon2] = useState<any>({})
   const [pokemon3, setPokemon3] = useState<any>({})
+
+  const dispatch = useDispatch();
 
   // set the state when we click a new region:
   const regionChange = (e: any) => {
@@ -48,6 +39,7 @@ const Register = () => {
       'alola': [722, 725, 728],
       'galar': [810, 813, 816],
     };
+    // initialize selected pokemon to first pokemon of the given region
     setUser({...user, starterId: generations[region][0]});
     // get the pokemon from the api:
     const api = new PokemonClient();
@@ -75,16 +67,17 @@ const Register = () => {
 
   // submit the form:
   function onSubmitHandler(event: any) {
+    // update the redux store:
+    dispatch({type: 'UPDATE_USER', payload: user});
     event.preventDefault();
   }
 
   return (
     <div className="container">
-      {user.starterId}
       <h2>Register</h2>
       <form onSubmit={onSubmitHandler}>
         <div className="form-group">
-          <label htmlFor="">First Name</label>
+          <label htmlFor="">Full Name</label>
           <input
             className="form-control"
             type="text"

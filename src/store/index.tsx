@@ -20,7 +20,7 @@ const taskReducer:any = (state = initialState, action:any) => {
         case 'UPDATE_USER':
             return {
                 ...state,
-                user: action.payload
+                user: {...state.user, ...action.payload}
             }
         }
 

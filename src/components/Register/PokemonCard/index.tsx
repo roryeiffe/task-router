@@ -9,7 +9,6 @@ const PokemonCard = (props:any) => {
 
   const [borderStyle, setBorderStyle] = useState({border: "none"});
   
-
   useEffect(() => {
     if(props.user.starterId === props.pokemon.id) {
       setBorderStyle({border: "1px solid #000",});
@@ -20,7 +19,7 @@ const PokemonCard = (props:any) => {
   }, [props.pokemon.id, props.user.starterId]);
 
   return (
-    <div style = {borderStyle} className = "col-lg-3">
+    <div style = {borderStyle} className = "col-lg-4">
       <div className="card" onClick = {() => changeStarterId()}>
         <img src={props.pokemon.sprites.front_default} className="card-img-top" alt="..." />
         <div className="card-body">
