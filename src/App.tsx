@@ -11,9 +11,10 @@ import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 function App() {
-    PokeCorner(38);
   return (
     <div className="App">
+        {PokeCorner.getPkmnNameById(38)}
+        {PokeCorner.getPokemonSprite.front(38)}
       <Routes>
         <Route path = '/' element = {<HomePage/>}/>
         <Route path = '/login' element = {<LoginPage/>}/>
