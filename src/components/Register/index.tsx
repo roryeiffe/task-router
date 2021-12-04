@@ -14,8 +14,6 @@ interface Sprites {
   back_default: string;
 }
 
-
-
 const Register = () => {
   const [user, setUser] = useState({
     name: "",
@@ -25,16 +23,12 @@ const Register = () => {
     starterId: 1,
   });
 
-  const defaultPokemon = {
-    name: ''
-  }
-
   // represents which region we want to display:
   const [region, setRegion] = useState("kanto");
   // each region will only display 3 pokemon:
-  const [pokemon1, setPokemon1] = useState<any>(defaultPokemon)
-  const [pokemon2, setPokemon2] = useState<any>(defaultPokemon)
-  const [pokemon3, setPokemon3] = useState<any>(defaultPokemon)
+  const [pokemon1, setPokemon1] = useState<any>({})
+  const [pokemon2, setPokemon2] = useState<any>({})
+  const [pokemon3, setPokemon3] = useState<any>({})
 
   // set the state when we click a new region:
   const regionChange = (e: any) => {
@@ -43,7 +37,6 @@ const Register = () => {
   };
 
   useEffect(() => {
-    console.log("useEffect");
     // mapping of region to starterId's:
     const generations: any = {
       'kanto': [1, 4, 7],
@@ -55,6 +48,7 @@ const Register = () => {
       'alola': [722, 725, 728],
       'galar': [810, 813, 816],
     };
+    setUser({...user, starterId: generations[region][0]});
     // get the pokemon from the api:
     const api = new PokemonClient();
     // First pokemon:
@@ -86,6 +80,7 @@ const Register = () => {
 
   return (
     <div className="container">
+      {user.starterId}
       <h2>Register</h2>
       <form onSubmit={onSubmitHandler}>
         <div className="form-group">
@@ -146,9 +141,10 @@ const Register = () => {
         </select>
         <div className="row">
           <br />
-            <PokemonCard pokemon={pokemon1} />
-            <PokemonCard pokemon={pokemon2} />
-            <PokemonCard pokemon={pokemon3} />
+            {/* make sure the sprites are loaded before we display the cards:*/}
+            {pokemon1.sprites && <PokemonCard pokemon={pokemon1} setUser = {setUser} user = {user}/>}
+            {pokemon2.sprites && <PokemonCard pokemon={pokemon2} setUser = {setUser} user = {user}/>}
+            {pokemon3.sprites && <PokemonCard pokemon={pokemon3} setUser = {setUser} user = {user}/>}
         </div>
 
         <input type="submit" value="Register" className="btn btn-primary" />
