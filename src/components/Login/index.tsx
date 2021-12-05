@@ -17,6 +17,9 @@ const Login = () => {
 
   function onSubmitHandler(event: any) {
     event.preventDefault();
+    console.log(user);
+    // to do: send login data to back-end using axios
+    // and grab rest of user data to store in redux
   }
 
   return (

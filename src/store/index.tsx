@@ -9,14 +9,24 @@ const initialState = {
         password: 'password123',
         phone: 555555,
         level: 5,
+        points: 0,
+        starterId: 1,
         partnerPokemon: '',
-        // points: 0
     }
     
+
 }
 
 // reducer:
 const taskReducer:any = (state = initialState, action:any) => {
+    switch (action.type) {
+        case 'UPDATE_USER':
+            return {
+                ...state,
+                user: {...state.user, ...action.payload}
+            }
+        }
+
     return state;
 }
 
