@@ -11,8 +11,8 @@ import PokemonCard from '../components/PokemonCard';
 // }
 const pokeApi = new PokemonClient();
 
-// function getPkmnNameById1(dexNo:number):String {
-//     getPkmnNameById2(dexNo)
+// function getPkmnNameByDexNo2(dexNo:number):String {
+//     getPkmnNameByDexNo(dexNo)
 //     .then(data => {
 //         return data as String
 //     })
