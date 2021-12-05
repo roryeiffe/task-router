@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import PokemonCard from "./PokemonCard";
 import {PokemonClient} from 'pokenode-ts';
+import {IPokemon} from '../../interfaces/Pokemon';
 import { useDispatch } from "react-redux";
 
 const Register = () => {
@@ -15,9 +16,9 @@ const Register = () => {
   // represents which region we want to display:
   const [region, setRegion] = useState("kanto");
   // each region will only display 3 pokemon:
-  const [pokemon1, setPokemon1] = useState<any>({})
-  const [pokemon2, setPokemon2] = useState<any>({})
-  const [pokemon3, setPokemon3] = useState<any>({})
+  const [pokemon1, setPokemon1] = useState<IPokemon>()
+  const [pokemon2, setPokemon2] = useState<IPokemon>()
+  const [pokemon3, setPokemon3] = useState<IPokemon>()
 
   const dispatch = useDispatch();
 
@@ -29,7 +30,7 @@ const Register = () => {
 
   useEffect(() => {
     // mapping of region to starterId's:
-    const generations: any = {
+    const generations: any= {
       'kanto': [1, 4, 7],
       'johto': [152, 155, 158],
       'hoenn': [252, 255, 258],
@@ -134,10 +135,10 @@ const Register = () => {
         </select>
         <div className="row">
           <br />
-            {/* make sure the sprites are loaded before we display the cards:*/}
-            {pokemon1.sprites && <PokemonCard pokemon={pokemon1} setUser = {setUser} user = {user}/>}
-            {pokemon2.sprites && <PokemonCard pokemon={pokemon2} setUser = {setUser} user = {user}/>}
-            {pokemon3.sprites && <PokemonCard pokemon={pokemon3} setUser = {setUser} user = {user}/>}
+            {/* make sure the pokemon are loaded before we display the cards:*/}
+            {pokemon1 && <PokemonCard pokemon={pokemon1} setUser = {setUser} user = {user}/>}
+            {pokemon2 && <PokemonCard pokemon={pokemon2} setUser = {setUser} user = {user}/>}
+            {pokemon3 && <PokemonCard pokemon={pokemon3} setUser = {setUser} user = {user}/>}
         </div>
 
         <input type="submit" value="Register" className="btn btn-primary" />

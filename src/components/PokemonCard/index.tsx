@@ -1,4 +1,9 @@
 import { useSelector } from "react-redux";
+import {IPokemon} from '../../interfaces/Pokemon';
+
+interface IProps {
+    pokemon: IPokemon;
+}
 
 const PokemonCard = (props: any) => {
 const user = useSelector((state:any) => state.user);
