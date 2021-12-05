@@ -8,7 +8,7 @@ const initialState = {
         name: 'User 1',
         password: 'password123',
         phone: 555555,
-        level: 0,
+        level: 5,
         partnerPokemon: '',
         // points: 0
     }
