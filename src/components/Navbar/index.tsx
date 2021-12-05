@@ -47,6 +47,11 @@ const Navbar = () => {
               View Profile
             </Link>
           </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/pokedex">
+              Pokédex
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>

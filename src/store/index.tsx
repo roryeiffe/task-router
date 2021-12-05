@@ -11,7 +11,10 @@ const initialState = {
         level: 5,
         points: 0,
         starterId: 1,
-    } 
+        partnerPokemon: '',
+    }
+    
+
 }
 
 // reducer:
