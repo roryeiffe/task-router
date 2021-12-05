@@ -10,20 +10,34 @@ import { PokemonClient, MainClient } from 'pokenode-ts';
 // }
 const pokeApi = new PokemonClient();
 
-async function getPkmnNameById(dexNo:number):Promise<String> {
+// function getPkmnNameById1(dexNo:number):String {
+//     getPkmnNameById2(dexNo)
+//     .then(data => {
+//         return data as String
+//     })
+//     .catch(error => {
+//         // console.error(error);
+//         return error as String;
+//     });
+//     return "";
+// }
+
+async function getPkmnNameById(dexNo:number):Promise<string> {
     let name:String = 'missingNo. : )';
-    console.log(dexNo);
+    // console.log(dexNo);
     
     await pokeApi
     .getPokemonById(dexNo)
     .then((data:any) => {
-        console.log("data.name = "+ data.name);
+        // console.log("data.name = "+ data.name);
         name = data.name;
-        console.log("name = "+ name);
+        // console.log("name = "+ name);
     })
-    .catch(error => console.error(error));
+    .catch(error => {
+        // console.error(error)
+    });
     
-    console.log("testing = "+ name);
+    // console.log("testing = "+ name);
     return name as string;
     
 }
@@ -53,64 +67,55 @@ class getPokemonSprite {
             return getPokemonBackSpriteByName(a);
         }
         else {
-            console.error("type error");
+            // console.error("type error");
             return "type error";
         }
     }
 }
-// function getPokemonSprite(a:number, isFront:boolean):any;
-// function getPokemonSprite(a:string, isFront:boolean):any;
-// function getPokemonSprite(a:any, isFront:boolean):any {
-//     if(a as number) {
-//         if(isFront) return getPokemonFrontSpriteByDexNo(a);
-//         else return getPokemonBackSpriteByDexNo(a);
-//     }
-//     else if(a as String) {
-//         if(isFront) return getPokemonFrontSpriteByName(a);
-//         else return getPokemonBackSpriteByName(a);
-//     }
-//     else {
-//         console.error("type error");
-//         return "type error";
-//         // let b = new Promise<String>((resolve, reject) => resolve("type error"));
-//         // return b;
-//     }
-// }
+
 async function getPokemonFrontSpriteByDexNo(dexNo:number):Promise<any> {
     await pokeApi
     .getPokemonById(dexNo)
     .then((data:any) => {
-        console.log(data.sprite.front_default);
+        // console.log(data.sprite.front_default);
         return data.sprite.front_default;
     })
-    .catch(error => console.error(error));
+    .catch(error => {
+        // console.error(error);
+    });
 }
 async function getPokemonFrontSpriteByName(pkmnName:string):Promise<any> {
     await pokeApi
     .getPokemonByName(pkmnName)
     .then((data:any) => {
-        console.log(data.sprite.front_default);
+        // console.log(data.sprite.front_default);
         return data.sprite.front_default;
     })
-    .catch(error => console.error(error));
+    .catch(error => {
+        // console.error(error)
+    });
 }
 async function getPokemonBackSpriteByDexNo(pkmnName:string):Promise<any> {
     await pokeApi
     .getPokemonByName(pkmnName)
     .then((data:any) => {
-        console.log(data.sprite.front_default);
+        // console.log(data.sprite.front_default);
         return data.sprite.back_default;
     })
-    .catch(error => console.error(error));
+    .catch(error => {
+        // console.error(error);
+    });
 }
 async function getPokemonBackSpriteByName(pkmnName:string):Promise<any> {
     await pokeApi
     .getPokemonByName(pkmnName)
     .then((data:any) => {
-        console.log(data.sprite.front_default);
+        // console.log(data.sprite.front_default);
         return data.sprite.back_default;
     })
-    .catch(error => console.error(error));
+    .catch(error => {
+        // console.error(error);
+    });
 }
 
 export default {getPkmnNameById, getPokemonSprite};
