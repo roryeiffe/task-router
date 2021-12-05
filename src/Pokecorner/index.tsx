@@ -1,17 +1,9 @@
-// import axios from 'axios';
-import React, { useState } from 'react';
-import { PokemonClient, MainClient } from 'pokenode-ts';
-import PokemonCard from '../components/PokemonCard';
+// a factory / tool set
+import { PokemonClient } from 'pokenode-ts';
 
-// axios.get("https://pokeapi.co/api/v2/pokemon/");
-
-// interface pkmn {
-//     dexNo: number;
-//     name: String;
-// }
 const pokeApi = new PokemonClient();
 
-// function getPkmnNameByDexNo2(dexNo:number):String {
+// function getPkmnNameByDexNoNoPromise(dexNo:number):String {
 //     getPkmnNameByDexNo(dexNo)
 //     .then(data => {
 //         return data as String
@@ -25,28 +17,24 @@ const pokeApi = new PokemonClient();
 
 async function getPkmnNameByDexNo(dexNo:number):Promise<string> {
     let name:String = 'missingNo.';
-    // console.log(dexNo);
     
     await pokeApi
     .getPokemonById(dexNo)
     .then((data:any) => {
-        // console.log("data.name = "+ data.name);
         name = data.name;
-        // console.log("name = "+ name);
     })
     .catch(error => {
-        // console.error(error)
+        console.error(error)
     });
     
-    // console.log("testing = "+ name);
     return name as string;
-    
 }
 
+// ======================================================================
 class getPokemonSprite {
-    static front(a:number):any;
-    static front(a:string, ):any;
-    static front(a:any):any {
+    static front(a:number):Promise<any>;
+    static front(a:string, ):Promise<any>;
+    static front(a:any):Promise<any> {
         if(a as number) {
             // getPkmnNameByDexNo(a).then(pkmnName => {
             //     return <PokemonCard pokemon={pkmnName} />;
@@ -58,13 +46,14 @@ class getPokemonSprite {
             return getPokemonFrontSpriteByName(a);
         }
         else {
-            console.error("type error");
-            return "type error";
+            let tempStr = "type error"
+            console.error(tempStr);
+            return new Promise<String>(() => {return tempStr});
         }
     }
-    static back(a:number):any;
-    static back(a:string, ):any;
-    static back(a:any):any {
+    static back(a:number):Promise<any>;
+    static back(a:string, ):Promise<any>;
+    static back(a:any):Promise<any> {
         if(a as number) {
             return getPokemonBackSpriteByDexNo(a);
         }
@@ -72,12 +61,12 @@ class getPokemonSprite {
             return getPokemonBackSpriteByName(a);
         }
         else {
-            // console.error("type error");
-            return "type error";
+            let tempStr = "type error"
+            console.error(tempStr);
+            return new Promise<String>(() => {return tempStr});
         }
     }
 }
-
 async function getPokemonFrontSpriteByDexNo(dexNo:number):Promise<any> {
     await pokeApi
     .getPokemonById(dexNo)
@@ -105,7 +94,7 @@ async function getPokemonBackSpriteByDexNo(pkmnName:string):Promise<any> {
         return data.sprites.back_default;
     })
     .catch(error => {
-        // console.error(error);
+        console.error(error);
     });
 }
 async function getPokemonBackSpriteByName(pkmnName:string):Promise<any> {
@@ -115,26 +104,23 @@ async function getPokemonBackSpriteByName(pkmnName:string):Promise<any> {
         return data.sprites.back_default;
     })
     .catch(error => {
-        // console.error(error);
+        console.error(error);
     });
 }
+// ======================================================================
 
+// ======================================================================
 class getList {
-    // static allPokemon():string[] {
-        
-    // }
+    // static allPokemon():string[] {}
     static allGen1Pokemon():string[] {
-        while(true) {
+        while(true) { // TODO: '-'
             getPokemonList(151).then(list => {
                 return list as string[];
             });
             console.error("allGen1Pokemon list is blank");
         }
-
-        // return new Array<string>();
     }
 }
-
 async function getPokemonList(upTo:number):Promise<string[]> {
     let arr:string[] = new Array();
     for(let i = 0; i<upTo; i++) {
@@ -145,5 +131,6 @@ async function getPokemonList(upTo:number):Promise<string[]> {
     }
     return arr;
 }
+// ======================================================================
 
 export default {getPkmnNameByDexNo, getPokemonSprite, getList};

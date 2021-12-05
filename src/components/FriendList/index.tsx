@@ -1,9 +1,9 @@
-import axios from "axios";
-import React, { useState } from "react";
-import "./style.css";
+// import axios from "axios";
+// import React, { useState } from "react";
+// import "./style.css";
 import PokeCorner from "../../PokeCorner";
 
-const PokedexList = () => {
+const FriendList = () => {
     // testing ======================================================
     let dexLimit = 151;
 
@@ -11,7 +11,7 @@ const PokedexList = () => {
     // setArr(PokeCorner.getList.allGen1Pokemon());
     // .then(list => setArr(list));
     // let arr:string[] = new Array;
-    let arr:string[] = ["Unown A", "Unown B", "Unown C"];
+    let arr:string[] = ["Friend A", "Friend B", "Friend C"];
     for(let i=0; i<dexLimit; i++) {
         PokeCorner.getPkmnNameByDexNo(i).then(pkmnString => {
             arr.push(pkmnString);
@@ -34,4 +34,4 @@ const PokedexList = () => {
     );
 }
 
-export default PokedexList;
+export default FriendList;
