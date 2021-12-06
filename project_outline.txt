@@ -204,7 +204,7 @@ Job 3 Cathy -
 	List current friends with a button to approve/deny
 	Pokedex
 
-Phase 2?
+Phase 2 Front-end part 2
 Rory - Work on post page, assuming you have dummy data (refer to sql outline for specifics), fix css overlap issue
 AJ - Finish up CSS on task page and add the ability to select task from dropdown menu with hard-coded values/points
 Cathy - Try to get pokemon names to display on the page, display pokemon with images (or using Pokemon Card card)
