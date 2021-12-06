@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import './index.css'
 import Navbar from "../../components/Navbar"
 import Tasks from '../../components/Tasks'
 import AddTask from '../../components/Tasks/AddTask'
@@ -42,9 +43,12 @@ const TaskPage = () => {
 
     return <div>
         <Navbar/>
+        <div className='container'>
         <TaskHeader onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
         {showAddTask && <AddTask onAdd={addTask}/>}
         {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask}/> : 'No Tasks to Show'}
+        </div>
+        
     </div>
 }
 
