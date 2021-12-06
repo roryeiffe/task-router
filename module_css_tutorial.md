@@ -17,19 +17,21 @@ Then, we need to import it to an HTML file. At the top of the file should look s
 import styles from './style.module.css';
 ```
 Change the path so that it matches where the css file is being stored. 
-To user the styling, we can do something along these lines:
+To use the styling, we can do something along these lines:
 ```
 <div className = {style.wrapper}>
     <p>HTML content</p>
 </div>
 ```
 When this page is loaded, the div should contain a green background (or whatever you defined in your css file). Furthermore, we can use the wrapper class in another module.css file without fear of overlap!
+
+We can also use inspect element to see how this works. Looking at the applied class names, we might not see plain old "wrapper"... we will probably see something like "style_wrapper__1Nrjv". The random gibberish makes the different wrapper classes unique, so we can use them across the website. 
 ## Some Quirks to look out for
 ### Changing Names of Classes
 One of the hassles of using module.css files is that we can't have any className that contains a hyphen (there may be other characters but I can't remember right now). 
-So, you can do something like 'btnSubmit' instead of btn-submit'. Not too bad, just something to look out for. 
+So, you can do something like 'btnSubmit' instead of btn-submit'. Not too bad, just something to look out for and change if you're converting from regular css code. 
 ### No more tags :(
-Another drawback of using these types of files is using css like:
+Another drawback of using these types of files is that using css like:
 ```
 p {
     font-size: 100px;
@@ -60,5 +62,5 @@ Here is how can we do both:
 ```
 <div className = `${styles.wrapper} btn btn-primary`>
 ```
-We use the template strings to put our style classes along with the default bootstrap classes. Also, this is just one way of doing it. As long as we have spaces between the different classNames, it should work. 
+We use the template strings to put our style classes along with the default bootstrap classes. Also, this is just one way of doing it. As long as we have spaces between the different classNames, it should work.
 
