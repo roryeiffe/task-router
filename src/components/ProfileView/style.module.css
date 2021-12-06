@@ -3,3 +3,7 @@
     padding: 20px;
     height: 100%;
 }
+
+.wrapper p {
+    font-size: 100px;
+}
