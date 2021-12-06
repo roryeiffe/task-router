@@ -1,38 +1,92 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import PokemonCard from "./PokemonCard";
+import {PokemonClient} from 'pokenode-ts';
+import {IPokemon} from '../../interfaces/Pokemon';
+import { useDispatch } from "react-redux";
+import './style.css';
 
 const Register = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
-    mobile: ""
+    phone: "",
+    starterId: 1,
   });
+  // represents which region we want to display:
+  const [region, setRegion] = useState("kanto");
+  // each region will only display 3 pokemon:
+  const [pokemon1, setPokemon1] = useState<IPokemon>()
+  const [pokemon2, setPokemon2] = useState<IPokemon>()
+  const [pokemon3, setPokemon3] = useState<IPokemon>()
 
-  function onChangeHandler(event:any) {
+  const dispatch = useDispatch();
+
+  // set the state when we click a new region:
+  const regionChange = (e: any) => {
+    e.preventDefault();
+    setRegion(e.target.value);
+  };
+
+  useEffect(() => {
+    // mapping of region to starterId's:
+    const generations: any= {
+      'kanto': [1, 4, 7],
+      'johto': [152, 155, 158],
+      'hoenn': [252, 255, 258],
+      'sinnoh': [387, 390, 393],
+      'unova': [495, 498, 501],
+      'kalos': [650, 653, 656],
+      'alola': [722, 725, 728],
+      'galar': [810, 813, 816],
+    };
+    // initialize selected pokemon to first pokemon of the given region
+    setUser({...user, starterId: generations[region][0]});
+    // get the pokemon from the api:
+    const api = new PokemonClient();
+    // First pokemon:
+    var pokemonId: number = generations[region][0];
+    api.getPokemonById(pokemonId)
+    .then((pokemon: any) => {setPokemon1(pokemon);})
+    // second pokemon:
+    pokemonId = generations[region][1];
+    axios.get("https://pokeapi.co/api/v2/pokemon/" + pokemonId + "/")
+    .then((response) => {setPokemon2(response.data);})
+    // third pokemon:
+    pokemonId = generations[region][2];
+    axios.get("https://pokeapi.co/api/v2/pokemon/" + pokemonId + "/")
+    .then((response) => {setPokemon3(response.data);})
+  }, [region]);
+
+  // update the state when input changes
+  function onChangeHandler(event: any) {
     setUser({
       ...user,
       [event.target.name]: event.target.value,
     });
   }
 
-  function onSubmitHandler(event:any) {
+  // submit the form:
+  function onSubmitHandler(event: any) {
+    // update the redux store:
+    dispatch({type: 'UPDATE_USER', payload: user});
     event.preventDefault();
-    
   }
 
   return (
     <div className="container">
       <h2>Register</h2>
-      <form onSubmit={onSubmitHandler}>
+      <form onSubmit={onSubmitHandler} className = "form">
         <div className="form-group">
-          <label htmlFor="">First Name</label>
+          <label htmlFor="">Full Name</label>
           <input
             className="form-control"
             type="text"
             name="name"
             value={user.name}
             onChange={onChangeHandler}
+            placeholder = 'Ash Ketchum'
             required
           />
         </div>
@@ -44,6 +98,7 @@ const Register = () => {
             name="email"
             value={user.email}
             onChange={onChangeHandler}
+            placeholder = 'poke@mon.com'
             required
           />
         </div>
@@ -55,6 +110,7 @@ const Register = () => {
             name="password"
             value={user.password}
             onChange={onChangeHandler}
+            placeholder = 'pikachu123'
             required
           />
         </div>
@@ -63,13 +119,35 @@ const Register = () => {
           <input
             className="form-control"
             type="phone"
-            name="mobile"
-            value={user.mobile}
+            name="phone"
+            value={user.phone}
             onChange={onChangeHandler}
             required
           />
         </div>
-        <input type="submit" value="Register" className="btn btn-primary" />
+
+        <h1>Choose your starter pokemon:</h1>
+        <label htmlFor='region'>Region: </label>
+        <br />
+        <select className = 'form-control select' id = 'region' value = {region} onChange = {regionChange}>
+          <option value="kanto">Kanto</option>
+          <option value="johto">Johto</option>
+          <option value="hoenn">Hoenn</option>
+          <option value="sinnoh">Sinnoh</option>
+          <option value="unova">Unova</option>
+          <option value="kalos">Kalos</option>
+          <option value="alola">Alola</option>
+          <option value="galar">Galar</option>
+        </select>
+        <div className="row">
+          <br />
+            {/* make sure the pokemon are loaded before we display the cards:*/}
+            {pokemon1 && <PokemonCard pokemon={pokemon1} setUser = {setUser} user = {user}/>}
+            {pokemon2 && <PokemonCard pokemon={pokemon2} setUser = {setUser} user = {user}/>}
+            {pokemon3 && <PokemonCard pokemon={pokemon3} setUser = {setUser} user = {user}/>}
+        </div>
+
+        <input type="submit" value="Register" className="btn btn-primary btn-submit" />
       </form>
     </div>
   );
