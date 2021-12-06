@@ -4,13 +4,14 @@ import PokemonCard from "./PokemonCard";
 import {PokemonClient} from 'pokenode-ts';
 import {IPokemon} from '../../interfaces/Pokemon';
 import { useDispatch } from "react-redux";
+import './style.css';
 
 const Register = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
-    mobile: "",
+    phone: "",
     starterId: 1,
   });
   // represents which region we want to display:
@@ -76,7 +77,7 @@ const Register = () => {
   return (
     <div className="container">
       <h2>Register</h2>
-      <form onSubmit={onSubmitHandler}>
+      <form onSubmit={onSubmitHandler} className = "form">
         <div className="form-group">
           <label htmlFor="">Full Name</label>
           <input
@@ -85,6 +86,7 @@ const Register = () => {
             name="name"
             value={user.name}
             onChange={onChangeHandler}
+            placeholder = 'Ash Ketchum'
             required
           />
         </div>
@@ -96,6 +98,7 @@ const Register = () => {
             name="email"
             value={user.email}
             onChange={onChangeHandler}
+            placeholder = 'poke@mon.com'
             required
           />
         </div>
@@ -107,6 +110,7 @@ const Register = () => {
             name="password"
             value={user.password}
             onChange={onChangeHandler}
+            placeholder = 'pikachu123'
             required
           />
         </div>
@@ -115,15 +119,17 @@ const Register = () => {
           <input
             className="form-control"
             type="phone"
-            name="mobile"
-            value={user.mobile}
+            name="phone"
+            value={user.phone}
             onChange={onChangeHandler}
             required
           />
         </div>
 
         <h1>Choose your starter pokemon:</h1>
-        <select value = {region} onChange = {regionChange}>
+        <label htmlFor='region'>Region: </label>
+        <br />
+        <select className = 'form-control select' id = 'region' value = {region} onChange = {regionChange}>
           <option value="kanto">Kanto</option>
           <option value="johto">Johto</option>
           <option value="hoenn">Hoenn</option>
@@ -141,7 +147,7 @@ const Register = () => {
             {pokemon3 && <PokemonCard pokemon={pokemon3} setUser = {setUser} user = {user}/>}
         </div>
 
-        <input type="submit" value="Register" className="btn btn-primary" />
+        <input type="submit" value="Register" className="btn btn-primary btn-submit" />
       </form>
     </div>
   );

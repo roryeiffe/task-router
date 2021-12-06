@@ -19,7 +19,7 @@ const StarterView = () => {
     }, [user.starterId]);
 
   if (pokemon.sprites) return (
-    <div className = "container">
+    <div className = "wrapper">
         <PokemonCard pokemon={pokemon} />
     </div>
   );
