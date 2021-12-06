@@ -13,8 +13,10 @@ const PokedexList = () => {
     for(let i=0; i<dexLimit; i++) {
         PokeCorner.getPkmnNameByDexNo(i).then(pkmnString => {
             arr.push(pkmnString);
+            console.log(pkmnString);
         })
     }
+    console.log(arr);
     //================================================================
     
     return(
