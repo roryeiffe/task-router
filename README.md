@@ -7,5 +7,3 @@ When inside of project directory:
 npm install (one time)
 npm start (to run)
 ```
-
-a
