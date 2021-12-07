@@ -31,8 +31,8 @@ const AddTask = ({ onAdd }: any) => {
             <div className={styles.formControl}>
                 <label>Task Value</label>
                 <select>
-                    <option>Option 1</option>
-                    <option>Option 2</option>
+                    <option>Coding - 15 points</option>
+                    <option>Cleaning - 5 points</option>
                 </select>
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a className="dropdown-item" href="#">Action</a>
