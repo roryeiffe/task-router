@@ -60,7 +60,7 @@ One last thing I want to mention is how to use multiple classes when using style
 However, we run into the issue of combining classes that are associated with the styles object, with "regular" classes. 
 Here is how can we do both:
 ```
-<div className = `${styles.wrapper} btn btn-primary`>
+<div className = {`${styles.btnBlock} ${styles.btn} btn btn-primary`}>
 ```
 We use the template strings to put our style classes along with the default bootstrap classes. Also, this is just one way of doing it. As long as we have spaces between the different classNames, it should work.
 
