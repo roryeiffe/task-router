@@ -43,6 +43,11 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="nav-item">
+            <Link className="nav-link" to="/posts">
+              View Feed
+            </Link>
+          </li>
+          <li className="nav-item">
             <Link className="nav-link" to="/profile">
               View Profile
             </Link>
