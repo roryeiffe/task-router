@@ -214,6 +214,7 @@ Rory - Try to fix the padding on the posts page
  	 - put pokeballs on the navbar
 	  - make the pokemonCard more flexible (display on register page, profile page, pokedex page)
 	  - reach goal: search post by user email
+	  - brush up styling on login
 AJ - Try out different backgrounds
 	- Task form consistent with login/register forms
 Cathy - get pokeballs to appear on pokedex page

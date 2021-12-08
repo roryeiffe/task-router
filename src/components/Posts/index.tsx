@@ -27,7 +27,7 @@ const Posts = () => {
         author: {
           id: 3,
           name: "Cathy",
-          starterId: 123,
+          starterId: 129,
         },
         title: "Shopping",
         description: "Bought a new kirby plushie!",

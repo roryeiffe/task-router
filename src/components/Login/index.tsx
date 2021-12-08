@@ -24,8 +24,8 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Login</h2>
       <form onSubmit={onSubmitHandler} className = {styles.form}>
+        <h2>Login</h2>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Email address</label>
           <input
