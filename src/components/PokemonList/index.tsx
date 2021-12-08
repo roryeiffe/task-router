@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { PokemonClient } from "pokenode-ts";
 import { IPokemon } from "../../interfaces/Pokemon";
