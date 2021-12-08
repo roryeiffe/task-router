@@ -40,7 +40,7 @@ const PokedexList = () => {
             {/* {asyncThing().then(value => {return value})} */}
             <ul className="checklist"> 
                 {arr2.map(value => {
-                    return <li>{isRegisteredIcon(value)}{value}</li>;
+                    return <li>{isRegisteredIcon(value)} {value}</li>;
                 })}
             </ul>
             <p> ------------------------------------------------ End
@@ -50,15 +50,19 @@ const PokedexList = () => {
 }
 
 function isRegisteredIcon(pkmnName:string) {
-    let caught:boolean = true;
+    let dexNo:number;
+    PokeCorner.pokeApi.getPokemonByName(pkmnName).then(data => {dexNo = data.id});
+    // check if ID on User's caught list
+    let caught:boolean = false;
+    
     if(caught) {
         return(
-            <img src="public/pokeball1.png" />
+            <img src="/public/pokeball1.png" alt="*" />
         );
     }
     else {
         return(
-            <img src="public/pokeball2.png" />
+            <img src="/public/pokeball2.png" alt="_"/>
         );
     }
 
