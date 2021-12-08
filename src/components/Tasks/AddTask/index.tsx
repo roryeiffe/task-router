@@ -30,14 +30,17 @@ const AddTask = ({ onAdd }: any) => {
             </div>
             <div className={styles.formControl}>
                 <label>Task Value</label>
-                <select>
-                    <option>Coding - 15 points</option>
-                    <option>Cleaning - 5 points</option>
-                </select>
-                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a className="dropdown-item" href="#">Action</a>
-                    <a className="dropdown-item" href="#">Another action</a>
-                    <a className="dropdown-item" href="#">Something else here</a>
+                <div className={styles.dropdown}>
+                    <button className={`${styles.btn} btn-block dropdown-toggle`} type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                        Select Value
+                    </button>
+                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a className="dropdown-item" href="#">Cleaning - 5 points</a>
+                        <a className="dropdown-item" href="#">Studying - 10 points</a>
+                        <a className="dropdown-item" href="#">Coding = 15 points</a>
+                        <div className="dropdown-divider"></div>
+                        <a className="dropdown-item" href="#">New Option</a>
+                    </div>
                 </div>
             </div>
 
