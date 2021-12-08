@@ -17,12 +17,15 @@ const Login = () => {
 
   function onSubmitHandler(event: any) {
     event.preventDefault();
+    console.log(user);
+    // to do: send login data to back-end using axios
+    // and grab rest of user data to store in redux
   }
 
   return (
     <div className="container">
       <h2>Login</h2>
-      <form onSubmit={onSubmitHandler}>
+      <form onSubmit={onSubmitHandler} className = "form">
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Email address</label>
           <input
@@ -31,6 +34,7 @@ const Login = () => {
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             name="email"
+            placeholder='poke@mon.com'
             onChange={onChangeHandler}
           />
           <small id="emailHelp" className="form-text text-muted">
@@ -44,6 +48,7 @@ const Login = () => {
             className="form-control"
             id="exampleInputPassword1"
             name="password"
+            placeholder='*******'
             onChange={onChangeHandler}
           />
         </div>

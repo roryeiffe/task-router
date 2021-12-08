@@ -1,11 +1,30 @@
-Todo List Project Potential Outline:
+Project: Task Router
 
-General Idea:
+Description:
 	The idea of this app is for users to keep track of tasks they complete throughout the day. 
 	Each task has an associated point value which, when completed, adds to the user's total points 
 	and level. (example: doing laundry would give the user 10 points and getting 50 points would 
-	raise the user from level 1 to level 2). We also want to implement friend functionality where
-	the user can "friend" people and be able to view their daily tasks and rank
+	raise the user's starter pokemon from level 5 to level 6). We also want to implement friend functionality where
+	the user can "friend" people and be able to view their daily tasks and rank. 
+
+	Getting points also raises the user's starter pokemon which can be viewed on a separate page.
+	As the user completes more tasks, they can view the progress of their pokemon. 
+	Furthermore, completing tasks lets you catch Pokemon (the exact pokemon that is caught will
+	be partially determined by a random generator). All the pokemon a user owns can be viewed on
+	a Pokedex page
+
+Feature List:
+	- Add task
+	- View tasks
+	- Complete task/catch pokemon
+	- Raise starter pokemon
+	- Add/Request friends
+	- View friend's profiles
+	- View current user profile
+	- View all caught Pokemon
+	- View feed/posts
+
+
 
 Pages (Front-End):
  - Login - login to your account
@@ -22,6 +41,9 @@ Pages (Front-End):
  		<input confirm password>
  		<input phone>
  		<input image url?>
+		<select starter pokemon from set list>
+			<Generation>
+			<Water, Grass, or Fire>
  		possibly more...
  	</form>
 	on submit, redirect to login:
@@ -37,6 +59,9 @@ Pages (Front-End):
 		<task 1> can mark as complete, remove, etc.
 		<task 2>
 		<task ...>
+		// when we complete a task, use a pokeball to catch a pokemon
+		// random selection, but points of task correspond to what level pokeball is used
+		// which also corresponds to what "tier" pokemon we can get
 	<List>
 	<form add task>
 		<select task>
@@ -66,6 +91,22 @@ Profile Page - view user info and also view points/level (gained from completing
 	<Phone>      option to change
 	<Points>
 	<Level>
+Feed/Post Page - View auto-generated posts from friends (ex: John completed coding homework)
+	<List>
+		<Post 1>
+		<Post 2>
+		<Post 3>
+		<Post 4>
+	</List>
+Pokedex page - only accessible when logged in
+	<List>
+		<Pokemon 1>
+		<Pokemon 2>
+		<Pokemon 3>
+	</List>
+Pokemon Page - displays the user's favorite pokemon:
+	<Pokemon>
+	// the level of the user corresponds to how high this pokemon's level is
 
 
 Database tables:
@@ -78,7 +119,9 @@ Database tables:
 		phone: integer,
 		points: integer,
 		level: integer,
-		profile_image: char(50)
+		profile_image: char(50),
+		numPokemon: integer,
+		starter_pokemon_id: integer regerences pokemon api
 	}
 	// a task object. This is a general task that can be performed many times
 	Task {
@@ -90,11 +133,13 @@ Database tables:
 	// a mapping that indicates a user performing a certain task 
 	on a certain day:
 	TaskMapping {
+		id: integer, AUTO_INCREMENT PRIMARY KEY
 		userId: integer foreign key to User(id),
 		taskId: integer foreign key to Task(id),
 		startDate: Date
 		dueDate: Date,
 		status ENUM('pending', 'completed'),
+		address: char(100)
 	}
 	// a friend request from one user to another:
 	FriendRequest {
@@ -107,6 +152,19 @@ Database tables:
 		userId: integer foreign key to User(id),
 		friendId: integer foreign key to User(id)
 	}
+	Post {
+		postId integer, AUTO_INCREMENT, PRIMARY KEY
+		taskMapping Id: integer, references taskMapping(id)
+		likes: integer
+	}
+	Pokemon {
+		userId references User(id)
+		PokemonId references Pokemon API
+	}
+	userId     pokemonId
+	1          1
+	1          2
+	1          3
 
 Spring:
 TBD
@@ -121,37 +179,54 @@ Reach Goals:
 Work Divions:
 
 Phase 1 (Front-end stuff using hard-coded values)
-Job 1 - 
+Job 1 Rory - 
 	Login and Register Pages, Profile Page
 	For now, just the visuals and keep track of form data in state, so 
 	that when we are ready to connect it to back-end, we can just plug it into
 	an axios function.
 	On Profile Page, display the user information from redux state, (I hard-coded in some default values
 	in store/index.tsx)
-Job 2 - 
+	Starter Pokemon Page - might be able to combine this with profile page
+Job 2 AJ - 
 	Task dropdown, add task form, add task template Form
 	Just hardcode in the data for now, make sure it roughly matches the data types
 	from the MYSQL tables
 	Task dropdown and task form - (Task Mapping object in MYSQL)
 	Task Template From - (Task object in MYSQL)
 	Display all the tasks for that current day, later we might be able to a day display 
-Job 3 - 
+	Posts page
+	Display posts, hardcode them for now, later we want to display all posts from friends
+Job 3 Cathy - 
 	Friend request form, view current friends, view incoming friend requests
 	Again, hardcode in values for now and then we'll connect it to the axios calls later
 	Friend request form - takes in email
 	View Current friends - just display each friend, level, and a link to their daily schedule
 	List current friends with a button to approve/deny
+	Pokedex
 
-Phase 2 Spring
+Phase 2 Front-end part 2
+Rory - Work on post page, assuming you have dummy data (refer to sql outline for specifics), fix css overlap issue
+AJ - Finish up CSS on task page and add the ability to select task from dropdown menu with hard-coded values/points
+Cathy - Try to get pokemon names to display on the page, display pokemon with images (or using Pokemon Card card)
+
+
+Phase 3 Spring
 TBD
 
-Phase 3 Extra stuff
-	Tree thingy
+Phase 4 Extra Features
+	Tree that grows as user completes more tasks
 	7 day calendar display
-	search for friends by email
+	search for friends by email,
+	keep track of address of where tasks take place
 	other special stuff we can think of
+	Search pokedex by region
 
 Redux State:
 	For now, I think we can just store user info
 	And then whenever we need info, we can make the axios calls
 	Because trying to store so much data in redux might be a lot.
+
+Misc. Design Ideas:
+ - display pokemon in card form and on sidebar
+ - on hover pokemon turn around
+ - Highlight navbar based on which page we're on
