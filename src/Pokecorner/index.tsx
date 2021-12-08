@@ -133,4 +133,4 @@ async function getPokemonList(upTo:number):Promise<string[]> {
 }
 // ======================================================================
 
-export default {getPkmnNameByDexNo, getPokemonSprite, getList};
+export default {pokeApi, getPkmnNameByDexNo, getPokemonSprite, getList};
