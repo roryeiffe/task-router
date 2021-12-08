@@ -1,7 +1,7 @@
 import React from "react";
 import { Pokemon } from "pokenode-ts";
 import {useState, useEffect} from "react";
-import './style.css';
+import styles from './style.module.css';
 
 const PokemonCard = (props:any) => {
   const changeStarterId = () => {
@@ -24,7 +24,7 @@ const PokemonCard = (props:any) => {
 
   return (
     <div className = "col-lg-4 poke-card">
-      <div className="card" style = {borderStyle} onClick = {() => changeStarterId()}>
+      <div className={`card  + ${styles.pokeCard}`} style = {borderStyle} onClick = {() => changeStarterId()}>
         <img draggable = 'false' src={imgUrl} className="card-img-top img" alt="..." />
         <div className="card-body">
           <h5 className="card-title">{props.pokemon.name}</h5>

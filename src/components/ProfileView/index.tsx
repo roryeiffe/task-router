@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import {useDispatch} from "react-redux";
-import './style.css';
+import styles from './style.module.css';
 
 const ProfileView = () => {
   // get user from redux store and set it to state;
@@ -32,7 +32,7 @@ const ProfileView = () => {
   // conditionally render the data or the form to edit the data:
   if (!editMode)
     return (
-      <div className = 'wrapper'>
+      <div className = {styles.wrapper}>
         <h1>Profile</h1>
         <table className = 'table table-bordered'>
           <tbody>
@@ -61,7 +61,7 @@ const ProfileView = () => {
     );
   else
     return (
-      <div className = 'wrapper'>
+      <div className = {styles.wrapper}>
         <h1>Edit Profile</h1>
         <form onSubmit={onSubmitHandler}>
           <div className="form-group">

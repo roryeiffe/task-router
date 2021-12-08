@@ -4,7 +4,7 @@ import PokemonCard from "./PokemonCard";
 import {PokemonClient} from 'pokenode-ts';
 import {IPokemon} from '../../interfaces/Pokemon';
 import { useDispatch } from "react-redux";
-import './style.css';
+import styles from './style.module.css';
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -76,8 +76,8 @@ const Register = () => {
 
   return (
     <div className="container">
+      <form onSubmit={onSubmitHandler} className = {styles.form}>
       <h2>Register</h2>
-      <form onSubmit={onSubmitHandler} className = "form">
         <div className="form-group">
           <label htmlFor="">Full Name</label>
           <input

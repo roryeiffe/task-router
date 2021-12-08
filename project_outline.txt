@@ -209,6 +209,15 @@ Rory - Work on post page, assuming you have dummy data (refer to sql outline for
 AJ - Finish up CSS on task page and add the ability to select task from dropdown menu with hard-coded values/points
 Cathy - Try to get pokemon names to display on the page, display pokemon with images (or using Pokemon Card card)
 
+Phase 3:
+Rory - Try to fix the padding on the posts page
+ 	 - put pokeballs on the navbar
+	  - make the pokemonCard more flexible (display on register page, profile page, pokedex page)
+	  - reach goal: search post by user email
+AJ - Try out different backgrounds
+	- Task form consistent with login/register forms
+Cathy - get pokeballs to appear on pokedex page
+	  - 
 
 Phase 3 Spring
 TBD
@@ -228,5 +237,5 @@ Redux State:
 
 Misc. Design Ideas:
  - display pokemon in card form and on sidebar
- - on hover pokemon turn around
  - Highlight navbar based on which page we're on
+ - display pokedex page with grid system
