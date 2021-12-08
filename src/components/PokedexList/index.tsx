@@ -1,30 +1,45 @@
 import "./style.css";
 import PokeCorner from "../../PokeCorner";
+import { useState } from "react";
 
+let count:number = 1;
+let dexLimit = 151;
+let arr2:string[] = [];
+// variable outside this function executes once; avoid using for loops
 const PokedexList = () => {
-    // testing ======================================================
-    let dexLimit = 151;
+    let [dummyArray, setDummyArray] = useState([0]); // removing this stops it for some reason
 
-    // let [arr, setArr] = useState(new Array);
-    // setArr(PokeCorner.getList.allGen1Pokemon());
-    // .then(list => setArr(list));
-    // let arr:string[] = new Array;
-    let arr:string[] = ["Unown A", "Unown B", "Unown C"];
-    for(let i=0; i<dexLimit; i++) {
-        PokeCorner.getPkmnNameByDexNo(i).then(pkmnString => {
-            arr.push(pkmnString);
+    // for(let i=1; i<dexLimit; i++) {
+    if(count<=dexLimit) {
+        PokeCorner.getPkmnNameByDexNo(count).then(pkmnString => {
+            setDummyArray([...dummyArray, count]);
+            arr2.push(pkmnString);
             console.log(pkmnString);
+            count++;
         })
     }
-    console.log(arr);
-    //================================================================
+
+    // }
+    
+    // const [tempText, setTempText] = useState("");
+    // // let count:number = 0;
+    // function dexClickHandler(event:any) {
+    //     count++;
+    //     PokeCorner.getPkmnNameByDexNo(count).then(pkmnString => {
+    //         setTempText(pkmnString);
+    //         setArr1([...arr1, pkmnString]);
+    //         console.log(pkmnString);
+    //     })
+    // }
+    
     
     return(
         <div className="container">
             <p> -------------------------------------------- Beginning
                 -------------------------------------------- </p>
-            <ul>
-                {arr.map(value => {
+            <button onClick={() => console.log(arr2)}>print to console</button>
+            <ul className="checklist"> 
+                {arr2.map(value => {
                     return <li>{value}</li>;
                 })}
             </ul>
