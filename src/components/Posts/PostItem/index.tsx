@@ -20,8 +20,6 @@ const PostItem = (props:any) => {
             </td>
             <td>
                 <h3>{props.post.title}</h3>
-            </td>
-            <td>
                 {props.post.description}
             </td>
         </tr>

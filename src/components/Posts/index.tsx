@@ -9,7 +9,7 @@ const Posts = () => {
         author: {
           id: 1,
           name: "Rory",
-          starterId: 1,
+          starterId: 261,
         },
         title: "Laundry",
         description: "Did my laundry today... feeling clean!",
@@ -18,7 +18,7 @@ const Posts = () => {
         author: {
           id: 2,
           name: "AJ",
-          starterId: 2,
+          starterId: 245,
         },
         title: "Dog Walk",
         description: "Walked my dog, had fun chasing squirrels!",
@@ -27,7 +27,7 @@ const Posts = () => {
         author: {
           id: 3,
           name: "Cathy",
-          starterId: 3,
+          starterId: 123,
         },
         title: "Shopping",
         description: "Bought a new kirby plushie!",
@@ -35,16 +35,17 @@ const Posts = () => {
     ]);
   }, []);
   return (
-    <div className="wrapper">
-      <table className = "table table-bordered">
-        <tr>
-            <th>User</th>
-            <th>Title</th>
-            <th>Description</th>
-        </tr>
+    <div className="container" style = {{textAlign:'center', border: 'none'}}>
+      <table className = "table table-bordered table-striped">
+        <thead className = "thead-dark" >
+            <th><h1>User</h1></th>
+            <th><h1>Post</h1></th>
+        </thead>
+        <tbody>
         {posts.map((post: any) => (
           <PostItem post={post} />
         ))}
+        </tbody>
       </table>
     </div>
   );
