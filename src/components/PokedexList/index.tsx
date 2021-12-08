@@ -19,7 +19,6 @@ const PokedexList = () => {
         })
     }
 
-    // }
     
     // const [tempText, setTempText] = useState("");
     // // let count:number = 0;
@@ -38,9 +37,10 @@ const PokedexList = () => {
             <p> -------------------------------------------- Beginning
                 -------------------------------------------- </p>
             <button onClick={() => console.log(arr2)}>print to console</button>
+            {/* {asyncThing().then(value => {return value})} */}
             <ul className="checklist"> 
                 {arr2.map(value => {
-                    return <li>{value}</li>;
+                    return <li>{isRegisteredIcon(value)}{value}</li>;
                 })}
             </ul>
             <p> ------------------------------------------------ End
@@ -48,5 +48,29 @@ const PokedexList = () => {
         </div>
     );
 }
+
+function isRegisteredIcon(pkmnName:string) {
+    let caught:boolean = true;
+    if(caught) {
+        return(
+            <img src="public/pokeball1.png" />
+        );
+    }
+    else {
+        return(
+            <img src="public/pokeball2.png" />
+        );
+    }
+
+}
+// async function asyncThing() {
+//     for(let i = 1; i<=151; i++) {
+//         PokeCorner.getPkmnNameByDexNo(i).then(pkmnString => {
+//             arr2.push(pkmnString);
+//             console.log(pkmnString);
+//         })
+//     }
+//     return arr2 as string[];
+// }
 
 export default PokedexList;
