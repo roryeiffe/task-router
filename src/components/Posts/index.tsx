@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import PostItem from "./PostItem";
+import styles from './style.module.css';
 
 const Posts = () => {
   const [posts, setPosts] = useState<any>([]);
@@ -35,7 +36,7 @@ const Posts = () => {
     ]);
   }, []);
   return (
-    <div className="container" style = {{textAlign:'center', border: 'none'}}>
+    <div className={`${styles.container}`} style = {{textAlign:'center', border: 'none'}}>
       <table className = "table table-bordered table-striped">
         <thead className = "thead-dark" >
             <th><h1>User</h1></th>

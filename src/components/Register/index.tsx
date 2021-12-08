@@ -129,7 +129,7 @@ const Register = () => {
         <h1>Choose your starter pokemon:</h1>
         <label htmlFor='region'>Region: </label>
         <br />
-        <select className = 'form-control select' id = 'region' value = {region} onChange = {regionChange}>
+        <select className = {`form-control select ${styles.select}`} id = 'region' value = {region} onChange = {regionChange}>
           <option value="kanto">Kanto</option>
           <option value="johto">Johto</option>
           <option value="hoenn">Hoenn</option>
@@ -147,7 +147,7 @@ const Register = () => {
             {pokemon3 && <PokemonCard pokemon={pokemon3} setUser = {setUser} user = {user}/>}
         </div>
 
-        <input type="submit" value="Register" className="btn btn-primary btn-submit" />
+        <input type="submit" value="Register" className={`btn btn-primary btn-submit ${styles.btnSubmit}`} />
       </form>
     </div>
   );
