@@ -4,15 +4,15 @@ import { useState } from "react";
 
 let count:number = 1;
 let dexLimit = 151;
-let arr2:string[] = ["Unown A", "Unown B", "Unown C"];
+let arr2:string[] = [];
 // variable outside this function executes once; avoid using for loops
 const PokedexList = () => {
-    let [arr1, setArr1] = useState(["Unown A", "Unown B", "Unown C"]);
+    let [dummyArray, setDummyArray] = useState([0]); // removing this stops it for some reason
 
     // for(let i=1; i<dexLimit; i++) {
-    if(count<=151) {
+    if(count<=dexLimit) {
         PokeCorner.getPkmnNameByDexNo(count).then(pkmnString => {
-            setArr1([...arr1, pkmnString]);
+            setDummyArray([...dummyArray, count]);
             arr2.push(pkmnString);
             console.log(pkmnString);
             count++;
@@ -37,8 +37,8 @@ const PokedexList = () => {
         <div className="container">
             <p> -------------------------------------------- Beginning
                 -------------------------------------------- </p>
-            {/* <button onClick={dexClickHandler}>GET!</button> */}
-            <ul> 
+            <button onClick={() => console.log(arr2)}>print to console</button>
+            <ul className="checklist"> 
                 {arr2.map(value => {
                     return <li>{value}</li>;
                 })}
