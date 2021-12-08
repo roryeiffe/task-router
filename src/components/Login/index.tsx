@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import "./style.css";
+import styles from "./style.module.css";
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -23,9 +23,9 @@ const Login = () => {
   }
 
   return (
-    <div className="container">
-      <h2>Login</h2>
-      <form onSubmit={onSubmitHandler}>
+    <div className={styles.container}>
+      <form onSubmit={onSubmitHandler} className = {styles.form}>
+        <h2>Login</h2>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Email address</label>
           <input
@@ -34,6 +34,7 @@ const Login = () => {
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             name="email"
+            placeholder='poke@mon.com'
             onChange={onChangeHandler}
           />
           <small id="emailHelp" className="form-text text-muted">
@@ -47,6 +48,7 @@ const Login = () => {
             className="form-control"
             id="exampleInputPassword1"
             name="password"
+            placeholder='*******'
             onChange={onChangeHandler}
           />
         </div>

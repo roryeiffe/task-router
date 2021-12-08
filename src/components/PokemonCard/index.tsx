@@ -13,6 +13,7 @@ const user = useSelector((state:any) => state.user);
         src={props.pokemon.sprites.front_default}
         className="card-img-top"
         alt="..."
+        draggable="false"
       />
       <div className="card-body">
         <h5 className="card-title">{props.pokemon.name}</h5>

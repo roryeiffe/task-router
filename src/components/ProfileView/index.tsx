@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import {useDispatch} from "react-redux";
+import styles from './style.module.css';
 
 const ProfileView = () => {
   // get user from redux store and set it to state;
@@ -31,12 +32,28 @@ const ProfileView = () => {
   // conditionally render the data or the form to edit the data:
   if (!editMode)
     return (
-      <div>
+      <div className = {styles.wrapper}>
         <h1>Profile</h1>
-        <p>{user.name}</p>
-        <p>{user.email}</p>
-        <p>{user.mobile}</p>
-        <p>Total: Points: {user.points} </p>
+        <table className = 'table table-bordered'>
+          <tbody>
+            <tr>
+              <td>Name:</td>
+              <td>{user.name}</td>
+            </tr>
+            <tr>
+              <td>Email:</td>
+              <td>{user.email}</td>
+            </tr>
+            <tr>
+              <td>Phone:</td>
+              <td>{user.phone}</td>
+            </tr>
+            <tr>
+              <td>Points:</td>
+              <td>{user.points}</td>
+            </tr>
+          </tbody>
+        </table>
         <button onClick={() => setEditMode(true)} className="btn btn-primary">
           Edit Profile
         </button>
@@ -44,7 +61,7 @@ const ProfileView = () => {
     );
   else
     return (
-      <div>
+      <div className = {styles.wrapper}>
         <h1>Edit Profile</h1>
         <form onSubmit={onSubmitHandler}>
           <div className="form-group">
@@ -58,7 +75,6 @@ const ProfileView = () => {
               required
             />
           </div>
-            <p>{user.email}</p>
           <div className="form-group">
             <label htmlFor="">Password</label>
             <input
@@ -75,15 +91,14 @@ const ProfileView = () => {
             <input
               className="form-control"
               type="phone"
-              name="mobile"
-              value={user.mobile}
+              name="phone"
+              value={user.phone}
               onChange={onChangeHandler}
               required
             />
           </div>
             <input type="submit" value="Update Profile" className="btn btn-primary" />
         </form>
-        <p>Total Points: {user.points} </p>
       </div>
     );
 };
