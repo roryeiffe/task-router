@@ -10,9 +10,19 @@ const NavbarItem = (props: any) => {
   // should we apply the active class to the current nav item:
   const [navClass, setNavClass] = useState('');
 
+  const changePokeballType = (action:string) => {
+    if (action === "enter") {
+        setIcon(pokeballMoving);
+    }
+    else if (action === "exit" && props.to !== window.location.pathname) {
+        setIcon(pokeBallStationary);
+    }
+  }
+
   useEffect (() => {
     if(props.to === window.location.pathname){
         setNavClass('active');
+        setIcon(pokeballMoving)
 
     }
   },[])
@@ -20,8 +30,8 @@ const NavbarItem = (props: any) => {
     // on mouse hover, set icon to moving, otherwise... back to stationary:
     <li
       className={`nav-item ${navClass}`}
-      onMouseEnter={() => setIcon(pokeballMoving)}
-      onMouseLeave={() => setIcon(pokeBallStationary)}
+      onMouseEnter={() => changePokeballType('enter')}
+      onMouseLeave={() => changePokeballType('exit')}
     >
       <Link className="nav-link" to={props.to}>
         <img className={styles.pokeball} src={icon} />
