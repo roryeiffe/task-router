@@ -63,7 +63,7 @@ const PokedexList = () => { // variable outside this function executes once; avo
 function isRegisteredIcon(pkmnName:string) {
     let dexNo:number;
     PokeCorner.pokeApi.getPokemonByName(pkmnName).then(data => {dexNo = data.id});
-    // check if ID on User's caught list
+    // TODO: check if ID on User's caught list
     let caught:boolean = true;
     
     if(caught) {
@@ -79,12 +79,12 @@ function isRegisteredIcon(pkmnName:string) {
 
 }
 function loadingBar(currentPosition:number) {
-    if(currentPosition>dexLimit) {
+    if(currentPosition>dexLimit) { // disappears at 101
         return;
     }
     else {
         let percentage:number = Math.round(100*(currentPosition/dexLimit));
-        return "Loading... " + percentage + "%";
+        return "Loading... " + percentage + "% ["+currentPosition+ "/"+dexLimit+"]";
     }
 }
 // async function asyncThing() {
