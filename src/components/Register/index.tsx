@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import PokemonCard from "./PokemonCard";
+import PokemonSelection from "./PokemonSelection";
 import {PokemonClient} from 'pokenode-ts';
 import {IPokemon} from '../../interfaces/Pokemon';
 import { useDispatch } from "react-redux";
@@ -57,6 +57,8 @@ const Register = () => {
     pokemonId = generations[region][2];
     axios.get("https://pokeapi.co/api/v2/pokemon/" + pokemonId + "/")
     .then((response) => {setPokemon3(response.data);})
+
+    axios.get('localhost:9001/test').then(response => console.log('response'));
   }, [region]);
 
   // update the state when input changes
@@ -129,7 +131,7 @@ const Register = () => {
         <h1>Choose your starter pokemon:</h1>
         <label htmlFor='region'>Region: </label>
         <br />
-        <select className = 'form-control select' id = 'region' value = {region} onChange = {regionChange}>
+        <select className = {`form-control select ${styles.select}`} id = 'region' value = {region} onChange = {regionChange}>
           <option value="kanto">Kanto</option>
           <option value="johto">Johto</option>
           <option value="hoenn">Hoenn</option>
@@ -142,12 +144,12 @@ const Register = () => {
         <div className="row">
           <br />
             {/* make sure the pokemon are loaded before we display the cards:*/}
-            {pokemon1 && <PokemonCard pokemon={pokemon1} setUser = {setUser} user = {user}/>}
-            {pokemon2 && <PokemonCard pokemon={pokemon2} setUser = {setUser} user = {user}/>}
-            {pokemon3 && <PokemonCard pokemon={pokemon3} setUser = {setUser} user = {user}/>}
+            {pokemon1 && <PokemonSelection pokemon={pokemon1} setUser = {setUser} user = {user}/>}
+            {pokemon2 && <PokemonSelection pokemon={pokemon2} setUser = {setUser} user = {user}/>}
+            {pokemon3 && <PokemonSelection pokemon={pokemon3} setUser = {setUser} user = {user}/>}
         </div>
 
-        <input type="submit" value="Register" className="btn btn-primary btn-submit" />
+        <input type="submit" value="Register" className={`btn btn-primary btn-submit ${styles.btnSubmit}`} />
       </form>
     </div>
   );

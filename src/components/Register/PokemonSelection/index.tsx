@@ -3,7 +3,7 @@ import { Pokemon } from "pokenode-ts";
 import {useState, useEffect} from "react";
 import styles from './style.module.css';
 
-const PokemonCard = (props:any) => {
+const PokemonSelection = (props:any) => {
   const changeStarterId = () => {
     props.setUser({...props.user, starterId: props.pokemon.id});
   }
@@ -37,4 +37,4 @@ const PokemonCard = (props:any) => {
 };
 
 
-export default PokemonCard;
+export default PokemonSelection;

@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import {PokemonClient} from 'pokenode-ts';
 import {useEffect, useState} from 'react';
 import PokemonCard from '../PokemonCard';
-
+import styles from './style.module.css';
 const StarterView = () => {
     // first, get starter id from redux store:
     const user = useSelector((state:any) => state.user);
@@ -19,8 +19,8 @@ const StarterView = () => {
     }, [user.starterId]);
 
   if (pokemon.sprites) return (
-    <div className = "wrapper">
-        <PokemonCard pokemon={pokemon} />
+    <div className = {`wrapper ${styles.container}`}>
+        <PokemonCard pokemon={pokemon} showLevel />
     </div>
   );
   else return (

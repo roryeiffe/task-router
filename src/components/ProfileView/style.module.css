@@ -2,6 +2,8 @@
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
     padding: 20px;
     height: 100%;
+    text-align: center;
+    background-color: #fff;
 }
 
 .wrapper p {
