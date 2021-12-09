@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
+import styles from '../style.module.css'
 import React from 'react'
 
 const Button = ({color, text, onClick}: any) => {
     return (
-        <button onClick={onClick} style={{backgroundColor: color}} className='btn'>{text}</button>
+        <button onClick={onClick} style={{backgroundColor: color}} className={styles.btn}>{text}</button>
     )
 }
 

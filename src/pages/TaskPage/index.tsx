@@ -41,7 +41,7 @@ const TaskPage = () => {
         setTasks(tasks.filter((task) => task.id !== id))
     }
 
-    return <div>
+    return <div className={styles.background}>
         <Navbar/>
         <div className={styles.container}>
         <TaskHeader onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
