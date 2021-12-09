@@ -17,6 +17,7 @@ const PostItem = (props:any) => {
             <td>
                 <img className = {styles.profileImg} src = {profilePic} alt = "..."/>
                 <h4>{props.post.author.name}</h4>
+                <h6>{props.post.author.email}</h6>
             </td>
             <td className = {styles.postContainer}>
                 <div className = {styles.post}>
