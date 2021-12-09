@@ -6,8 +6,9 @@ import pokeball2s from "./pokeball2-small.png";
 import pokeball1l from "./pokeball1.png";
 import pokeball2l from "./pokeball2.png";
 
-let count:number = 1;
 let dexLimit = 151;
+let count:number = 1;
+let dupeTracker:number[] = [];
 let arr2:string[] = [];
 
 const PokedexList = () => { // variable outside this function executes once; avoid using for loops
@@ -17,8 +18,9 @@ const PokedexList = () => { // variable outside this function executes once; avo
         PokeCorner.getPkmnNameByDexNo(count).then(pkmnString => {
             setDummyArray([...dummyArray, count]);
             // let pkmnString2:string = capitalizeFirstLetter(pkmnString);
-            if(pkmnString===arr2[arr2.length-1]) {
+            if(pkmnString==arr2[arr2.length-1]) {
                 // if duplicate, do nothing
+                dupeTracker.push(count);
             }
             else {
                 arr2.push(pkmnString);
@@ -45,7 +47,8 @@ const PokedexList = () => { // variable outside this function executes once; avo
         <div className="container">
             <p> -------------------------------------------- Beginning
                 -------------------------------------------- </p>
-            {/* <button onClick={() => console.log(arr2)}>print to console</button> */}
+            <button onClick={() => console.log(dupeTracker)}>print to console</button>
+            <p>{loadingBar(count)}</p>
             <ul className="checklist"> 
                 {arr2.map(value => {
                     return <li>{isRegisteredIcon(value)} {capitalizeFirstLetter(value)}</li>;
@@ -74,6 +77,15 @@ function isRegisteredIcon(pkmnName:string) {
         );
     }
 
+}
+function loadingBar(currentPosition:number) {
+    if(currentPosition>dexLimit) {
+        return;
+    }
+    else {
+        let percentage:number = Math.round(100*(currentPosition/dexLimit));
+        return "Loading... " + percentage + "%";
+    }
 }
 // async function asyncThing() {
 //     for(let i = 1; i<=151; i++) {
