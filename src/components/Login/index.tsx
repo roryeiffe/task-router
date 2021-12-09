@@ -52,10 +52,12 @@ const Login = () => {
             onChange={onChangeHandler}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className={`btn btn-primary ${styles.btnSubmit}`}>
           Login
         </button>
+        <br />
       </form>
+      
     </div>
   );
 };

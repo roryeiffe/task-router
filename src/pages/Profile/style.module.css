@@ -1,3 +1,7 @@
+
+.container {
+    text-align: center;
+}
 .background {
     position: fixed;
     top: 0;
@@ -5,4 +9,5 @@
     height: 100%;
     background-size: cover;
     background-image: url(../../images/pikachu_shooting_background.jpeg);
+
 }

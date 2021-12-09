@@ -16,8 +16,8 @@ const user = useSelector((state:any) => state.user);
         draggable="false"
       />
       <div className="card-body">
-        <h5 className="card-title">{props.pokemon.name}</h5>
-        <p className="card-text">Level {user.level}</p>
+        <h4 className="card-title">{props.pokemon.name}</h4>
+        {props.showLevel && <h5 className="card-text">Level {user.level}</h5>}
       </div>
     </div>
   );

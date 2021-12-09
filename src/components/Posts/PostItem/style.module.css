@@ -3,3 +3,17 @@
     border: solid 2px black;
     padding: 10px;
 }
+
+.post {
+    text-align: center;
+}
+
+.post h3 {
+    font-size: 30px;
+}
+
+.post h5 {
+    font-weight: 100;
+    text-emphasis: none;
+    font-size: 22px;
+}

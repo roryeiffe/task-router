@@ -1,5 +1,6 @@
 import React from "react";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
+import NavbarItem from "./NavbarItem";
 
 const Navbar = () => {
   return (
@@ -17,46 +18,14 @@ const Navbar = () => {
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item active">
-            <Link className="nav-link" to="/">
-              Home <span className="sr-only">(current)</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/login">
-              Login
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/register">
-              Register
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/task">
-              Tasks
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/friend">
-              Friends
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/posts">
-              View Feed
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/profile">
-              View Profile
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/pokedex">
-              Pokédex
-            </Link>
-          </li>
+          <NavbarItem to = '/' pageName = 'Home' />
+          <NavbarItem to = '/login' pageName = 'Login'/>
+          <NavbarItem to = '/register' pageName = 'Register'/>
+          <NavbarItem to = '/task' pageName = 'Tasks'/>
+          <NavbarItem to = '/friend' pageName = 'Friends'/>
+          <NavbarItem to = '/posts' pageName = 'View Posts'/>
+          <NavbarItem to = '/profile' pageName = 'View Profile'/>
+          <NavbarItem to = '/pokedex' pageName = 'Pokedex'/>
         </ul>
       </div>
     </nav>
