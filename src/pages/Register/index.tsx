@@ -1,10 +1,11 @@
 import Register from '../../components/Register';
 import Navbar from '../../components/Navbar';
+import styles from "./style.module.css";
 
 
 const RegisterPage = () => {
     return (
-        <div>
+        <div className={styles.background}>
             <Navbar />
             <Register />
         </div>

@@ -3,7 +3,7 @@ import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import FriendPage from './pages/FriendPage';
-import TaskPage from './pages/Task';
+import TaskPage from './pages/TaskPage';
 import ProfilePage from './pages/Profile';
 import PokedexPage from './pages/Pokedex';
 import Posts from './pages/Posts';
