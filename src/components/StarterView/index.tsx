@@ -20,7 +20,7 @@ const StarterView = () => {
 
   if (pokemon.sprites) return (
     <div className = "wrapper">
-        <PokemonCard pokemon={pokemon} />
+        <PokemonCard pokemon={pokemon} showLevel />
     </div>
   );
   else return (

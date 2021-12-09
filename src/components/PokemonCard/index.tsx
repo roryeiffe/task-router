@@ -17,7 +17,7 @@ const user = useSelector((state:any) => state.user);
       />
       <div className="card-body">
         <h5 className="card-title">{props.pokemon.name}</h5>
-        <p className="card-text">Level {user.level}</p>
+        {props.showLevel && <p className="card-text">Level {user.level}</p>}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import PokemonCard from "./PokemonCard";
+import PokemonSelection from "./PokemonSelection";
 import {PokemonClient} from 'pokenode-ts';
 import {IPokemon} from '../../interfaces/Pokemon';
 import { useDispatch } from "react-redux";
@@ -142,9 +142,9 @@ const Register = () => {
         <div className="row">
           <br />
             {/* make sure the pokemon are loaded before we display the cards:*/}
-            {pokemon1 && <PokemonCard pokemon={pokemon1} setUser = {setUser} user = {user}/>}
-            {pokemon2 && <PokemonCard pokemon={pokemon2} setUser = {setUser} user = {user}/>}
-            {pokemon3 && <PokemonCard pokemon={pokemon3} setUser = {setUser} user = {user}/>}
+            {pokemon1 && <PokemonSelection pokemon={pokemon1} setUser = {setUser} user = {user}/>}
+            {pokemon2 && <PokemonSelection pokemon={pokemon2} setUser = {setUser} user = {user}/>}
+            {pokemon3 && <PokemonSelection pokemon={pokemon3} setUser = {setUser} user = {user}/>}
         </div>
 
         <input type="submit" value="Register" className={`btn btn-primary btn-submit ${styles.btnSubmit}`} />
