@@ -57,6 +57,8 @@ const Register = () => {
     pokemonId = generations[region][2];
     axios.get("https://pokeapi.co/api/v2/pokemon/" + pokemonId + "/")
     .then((response) => {setPokemon3(response.data);})
+
+    axios.get('localhost:9001/test').then(response => console.log('response'));
   }, [region]);
 
   // update the state when input changes
