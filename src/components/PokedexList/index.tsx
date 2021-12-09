@@ -1,19 +1,28 @@
 import "./style.css";
 import PokeCorner from "../../PokeCorner";
 import { useState } from "react";
+import pokeball1s from "./pokeball1-small.png";
+import pokeball2s from "./pokeball2-small.png";
+import pokeball1l from "./pokeball1.png";
+import pokeball2l from "./pokeball2.png";
 
 let count:number = 1;
 let dexLimit = 151;
 let arr2:string[] = [];
-// variable outside this function executes once; avoid using for loops
-const PokedexList = () => {
+
+const PokedexList = () => { // variable outside this function executes once; avoid using for loops
     let [dummyArray, setDummyArray] = useState([0]); // removing this stops it for some reason
 
-    // for(let i=1; i<dexLimit; i++) {
     if(count<=dexLimit) {
         PokeCorner.getPkmnNameByDexNo(count).then(pkmnString => {
             setDummyArray([...dummyArray, count]);
-            arr2.push(pkmnString);
+            // let pkmnString2:string = capitalizeFirstLetter(pkmnString);
+            if(pkmnString===arr2[arr2.length-1]) {
+                // if duplicate, do nothing
+            }
+            else {
+                arr2.push(pkmnString);
+            }            
             console.log(pkmnString);
             count++;
         })
@@ -36,11 +45,10 @@ const PokedexList = () => {
         <div className="container">
             <p> -------------------------------------------- Beginning
                 -------------------------------------------- </p>
-            <button onClick={() => console.log(arr2)}>print to console</button>
-            {/* {asyncThing().then(value => {return value})} */}
+            {/* <button onClick={() => console.log(arr2)}>print to console</button> */}
             <ul className="checklist"> 
                 {arr2.map(value => {
-                    return <li>{isRegisteredIcon(value)} {value}</li>;
+                    return <li>{isRegisteredIcon(value)} {capitalizeFirstLetter(value)}</li>;
                 })}
             </ul>
             <p> ------------------------------------------------ End
@@ -53,16 +61,16 @@ function isRegisteredIcon(pkmnName:string) {
     let dexNo:number;
     PokeCorner.pokeApi.getPokemonByName(pkmnName).then(data => {dexNo = data.id});
     // check if ID on User's caught list
-    let caught:boolean = false;
+    let caught:boolean = true;
     
     if(caught) {
         return(
-            <img src="/public/pokeball1.png" alt="*" />
+            <img src={pokeball1s} alt="*" height="16" />
         );
     }
     else {
         return(
-            <img src="/public/pokeball2.png" alt="_"/>
+            <img src={pokeball2s} alt="_" height="16"/>
         );
     }
 
@@ -76,5 +84,8 @@ function isRegisteredIcon(pkmnName:string) {
 //     }
 //     return arr2 as string[];
 // }
-
+function capitalizeFirstLetter(name:string) {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+}
+  
 export default PokedexList;
