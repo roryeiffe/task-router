@@ -5,7 +5,7 @@ import styles from './style.module.css';
 
 const ProfilePage = () => {
   return (
-    <div>
+    <div className={styles.background}>
       <Navbar />
       <div className={`${styles.container} container`}>
         <div className="row" style = {{marginTop: '100px'}}>
