@@ -1,5 +1,6 @@
 // a factory / tool set
 import { PokemonClient } from 'pokenode-ts';
+import { useState } from 'react';
 
 const pokeApi = new PokemonClient();
 
@@ -29,6 +30,12 @@ async function getPkmnNameByDexNo(dexNo:number):Promise<string> {
     
     return name as string;
 }
+
+// async function getDexNoByName(pkmnName:string):Promise<number> {
+//     let dexNo:number;
+//     await pokeApi.getPokemonByName(pkmnName).then(data => {dexNo = data.id});
+//     return dexNo;
+// }
 
 // ======================================================================
 class getPokemonSprite {
@@ -132,5 +139,15 @@ async function getPokemonList(upTo:number):Promise<string[]> {
     return arr;
 }
 // ======================================================================
+function capitalizeFirstLetter(name:string) {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+}
 
-export default {pokeApi, getPkmnNameByDexNo, getPokemonSprite, getList};
+export default {
+    pokeApi, 
+    getPkmnNameByDexNo, 
+    // getDexNoByName,
+    // getPokemonSprite, 
+    getList, 
+    capitalizeFirstLetter
+};

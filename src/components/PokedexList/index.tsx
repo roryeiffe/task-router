@@ -1,6 +1,8 @@
+import { useState } from "react";
+
 import "./style.css";
 import PokeCorner from "../../PokeCorner";
-import { useState } from "react";
+import PokemonCard from "../PokemonCard";
 import pokeball1s from "./pokeball1-small.png";
 import pokeball2s from "./pokeball2-small.png";
 import pokeball1l from "./pokeball1.png";
@@ -45,35 +47,48 @@ const PokedexList = () => { // variable outside this function executes once; avo
     
     return(
         <div className="container">
-            <p> -------------------------------------------- Beginning
-                -------------------------------------------- </p>
-            <button onClick={() => console.log(dupeTracker)}>print to console</button>
+            {/* <p> -------------------------------------------- Beginning
+                -------------------------------------------- </p> */}
+            {/* <button onClick={() => console.log(dupeTracker)}>print to console</button> */}
             <p>{loadingBar(count)}</p>
             <ul className="checklist"> 
-                {arr2.map(value => {
-                    return <li>{isRegisteredIcon(value)} {capitalizeFirstLetter(value)}</li>;
+                {arr2.map((value, id) => {
+                    return <li>
+                        {isRegisteredIcon(value)} 
+                        {capitalizeFirstLetter(value)} 
+                        {getSprite(id+1)}
+                    </li>;
                 })}
             </ul>
-            <p> ------------------------------------------------ End
-                ------------------------------------------------ </p>
+            {/* <p> ------------------------------------------------ End
+                ------------------------------------------------ </p> */}
         </div>
     );
 }
 
+// let url1:string = "https://pokeapi.co/api/v2/pokemon/";
+// let url2:string = "/sprites/front_default";
+let url1:string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+let url2:string = ".png";
+
+function getSprite(dexNo:number):JSX.Element {
+    return <img src={url1+dexNo+url2} alt={url1+dexNo+url2}/>;
+}
+
 function isRegisteredIcon(pkmnName:string) {
-    let dexNo:number;
-    PokeCorner.pokeApi.getPokemonByName(pkmnName).then(data => {dexNo = data.id});
+    let dexNo:number = count; // TODO: temp fix
+    
     // TODO: check if ID on User's caught list
     let caught:boolean = true;
     
     if(caught) {
         return(
-            <img src={pokeball1s} alt="*" height="16" />
+            <img src={pokeball1s} alt="*" />
         );
     }
     else {
         return(
-            <img src={pokeball2s} alt="_" height="16"/>
+            <img src={pokeball2s} alt="_" />
         );
     }
 
@@ -96,6 +111,7 @@ function loadingBar(currentPosition:number) {
 //     }
 //     return arr2 as string[];
 // }
+
 function capitalizeFirstLetter(name:string) {
     return name.charAt(0).toUpperCase() + name.slice(1);
 }
