@@ -9,7 +9,7 @@ import pokeball2s from "../../images/pokeball2-small.png";
 import pokeball1l from "../../images/pokeball1.png";
 import pokeball2l from "../../images/pokeball2.png";
 
-let dexLimit = 151;
+let dexLimit = 898;
 let count:number = 1;
 let dupeTracker:number[] = [];
 let arr2:string[] = [];
@@ -45,7 +45,7 @@ const PokedexList = () => { // variable outside this function executes once; avo
     // }
     
     return(
-        <div className="dex">
+        <div className="container">
             {/* <p> -------------------------------------------- Beginning
                 -------------------------------------------- </p> */}
             {/* <button onClick={() => console.log(dupeTracker)}>print to console</button> */}
@@ -53,10 +53,10 @@ const PokedexList = () => { // variable outside this function executes once; avo
             <>{loadingBar(count)}</>
             <ul className="checklist"> 
                 {arr2.map((value, id) => {
-                    return <li>
-                        {isRegisteredIcon(value)} 
-                        {capitalizeFirstLetter(value)} 
-                        {getFrontSprite(id+1)}
+                    return <li className="dex-entry">
+                        {getFrontSprite(id+1)} <br/>
+                        {isRegisteredIcon(value)} {" "}
+                        {capitalizeFirstLetter(value)} <br/>---------------<br/>
                     </li>;
                 })}
             </ul>
