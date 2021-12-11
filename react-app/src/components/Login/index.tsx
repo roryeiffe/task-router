@@ -1,12 +1,15 @@
 import axios from "axios";
 import React, { useState } from "react";
 import styles from "./style.module.css";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+
+  const dispatch = useDispatch();
 
   function onChangeHandler(event: any) {
     setUser({
@@ -17,7 +20,19 @@ const Login = () => {
 
   function onSubmitHandler(event: any) {
     event.preventDefault();
-    console.log(user);
+    axios.post('http://localhost:9001/users/login', user)
+    .then((response) => {
+      console.log(response.data);
+      // if reponse is empty, either the username or password is incorrect:
+      if(response.data === ""){
+        alert("Email or password incorrect!");
+      }
+      else {
+        // update the store with the user object
+        dispatch({type: 'UPDATE_USER', payload: response.data})
+      }
+    })
+    event.preventDefault();
     // to do: send login data to back-end using axios
     // and grab rest of user data to store in redux
   }

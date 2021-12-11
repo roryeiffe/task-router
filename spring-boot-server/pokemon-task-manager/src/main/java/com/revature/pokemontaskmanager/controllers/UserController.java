@@ -1,5 +1,6 @@
 package com.revature.pokemontaskmanager.controllers;
 
+import com.revature.pokemontaskmanager.dto.LoginRequest;
 import com.revature.pokemontaskmanager.entities.Pokemon;
 import com.revature.pokemontaskmanager.entities.Post;
 import com.revature.pokemontaskmanager.entities.User;
@@ -30,6 +31,22 @@ public class UserController {
         }
         userRepository.save(user);
         return user;
+    }
+
+    // login, check password
+    @PostMapping("/login")
+    public User login(@RequestBody LoginRequest request) {
+        String email = request.getEmail();
+        String password = request.getPassword();
+        User user_db = userRepository.findByEmail(email);
+        if(user_db == null) return null;
+        else{
+            // if the password matches, return the db:
+            if (user_db.getPassword().equals(password)){
+                return user_db;
+            }
+        }
+        return null;
     }
 
     // update the user's general information:

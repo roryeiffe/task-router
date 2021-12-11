@@ -75,13 +75,14 @@ const Register = () => {
   function onSubmitHandler(event: any) {
     // update the redux store:
     dispatch({type: 'UPDATE_USER', payload: user});
+
     axios.post('http://localhost:9001/users/register', user)
     .then((response) => {
-      alert("Registered successfully!")
+      alert("Registered successfully!");
     })
     .catch( (error) => {
       console.log(error);
-      alert("Registration failed. Email is already in use.")
+      alert("Registration failed. Email is already in use.");
     });
     event.preventDefault();
   }

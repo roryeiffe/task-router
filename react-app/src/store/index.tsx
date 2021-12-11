@@ -12,6 +12,7 @@ const initialState = {
         points: 0,
         starterId: 1,
         partnerPokemon: '',
+        tasks: []
     }
     
 
@@ -24,6 +25,12 @@ const taskReducer:any = (state = initialState, action:any) => {
             return {
                 ...state,
                 user: {...state.user, ...action.payload}
+            }
+        
+        case 'ADD_TASK':
+            return {
+                ...state,
+                user: {...state.user, tasks: [...state.user.tasks, action.payload] }
             }
         }
 
