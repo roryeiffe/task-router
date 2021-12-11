@@ -2,7 +2,7 @@
 import { PokemonClient } from 'pokenode-ts';
 import { useState } from 'react';
 
-const pokeApi = new PokemonClient();
+export const pokeApi = new PokemonClient();
 
 // function getPkmnNameByDexNoNoPromise(dexNo:number):String {
 //     getPkmnNameByDexNo(dexNo)
@@ -16,7 +16,7 @@ const pokeApi = new PokemonClient();
 //     return "";
 // }
 
-async function getPkmnNameByDexNo(dexNo:number):Promise<string> {
+export async function getPkmnNameByDexNo(dexNo:number):Promise<string> {
     let name:String = 'missingNo.';
     
     await pokeApi
@@ -117,7 +117,7 @@ async function getPokemonBackSpriteByName(pkmnName:string):Promise<any> {
 // ======================================================================
 
 // ======================================================================
-class getList {
+export class getList {
     // static allPokemon():string[] {}
     static allGen1Pokemon():string[] {
         while(true) { // TODO: '-'
@@ -138,9 +138,10 @@ async function getPokemonList(upTo:number):Promise<string[]> {
     }
     return arr;
 }
+
 // ======================================================================
 
-function capitalizeFirstLetter(name:string) {
+export function capitalizeFirstLetter(name:string) {
     return name.charAt(0).toUpperCase() + name.slice(1);
 }
 

@@ -10,10 +10,9 @@ import pokeball1l from "../../images/pokeball1.png";
 import pokeball2l from "../../images/pokeball2.png";
 
 // editable parameters =======================================
-let showSpriteOfUncaughtPokemon:boolean = true;
-let dexLimit = 898; // 898 total Pokemon
-let allCaught:boolean = true; // for testing
-let allUncaught:boolean = false; // for testing
+let showSpriteOfUncaughtPokemonInitial:boolean = false;
+let dexLimit = 151; // 898 total Pokemon
+let isCaught:boolean = false; // for testing
 // ===========================================================
 
 let count:number = 1;
@@ -21,6 +20,7 @@ let dupeTracker:number[] = []; // for debugging
 let arr2:string[] = [];
 
 const PokedexList = () => { // variable outside this function executes once; avoid using for loops
+    let [spriteOfUncaught, setSpriteOfUncaught] = useState(showSpriteOfUncaughtPokemonInitial);
     let [dummyArray, setDummyArray] = useState([0]); // removing this stops it for some reason
 
     if(count<=dexLimit) {
@@ -51,17 +51,18 @@ const PokedexList = () => { // variable outside this function executes once; avo
     // }
     
     return(
-        <div className="container">
+        <div className="dex">
             {/* <p> -------------------------------------------- Beginning
                 -------------------------------------------- </p> */}
             {/* <button onClick={() => console.log(dupeTracker)}>print to console</button> */}
             {/* <PokemonCard pokemon="magikarp" /> */}
+            <button onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button><br/>
             <>{loadingBar(count)}</>
             <ul className="checklist"> 
                 {arr2.map((value, id) => {
                     return <li className="dex-entry">
                         #{id+1} <br/>
-                        {getFrontSprite(id+1)} <br/>
+                        {getFrontSprite(id+1, spriteOfUncaught)} <br/>
                         {isRegisteredIcon(id+1)} {" "} {capitalizeFirstLetter(value)} <br/>
                         ---------------<br/>
                     </li>;
@@ -78,24 +79,29 @@ const PokedexList = () => { // variable outside this function executes once; avo
 let url1:string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 let url2:string = ".png";
 
-function getFrontSprite(dexNo:number):JSX.Element {
-    if(!showSpriteOfUncaughtPokemon) {
-        return <img src={url1+0+url2} alt={url1+0+url2}/>
+function getFrontSprite(dexNo:number, spriteOfUncaught:boolean):JSX.Element {
+    if(spriteOfUncaught) {
+        return <img src={url1+dexNo+url2} alt={""+dexNo+".png"}/>;
     }
     else {
-        return <img src={url1+dexNo+url2} alt={url1+dexNo+url2}/>;
+        if(isRegistered(dexNo)) {
+            return <img src={url1+dexNo+url2} alt={""+dexNo+".png"}/>;
+        }
+        else {
+            return <img src={url1+0+url2} alt="not registered"/>
+        }
     }
 }
 
 function isRegistered(dexNo:number):boolean { // returns the dex number if registered, 0 if unregistered
-
-    let caught:boolean = allCaught&&!allUncaught; // TODO: check database if pokemon on User's caught list
-    if(caught) {
-        return true;
-    }
-    else {
-        return false;
-    }
+    return isCaught; // for testing
+    // let caught:boolean = ; // TODO: check database if pokemon on User's caught list
+    // if(caught) {
+    //     return true;
+    // }
+    // else {
+    //     return false;
+    // }
 }
 function isRegisteredIcon(dexNo:number):JSX.Element {
     if((isRegistered(dexNo))) {
