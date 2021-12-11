@@ -25,7 +25,7 @@ const Navbar = () => {
           <NavbarItem to = '/friend' pageName = 'Friends'/>
           <NavbarItem to = '/posts' pageName = 'View Posts'/>
           <NavbarItem to = '/profile' pageName = 'View Profile'/>
-          <NavbarItem to = '/pokedex' pageName = 'Pokedex'/>
+          <NavbarItem to = '/pokedex' pageName = 'Pokédex'/>
         </ul>
       </div>
     </nav>

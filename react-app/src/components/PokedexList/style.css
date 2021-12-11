@@ -4,18 +4,16 @@
     font-family: "PT Sans", sans-serif;
     text-align: center;
     padding: 20px;
-    border-radius: 5px;
-    margin-top: -20px;
+    margin-top: 0px;
 }
 .checklist {
     list-style: none;
-    column-count: 3;
+    column-count: 5; /* 3 for small, 5 for large displays */
     text-align: center;
 }
 .alt-list {
     text-align: left;
 }
 .dex-entry {
-    border-color: black;
-    border-radius: 5px;
+    border: 10px gray;
 }

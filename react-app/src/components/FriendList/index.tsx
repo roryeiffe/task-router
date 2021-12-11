@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 
+// TODO: get list of friends from database
 const FriendList = () => {
     // const friends:string[] = ["Friend A", "Friend B", "Friend C"];
     
@@ -21,9 +22,9 @@ const FriendList = () => {
         //     ...newFriend,
         //     [event.target.name]: event.target.value,
         // })
-        let friendName:string = tempText; // TODO: Textbox appears
+        let friendName:string = tempText;
         // friends.push(friendName);
-        setFriends([...friends, friendName]);
+        setFriends([...friends, friendName]); // TODO: implement friend request before this
         console.log(friends); // goes before the above
         console.log(event);
         console.log(event.target.value);
