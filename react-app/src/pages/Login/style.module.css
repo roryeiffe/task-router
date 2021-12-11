@@ -5,4 +5,5 @@
     height: 100%;
     background-size: cover;
     background-image: url(../../images/pikachu_shooting_background.jpeg);
+    padding-bottom: 100px;
 }

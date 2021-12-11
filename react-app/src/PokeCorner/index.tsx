@@ -139,6 +139,7 @@ async function getPokemonList(upTo:number):Promise<string[]> {
     return arr;
 }
 // ======================================================================
+
 function capitalizeFirstLetter(name:string) {
     return name.charAt(0).toUpperCase() + name.slice(1);
 }

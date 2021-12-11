@@ -31,7 +31,6 @@ const PokedexList = () => { // variable outside this function executes once; avo
             count++;
         })
     }
-
     
     // const [tempText, setTempText] = useState("");
     // // let count:number = 0;
@@ -44,9 +43,9 @@ const PokedexList = () => { // variable outside this function executes once; avo
     //     })
     // }
     
-    
     return(
         <div className="container">
+
             {/* <p> -------------------------------------------- Beginning
                 -------------------------------------------- </p> */}
             {/* <button onClick={() => console.log(dupeTracker)}>print to console</button> */}
@@ -77,22 +76,18 @@ function getSprite(dexNo:number):JSX.Element {
 
 function isRegisteredIcon(pkmnName:string) {
     let dexNo:number = count; // TODO: temp fix
-    
     // TODO: check if ID on User's caught list
     let caught:boolean = true;
-    
+
     if(caught) {
-        return(
-            <img src={pokeball1s} alt="*" />
-        );
+        return(<img src={pokeball1s} alt="*" />);
     }
     else {
-        return(
-            <img src={pokeball2s} alt="_" />
-        );
+        return(<img src={pokeball2s} alt="_" />);
     }
 
 }
+
 function loadingBar(currentPosition:number) {
     if(currentPosition>dexLimit) { // disappears at 101
         return;
@@ -102,6 +97,7 @@ function loadingBar(currentPosition:number) {
         return "Loading... " + percentage + "% ["+currentPosition+ "/"+dexLimit+"]";
     }
 }
+
 // async function asyncThing() {
 //     for(let i = 1; i<=151; i++) {
 //         PokeCorner.getPkmnNameByDexNo(i).then(pkmnString => {
@@ -115,5 +111,5 @@ function loadingBar(currentPosition:number) {
 function capitalizeFirstLetter(name:string) {
     return name.charAt(0).toUpperCase() + name.slice(1);
 }
-  
+
 export default PokedexList;
