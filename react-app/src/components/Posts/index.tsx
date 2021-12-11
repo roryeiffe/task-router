@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
+import AddPost from "./AddPost";
 import PostItem from "./PostItem";
 import styles from "./style.module.css";
 
@@ -12,55 +14,15 @@ const Posts = () => {
   };
 
   useEffect(() => {
-    const temp = [
-      {
-        author: {
-          id: 1,
-          name: "Rory",
-          email: "r@gmail.com",
-          starterId: 261,
-        },
-        title: "Laundry",
-        description: "Did my laundry today... feeling clean!",
-      },
-      {
-        author: {
-          id: 2,
-          name: "AJ",
-          email: "a@gmail.com",
-          starterId: 245,
-        },
-        title: "Dog Walk",
-        description: "Walked my dog, had fun chasing squirrels!",
-      },
-      {
-        author: {
-          id: 3,
-          name: "Cathy",
-          email: "c@gmail.com",
-          starterId: 129,
-        },
-        title: "Shopping",
-        description: "Bought a new kirby plushie!",
-      },
-      {
-        author: {
-          id: 1,
-          name: "Rory",
-          email: "r@gmail.com",
-          starterId: 261,
-        },
-        title: "Dishes",
-        description: "Washed some dishes.",
-      },
-    ];
-    setPosts(temp);
-  }, []);
+    axios.get("http://localhost:9001/posts/getPosts")
+    .then(response => setPosts(response.data))
+  }, [posts]);
   return (
     <div
       className={`${styles.container}`}
       style={{ textAlign: "center", border: "none" }}
     >
+      <AddPost setPosts = {setPosts}/>
       <form>
         <input
           type="text"
@@ -70,11 +32,11 @@ const Posts = () => {
           className={`${styles.input}`}
         />
         <br />
-        <input
+        {/* <input
           type="submit"
           value="Filter by Email"
           className={`btn btn-secondary ${styles.submit}`}
-        />
+        /> */}
       </form>
       <table className="table table-bordered table-striped">
         <thead className="thead-dark">
@@ -90,7 +52,7 @@ const Posts = () => {
             posts
               .filter(
                 (post: any) =>
-                  post.author.email === searchTerm || searchTerm === ""
+                  post.email === searchTerm || searchTerm === ""
               )
               .map((post: any) => <PostItem post={post} />)}
         </tbody>

@@ -50,14 +50,14 @@ public class UserController {
     }
 
     // update the user's general information:
-    @PutMapping("/update{id}")
+    @PutMapping("/update/{id}")
     public User updateUser(@RequestBody User user, @PathVariable("id") Long id) {
         // get the update user from the request:
         User updatedUser = user;
         User user_db = userRepository.findById(id).get();
         user_db.setName(updatedUser.getName());
-        user_db.setEmail(updatedUser.getEmail());
         user_db.setPhone(updatedUser.getPhone());
+        user_db.setPassword(updatedUser.getPassword());
         // save to repository:
         return userRepository.save((user_db));
     }

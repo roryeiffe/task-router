@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import {useDispatch} from "react-redux";
 import styles from './style.module.css';
+import axios from "axios";
 
 const ProfileView = () => {
   // get user from redux store and set it to state;
@@ -25,6 +26,9 @@ const ProfileView = () => {
     // update the redux store:
     dispatch({type: 'UPDATE_USER', payload: user});
     event.preventDefault();
+    // upate the database:
+    axios.put("http://localhost:9001/users/update/" + user.id, user)
+    .then(response => console.log("response"));
     setEditMode(false);
     // TODO: update the user in the database
   }

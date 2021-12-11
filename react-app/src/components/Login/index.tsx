@@ -27,7 +27,9 @@ const Login = () => {
       if(response.data === ""){
         alert("Email or password incorrect!");
       }
+      // if successful:
       else {
+        alert("Login successful!");
         // update the store with the user object
         dispatch({type: 'UPDATE_USER', payload: response.data})
       }
