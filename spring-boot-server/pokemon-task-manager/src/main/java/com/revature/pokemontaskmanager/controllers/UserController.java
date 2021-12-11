@@ -1,11 +1,14 @@
 package com.revature.pokemontaskmanager.controllers;
 
 import com.revature.pokemontaskmanager.dto.UserUpdateRequest;
+import com.revature.pokemontaskmanager.entities.Pokemon;
+import com.revature.pokemontaskmanager.entities.Post;
 import com.revature.pokemontaskmanager.entities.User;
 import com.revature.pokemontaskmanager.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,6 +21,13 @@ public class UserController {
     // add the user to the database:
     @PostMapping("/register")
     public User addUser(@RequestBody User user) {
+        // make sure neither pokemon nor posts are null:
+        if (user.getPokemon() == null) {
+            user.setPokemon(new ArrayList<Pokemon>());
+        }
+        if (user.getPosts() == null) {
+            user.setPosts(new ArrayList<Post>());
+        }
         userRepository.save(user);
         return user;
     }
