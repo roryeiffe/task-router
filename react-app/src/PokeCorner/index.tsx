@@ -103,8 +103,7 @@ export async function getPkmnNameByDexNo(dexNo:number):Promise<string> {
 //     });
 // }
 // ======================================================================
-
-// // ======================================================================
+// ======================================================================
 // export class getList {
 //     // static allPokemon():string[] {}
 //     static allGen1Pokemon():string[] {
