@@ -21,7 +21,7 @@ const PokedexPage = () => {
     return (
         <div>
             <Navbar/>
-            <h1>This is the Pokédex page</h1>
+            {/* <h1>This is the Pokédex page</h1> */}
             <PokedexList />
             {/* {tempSprite} */}
             {/* {tempPkmnName} */}

@@ -1,24 +1,36 @@
-import "./style.css";
-import PokeCorner from "../../PokeCorner";
 import { useState } from "react";
 
-let count:number = 1;
+import "./style.css";
+import PokeCorner from "../../PokeCorner";
+import PokemonCard from "../PokemonCard";
+import pokeball1s from "./pokeball1-small.png";
+import pokeball2s from "./pokeball2-small.png";
+import pokeball1l from "./pokeball1.png";
+import pokeball2l from "./pokeball2.png";
+
 let dexLimit = 151;
+let count:number = 1;
+let dupeTracker:number[] = [];
 let arr2:string[] = [];
-// variable outside this function executes once; avoid using for loops
-const PokedexList = () => {
+
+const PokedexList = () => { // variable outside this function executes once; avoid using for loops
     let [dummyArray, setDummyArray] = useState([0]); // removing this stops it for some reason
 
-    // for(let i=1; i<dexLimit; i++) {
     if(count<=dexLimit) {
         PokeCorner.getPkmnNameByDexNo(count).then(pkmnString => {
             setDummyArray([...dummyArray, count]);
-            arr2.push(pkmnString);
+            // let pkmnString2:string = capitalizeFirstLetter(pkmnString);
+            if(pkmnString==arr2[arr2.length-1]) {
+                // if duplicate, do nothing
+                dupeTracker.push(count);
+            }
+            else {
+                arr2.push(pkmnString);
+            }            
             console.log(pkmnString);
             count++;
         })
     }
-
     
     // const [tempText, setTempText] = useState("");
     // // let count:number = 0;
@@ -31,42 +43,61 @@ const PokedexList = () => {
     //     })
     // }
     
-    
     return(
         <div className="container">
-            <p> -------------------------------------------- Beginning
-                -------------------------------------------- </p>
-            <button onClick={() => console.log(arr2)}>print to console</button>
-            {/* {asyncThing().then(value => {return value})} */}
+
+            {/* <p> -------------------------------------------- Beginning
+                -------------------------------------------- </p> */}
+            {/* <button onClick={() => console.log(dupeTracker)}>print to console</button> */}
+            <p>{loadingBar(count)}</p>
             <ul className="checklist"> 
-                {arr2.map(value => {
-                    return <li>{isRegisteredIcon(value)} {value}</li>;
+                {arr2.map((value, id) => {
+                    return <li>
+                        {isRegisteredIcon(value)} 
+                        {capitalizeFirstLetter(value)} 
+                        {getSprite(id+1)}
+                    </li>;
                 })}
             </ul>
-            <p> ------------------------------------------------ End
-                ------------------------------------------------ </p>
+            {/* <p> ------------------------------------------------ End
+                ------------------------------------------------ </p> */}
         </div>
     );
 }
 
+// let url1:string = "https://pokeapi.co/api/v2/pokemon/";
+// let url2:string = "/sprites/front_default";
+let url1:string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+let url2:string = ".png";
+
+function getSprite(dexNo:number):JSX.Element {
+    return <img src={url1+dexNo+url2} alt={url1+dexNo+url2}/>;
+}
+
 function isRegisteredIcon(pkmnName:string) {
-    let dexNo:number;
-    PokeCorner.pokeApi.getPokemonByName(pkmnName).then(data => {dexNo = data.id});
-    // check if ID on User's caught list
-    let caught:boolean = false;
-    
+    let dexNo:number = count; // TODO: temp fix
+    // TODO: check if ID on User's caught list
+    let caught:boolean = true;
+
     if(caught) {
-        return(
-            <img src="/public/pokeball1.png" alt="*" />
-        );
+        return(<img src={pokeball1s} alt="*" />);
     }
     else {
-        return(
-            <img src="/public/pokeball2.png" alt="_"/>
-        );
+        return(<img src={pokeball2s} alt="_" />);
     }
 
 }
+
+function loadingBar(currentPosition:number) {
+    if(currentPosition>dexLimit) { // disappears at 101
+        return;
+    }
+    else {
+        let percentage:number = Math.round(100*(currentPosition/dexLimit));
+        return "Loading... " + percentage + "% ["+currentPosition+ "/"+dexLimit+"]";
+    }
+}
+
 // async function asyncThing() {
 //     for(let i = 1; i<=151; i++) {
 //         PokeCorner.getPkmnNameByDexNo(i).then(pkmnString => {
@@ -76,5 +107,9 @@ function isRegisteredIcon(pkmnName:string) {
 //     }
 //     return arr2 as string[];
 // }
+
+function capitalizeFirstLetter(name:string) {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+}
 
 export default PokedexList;
