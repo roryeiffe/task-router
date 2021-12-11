@@ -5,6 +5,7 @@ import Tasks from '../../components/Tasks'
 import AddTask from '../../components/Tasks/AddTask'
 import TaskHeader from "../../components/Tasks/TaskHeader"
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
 
 const TaskPage = () => {
     const [showAddTask, setShowAddTask] = useState(false)
@@ -36,13 +37,15 @@ const TaskPage = () => {
         // }
     ])
 
+    const dispatch = useDispatch();
+
     //add task
     const addTask = (task: any) => {
         // const id = Math.floor(Math.random() * 10000) + 1
 
         // const newTask = {id, ...task}
         // setTasks([...tasks, newTask])
-        dispatchEvent({type: 'UPDATE_TASK', payload: tasks});
+        dispatch({type: 'UPDATE_TASK', payload: tasks});
         axios.post('http://localhost:9001/tasks/add', tasks)
         .then((response) => {
             alert("Task added successfully")
