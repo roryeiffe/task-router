@@ -1,0 +1,30 @@
+.form {
+    width: 75%;
+    margin: auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    background-color: #fff;
+    opacity: .95;
+    border-radius: 5px;
+}
+
+.select {
+    margin-bottom: 50px;
+}
+
+.btnSubmit {
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.container {
+    padding: 50px;
+    width: 50%;
+    margin: auto;
+    margin-top: 100px;
+    opacity: .95;
+}

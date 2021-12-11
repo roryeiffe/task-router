@@ -1,0 +1,13 @@
+.wrapper{
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    padding: 20px;
+    height: 100%;
+    text-align: center;
+    background-color: #fff;
+    opacity: 0.95;
+    border-radius: 5px;
+}
+
+.wrapper p {
+    font-size: 100px;
+}
