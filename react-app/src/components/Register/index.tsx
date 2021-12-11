@@ -12,6 +12,8 @@ const Register = () => {
     email: "",
     password: "",
     phone: "",
+    points: 0,
+    level: 5,
     starterId: 1,
   });
   // represents which region we want to display:
@@ -58,7 +60,7 @@ const Register = () => {
     axios.get("https://pokeapi.co/api/v2/pokemon/" + pokemonId + "/")
     .then((response) => {setPokemon3(response.data);})
 
-    axios.get('localhost:9001/test').then(response => console.log('response'));
+    axios.get("http://localhost:9001/users/getAll").then(response => console.log(response));
   }, [region]);
 
   // update the state when input changes
@@ -73,6 +75,7 @@ const Register = () => {
   function onSubmitHandler(event: any) {
     // update the redux store:
     dispatch({type: 'UPDATE_USER', payload: user});
+    axios.post('http://localhost:9001/users/register', user)
     event.preventDefault();
   }
 

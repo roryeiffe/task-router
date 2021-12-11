@@ -1,7 +1,6 @@
 package com.revature.pokemontaskmanager.controllers;
 
 import com.revature.pokemontaskmanager.dto.PostResponse;
-import com.revature.pokemontaskmanager.dto.PostUpdateRequest;
 import com.revature.pokemontaskmanager.entities.Post;
 import com.revature.pokemontaskmanager.entities.User;
 import com.revature.pokemontaskmanager.repositories.UserRepository;
@@ -28,6 +27,7 @@ public class PostController {
         userRepository.save(user);
     }
 
+    // get all posts:
     @GetMapping("/getPosts")
     public List<PostResponse> getPosts() {
         return userRepository.getPostJoin();

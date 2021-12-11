@@ -16,6 +16,8 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @ToString
 @Entity
+// Pokemon just stores the id of a pokemon
+// as well as an auto-generated id
 public class Pokemon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

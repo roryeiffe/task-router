@@ -9,6 +9,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+// this is the format of a post response that we send back
+// when the client wants to get posts:
 public class PostResponse {
     private String userName;
     private String email;

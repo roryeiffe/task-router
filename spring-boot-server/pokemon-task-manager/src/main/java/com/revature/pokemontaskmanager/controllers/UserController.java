@@ -1,6 +1,5 @@
 package com.revature.pokemontaskmanager.controllers;
 
-import com.revature.pokemontaskmanager.dto.UserUpdateRequest;
 import com.revature.pokemontaskmanager.entities.Pokemon;
 import com.revature.pokemontaskmanager.entities.Post;
 import com.revature.pokemontaskmanager.entities.User;
@@ -12,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/users")
 public class UserController {
 
@@ -33,12 +33,10 @@ public class UserController {
     }
 
     // update the user's general information:
-    @PutMapping("/update")
-    public User updateUser(@RequestBody UserUpdateRequest request) {
+    @PutMapping("/update{id}")
+    public User updateUser(@RequestBody User user, @PathVariable("id") Long id) {
         // get the update user from the request:
-        User updatedUser = request.getUser();
-        // get the id to change from the request:
-        Long id = request.getId();
+        User updatedUser = user;
         User user_db = userRepository.findById(id).get();
         user_db.setName(updatedUser.getName());
         user_db.setEmail(updatedUser.getEmail());
