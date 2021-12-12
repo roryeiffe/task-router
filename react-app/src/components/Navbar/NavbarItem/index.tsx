@@ -30,7 +30,7 @@ const NavbarItem = (props: any) => {
         setIcon(pokeballMoving)
     }
     // if the user is not logged in, make this link inactive:
-    if(user.id === null) {
+    if(user.email === null) {
       if(props.to !== '/login' && props.to !== '/register' && props.to !== '/') {
         setNavLinkClass('disabled');
       }

@@ -4,7 +4,7 @@ import {createStore} from 'redux';
 const initialState = {
     user : {
         id: null,
-        email: 'email@gmail.com',
+        email: null,
         name: 'User 1',
         password: 'password123',
         phone: 555555,
