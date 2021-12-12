@@ -32,14 +32,14 @@ const AddPost = (props:any) => {
   return (
     <div>
       {alert}
-      <form onSubmit={onSubmitHandler}>
+      <form onSubmit={onSubmitHandler} className = {styles.input}>
         <h2>Add Post</h2>
         <input
           type="text"
           name="title"
           value={post.title}
           placeholder="Post Title"
-          className={`form-control ${styles.input}`}
+          className={`form-control`}
           required
           onChange={onChangeHandler}
         />
