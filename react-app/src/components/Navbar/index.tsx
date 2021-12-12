@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import NavbarItem from "./NavbarItem";
-import PokeCorner from '../../PokeCorner';
+import PokeCorner from '../PokeCorner';
 import store, { initialState } from "../../store";
 
 const Navbar = () => {

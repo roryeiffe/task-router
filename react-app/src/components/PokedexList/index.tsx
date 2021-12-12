@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import "./style.css";
-import PokeCorner from "../../PokeCorner";
+import PokeCorner from "../PokeCorner";
 import PokemonCard from "../PokemonCard";
 
 import pokeball1s from "../../images/pokeball1-small.png";

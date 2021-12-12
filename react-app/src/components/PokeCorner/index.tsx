@@ -1,10 +1,7 @@
 // a factory / tool set
 import { PokemonClient } from 'pokenode-ts';
-import React from 'react';
-import { useState } from 'react';
 
 export const pokeApi = new PokemonClient();
-let opponentPkmn:number;
 export async function getPkmnNameByDexNo(dexNo:number):Promise<string> {
     let name:String = 'missingNo.';
     
