@@ -2,7 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import styles from "./style.module.css";
 import { useDispatch } from "react-redux";
-import Alert from '../Alert'
+import Alert from '../Alert';
+import {Navigate} from 'react-router-dom';
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -11,6 +12,7 @@ const Login = () => {
   });
   // show alert upon success/failure
   const [alert, setAlert] = useState(<div></div>);
+  const [redirect, setRedirect] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -37,6 +39,7 @@ const Login = () => {
         setAlert(<Alert message = "Login successful!" type = "success"/>);
         // update the store with the user object
         dispatch({type: 'UPDATE_USER', payload: response.data})
+        setRedirect(true);
       }
     })
     event.preventDefault();
@@ -47,6 +50,7 @@ const Login = () => {
   return (
     <div className={styles.container}>
       {alert}
+      {redirect ? <Navigate to = "/profile"/> : null}
       <form onSubmit={onSubmitHandler} className = {styles.form}>
         <h2>Login</h2>
         <div className="form-group">

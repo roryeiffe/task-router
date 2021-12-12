@@ -6,6 +6,7 @@ import {PokemonClient} from 'pokenode-ts';
 import {IPokemon} from '../../interfaces/Pokemon';
 import { useDispatch } from "react-redux";
 import styles from './style.module.css';
+import { Navigate } from "react-router-dom";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -25,6 +26,8 @@ const Register = () => {
   const [pokemon3, setPokemon3] = useState<IPokemon>()
   // show alert upon success/failure
   const [alert, setAlert] = useState(<div></div>);
+  // redirect after we register:
+  const [redirect, setRedirect] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -84,6 +87,7 @@ const Register = () => {
       // set alert to empty div to "reset" the alert show property:
       setAlert(<div></div>)
       setAlert(<Alert message = "Registration successful!" type = "success"/>);
+      setRedirect(true);
     })
     .catch( (error) => {
       // set alert to empty div to "reset" the alert show property:
@@ -97,6 +101,7 @@ const Register = () => {
   return (
     <div className="container">
       {alert}
+      {redirect ? <Navigate to="/profile" /> : null}
       <form onSubmit={onSubmitHandler} className = {styles.form}>
       <h2>Register</h2>
         <div className="form-group">
