@@ -40,7 +40,11 @@ public class User {
 
     // Mappings (all one to many)
 
-//    private List<Task> tasks;
+    // create a one to many relationship... one user can have many tasks
+    @OneToMany(targetEntity = Task.class, cascade = CascadeType.ALL)
+    // foreign key: references user id:
+    @JoinColumn(name = "task_fk", referencedColumnName="id")
+    private List<Task> tasks;
 
     // create a one to many relationship... one user can have many posts
     @OneToMany(targetEntity = Post.class, cascade = CascadeType.ALL)
@@ -48,7 +52,11 @@ public class User {
     @JoinColumn(name = "post_fk", referencedColumnName="id")
     private List<Post> posts;
 
-//    private List<Integer> pokemon;
+    // create a one to many relationship... one user can have many posts
+    @OneToMany(targetEntity = Pokemon.class, cascade = CascadeType.ALL)
+    // foreign key: references user id:
+    @JoinColumn(name = "pokemon_fk", referencedColumnName="id")
+    private List<Pokemon> pokemon;
 //    private List<Integer> friendIds;
 
     /**

@@ -4,19 +4,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Table(
+        name = "tasks"
+)
 public class Task {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private boolean completed;
     private String title;
-    private String points;
+    private int points;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date date;
 }

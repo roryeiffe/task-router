@@ -7,7 +7,7 @@ const PostItem = (props:any) => {
 
     useEffect(() => {
         const api = new PokemonClient();
-        api.getPokemonById(props.post.author.starterId)
+        api.getPokemonById(props.post.starterId)
         .then((pokemon: any) => {setProfilePic(pokemon.sprites.front_default);})
         console.log(profilePic);
     }, [])
@@ -16,8 +16,8 @@ const PostItem = (props:any) => {
         <tr>
             <td>
                 <img className = {styles.profileImg} src = {profilePic} alt = "..."/>
-                <h4>{props.post.author.name}</h4>
-                <h6>{props.post.author.email}</h6>
+                <h4>{props.post.userName}</h4>
+                <h6>{props.post.email}</h6>
             </td>
             <td className = {styles.postContainer}>
                 <div className = {styles.post}>

@@ -3,8 +3,8 @@ import {createStore} from 'redux';
 // initial state:
 export const initialState = {
     user : {
-        id: 1,
-        email: 'email@gmail.com',
+        id: null,
+        email: null,
         name: 'User 1',
         password: 'password123',
         phone: 555555,
@@ -12,6 +12,7 @@ export const initialState = {
         points: 0,
         starterId: 1,
         partnerPokemon: '',
+        tasks:[]
     }
     
 
@@ -24,6 +25,12 @@ const taskReducer:any = (state = initialState, action:any) => {
             return {
                 ...state,
                 user: {...state.user, ...action.payload}
+            }
+        
+        case 'UPDATE_TASK':
+            return{
+                ...state,
+                user: {...state.user, tasks: action.payload }
             }
         }
 
