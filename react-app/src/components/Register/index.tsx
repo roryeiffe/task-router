@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import PokemonSelection from "./PokemonSelection";
+import Alert from "../Alert";
 import {PokemonClient} from 'pokenode-ts';
 import {IPokemon} from '../../interfaces/Pokemon';
 import { useDispatch } from "react-redux";
@@ -22,6 +23,8 @@ const Register = () => {
   const [pokemon1, setPokemon1] = useState<IPokemon>()
   const [pokemon2, setPokemon2] = useState<IPokemon>()
   const [pokemon3, setPokemon3] = useState<IPokemon>()
+  // show alert upon success/failure
+  const [alert, setAlert] = useState(<div></div>);
 
   const dispatch = useDispatch();
 
@@ -78,17 +81,22 @@ const Register = () => {
 
     axios.post('http://localhost:9001/users/register', user)
     .then((response) => {
-      alert("Registered successfully!");
+      // set alert to empty div to "reset" the alert show property:
+      setAlert(<div></div>)
+      setAlert(<Alert message = "Registration successful!" type = "success"/>);
     })
     .catch( (error) => {
-      console.log(error);
-      alert("Registration failed. Email is already in use.");
+      // set alert to empty div to "reset" the alert show property:
+      setAlert(<div></div>)
+      setAlert(<Alert message = "Registration failed (email already exists)" type = "danger"/>);
+      
     });
     event.preventDefault();
   }
 
   return (
     <div className="container">
+      {alert}
       <form onSubmit={onSubmitHandler} className = {styles.form}>
       <h2>Register</h2>
         <div className="form-group">

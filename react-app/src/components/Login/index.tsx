@@ -2,12 +2,15 @@ import axios from "axios";
 import React, { useState } from "react";
 import styles from "./style.module.css";
 import { useDispatch } from "react-redux";
+import Alert from '../Alert'
 
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+  // show alert upon success/failure
+  const [alert, setAlert] = useState(<div></div>);
 
   const dispatch = useDispatch();
 
@@ -25,11 +28,13 @@ const Login = () => {
       console.log(response.data);
       // if reponse is empty, either the username or password is incorrect:
       if(response.data === ""){
-        alert("Email or password incorrect!");
+        setAlert(<div></div>)
+        setAlert(<Alert message = "Login failed, email or password incorrect" type = "danger"/>);
       }
       // if successful:
       else {
-        alert("Login successful!");
+        setAlert(<div></div>)
+        setAlert(<Alert message = "Login successful!" type = "success"/>);
         // update the store with the user object
         dispatch({type: 'UPDATE_USER', payload: response.data})
       }
@@ -41,6 +46,7 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
+      {alert}
       <form onSubmit={onSubmitHandler} className = {styles.form}>
         <h2>Login</h2>
         <div className="form-group">
