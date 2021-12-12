@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/tasks")
 public class TaskController {
 
@@ -15,6 +16,7 @@ public class TaskController {
     //create task
     @PostMapping("/add")
     public Task addTask(@RequestBody Task task){
+        System.out.println(task);
         taskRepository.save(task);
         return task;
     }

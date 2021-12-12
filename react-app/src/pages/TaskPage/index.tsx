@@ -43,8 +43,9 @@ const TaskPage = () => {
     const addTask = (task: any) => {
         // const id = Math.floor(Math.random() * 10000) + 1
 
-        // const newTask = {id, ...task}
-        // setTasks([...tasks, newTask])
+        const newTask = {...task, completed: false}
+        console.log(newTask);
+        setTasks([...tasks, newTask])
         dispatch({type: 'UPDATE_TASK', payload: tasks});
         axios.post('http://localhost:9001/tasks/add', tasks)
         .then((response) => {
@@ -54,7 +55,7 @@ const TaskPage = () => {
             console.log(error);
             alert("Task failed to add")
         });
-        task.preventDefault();
+        // task.preventDefault();
     }
 
     //delete task

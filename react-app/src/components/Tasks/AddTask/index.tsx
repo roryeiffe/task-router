@@ -4,6 +4,7 @@ import styles from '../style.module.css'
 const AddTask = ({ onAdd }: any) => {
     const [text, setText] = useState('')
     const [day, setDay] = useState('')
+    const [points, setPoints] = useState(0)
 
     const onSubmit = (e: any) => {
         e.preventDefault()
@@ -13,7 +14,7 @@ const AddTask = ({ onAdd }: any) => {
             return
         }
 
-        onAdd({ text, day })
+        onAdd({ 'title': text, 'date': day, 'points': points })
         setText('')
         setDay('')
     }
@@ -26,7 +27,7 @@ const AddTask = ({ onAdd }: any) => {
             </div>
             <div className={styles.formControl}>
                 <label>Day & Time</label>
-                <input type='text' placeholder='Add Day & Time' value={text} onChange={(e) => setDay(e.target.value)} />
+                <input type='text' placeholder='Add Day & Time' value={day} onChange={(e) => setDay(e.target.value)} />
             </div>
             <div className={styles.formControl}>
                 <label>Task Value</label>
