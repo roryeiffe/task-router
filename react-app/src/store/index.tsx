@@ -1,7 +1,7 @@
 import {createStore} from 'redux';
 
 // initial state:
-const initialState = {
+export const initialState = {
     user : {
         id: 1,
         email: 'email@gmail.com',

@@ -1,23 +1,37 @@
 // a factory / tool set
 import { PokemonClient } from 'pokenode-ts';
+import React from 'react';
 import { useState } from 'react';
 
 export const pokeApi = new PokemonClient();
-
+let opponentPkmn:number;
 export async function getPkmnNameByDexNo(dexNo:number):Promise<string> {
     let name:String = 'missingNo.';
     
-    await pokeApi
-    .getPokemonById(dexNo)
-    .then((data:any) => {
-        name = data.name;
-    })
-    .catch(error => {
-        console.error(error)
-    });
+    await pokeApi.getPokemonById(dexNo)
+    .then((data:any) => { name = data.name; })
+    .catch(error => { console.error(error); });
     
     return name as string;
 }
+
+let url1:string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+let url2:string = ".png";
+
+function getFrontSpriteOf(dexNo:number):JSX.Element {
+    return <img src={url1+dexNo+url2} height="65" alt={""+dexNo+".png"}/>;
+}
+
+function PokeCorner(dexNo: number):JSX.Element {
+    return(
+        <div>
+            {getFrontSpriteOf(dexNo)}
+        </div>
+    );
+}
+
+export default { PokeCorner, pokeApi, getPkmnNameByDexNo, getFrontSpriteOf };
+
 
 // async function getDexNoByName(pkmnName:string):Promise<number> {
 //     let dexNo:number;
@@ -132,11 +146,12 @@ export async function getPkmnNameByDexNo(dexNo:number):Promise<string> {
 //     return name.charAt(0).toUpperCase() + name.slice(1);
 // }
 
-export default {
-    pokeApi, 
-    getPkmnNameByDexNo, 
-    // getDexNoByName,
-    // getPokemonSprite, 
-    // getList, 
-    // capitalizeFirstLetter
-};
+// export default {
+//     PokeCorner,
+//     pokeApi, 
+//     getPkmnNameByDexNo, 
+//     getDexNoByName,
+//     getPokemonSprite, 
+//     getList, 
+//     capitalizeFirstLetter
+// };

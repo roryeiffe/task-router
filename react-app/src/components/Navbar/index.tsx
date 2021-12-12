@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import NavbarItem from "./NavbarItem";
+import PokeCorner from '../../PokeCorner';
+import store, { initialState } from "../../store";
 
 const Navbar = () => {
   return (
@@ -28,6 +30,7 @@ const Navbar = () => {
           <NavbarItem to = '/pokedex' pageName = 'Pokédex'/>
         </ul>
       </div>
+      {PokeCorner.PokeCorner(initialState.user.starterId)}
     </nav>
   );
 };
