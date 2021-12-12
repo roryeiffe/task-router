@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import "./style.css";
-import PokeCorner from "../../PokeCorner";
+import PokeCorner from "../PokeCorner";
 import PokemonCard from "../PokemonCard";
 
 import pokeball1s from "../../images/pokeball1-small.png";
@@ -9,19 +9,25 @@ import pokeball2s from "../../images/pokeball2-small.png";
 import pokeball1l from "../../images/pokeball1.png";
 import pokeball2l from "../../images/pokeball2.png";
 
-let dexLimit = 898;
+// editable parameters =======================================
+let showSpriteOfUncaughtPokemonInitial:boolean = false;
+let dexLimit = 151; // 898 total Pokemon
+let isAllCaught:boolean = false; // for testing
+// ===========================================================
+export let caughtList:number[] = [1,38,129,151,152];
 let count:number = 1;
-let dupeTracker:number[] = [];
+let dupeTracker:number[] = []; // for debugging
 let arr2:string[] = [];
 
 const PokedexList = () => { // variable outside this function executes once; avoid using for loops
+    let [spriteOfUncaught, setSpriteOfUncaught] = useState(showSpriteOfUncaughtPokemonInitial);
     let [dummyArray, setDummyArray] = useState([0]); // removing this stops it for some reason
 
     if(count<=dexLimit) {
         PokeCorner.getPkmnNameByDexNo(count).then(pkmnString => {
             setDummyArray([...dummyArray, count]);
             // let pkmnString2:string = capitalizeFirstLetter(pkmnString);
-            if(pkmnString===arr2[arr2.length-1]) {
+            if(pkmnString===arr2[arr2.length-1]) { // add if statement for debugging
                 // if duplicate, do nothing
                 dupeTracker.push(count);
             }
@@ -45,18 +51,20 @@ const PokedexList = () => { // variable outside this function executes once; avo
     // }
     
     return(
-        <div className="container">
+        <div className="dex">
             {/* <p> -------------------------------------------- Beginning
                 -------------------------------------------- </p> */}
             {/* <button onClick={() => console.log(dupeTracker)}>print to console</button> */}
             {/* <PokemonCard pokemon="magikarp" /> */}
+            <button onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button><br/>
             <>{loadingBar(count)}</>
             <ul className="checklist"> 
                 {arr2.map((value, id) => {
                     return <li className="dex-entry">
-                        {getFrontSprite(id+1)} <br/>
-                        {isRegisteredIcon(value)} {" "}
-                        {capitalizeFirstLetter(value)} <br/>---------------<br/>
+                        #{id+1} <br/>
+                        {getFrontSprite(id+1, spriteOfUncaught)} <br/>
+                        {isRegisteredIcon(id+1)} {" "} {capitalizeFirstLetter(value)} <br/>
+                        ---------------<br/>
                     </li>;
                 })}
             </ul>
@@ -71,26 +79,35 @@ const PokedexList = () => { // variable outside this function executes once; avo
 let url1:string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 let url2:string = ".png";
 
-function getFrontSprite(dexNo:number):JSX.Element {
-    return <img src={url1+dexNo+url2} alt={url1+dexNo+url2}/>;
-}
-
-function isRegistered(dexNo:number):boolean;
-function isRegistered(pkmnName:string):boolean;
-function isRegistered(pkmnData:any):boolean {
-    // let dexNo:number = count; // TODO: temp fix
-    let caught:boolean = true;    // TODO: check if ID on User's caught list
-    if(caught) {
-        return true;
+function getFrontSprite(dexNo:number, spriteOfUncaught:boolean):JSX.Element {
+    if(spriteOfUncaught) {
+        return <img src={url1+dexNo+url2} alt={""+dexNo+".png"}/>;
     }
     else {
-        return false;
+        if(isRegistered(dexNo)) {
+            return <img src={url1+dexNo+url2} alt={""+dexNo+".png"}/>;
+        }
+        else {
+            return <img src={url1+0+url2} alt="not registered"/>
+        }
     }
 }
-function isRegisteredIcon(pkmnName:number):JSX.Element;
-function isRegisteredIcon(dexNo:string):JSX.Element;
-function isRegisteredIcon(pkmnData:any):JSX.Element {
-    if(isRegistered(pkmnData)) {
+
+function isRegistered(dexNo:number):boolean { // returns the dex number if registered, 0 if unregistered
+    caughtList.forEach(entry => {
+        if(entry===dexNo) return true;
+    })
+    return isAllCaught; // for testing, should be false
+    // let caught:boolean = ; // TODO: check database if pokemon on User's caught list
+    // if(caught) {
+    //     return true;
+    // }
+    // else {
+    //     return false;
+    // }
+}
+function isRegisteredIcon(dexNo:number):JSX.Element {
+    if((isRegistered(dexNo))) {
         return(<img src={pokeball1s} alt="*" />);
     }
     else {
@@ -98,7 +115,7 @@ function isRegisteredIcon(pkmnData:any):JSX.Element {
     }
 }
 
-function loadingBar(currentPosition:number) {
+function loadingBar(currentPosition:number) { // TODO: onClick stop loading
     if(currentPosition>dexLimit) { // disappears at 101
         return;
     }

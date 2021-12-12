@@ -1,5 +1,5 @@
 import Navbar from "../../components/Navbar"
-import PokeCorner from '../../PokeCorner';
+import PokeCorner from '../../components/PokeCorner';
 import PokedexList from '../../components/PokedexList';
 import { useState } from 'react';
 
