@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import PokemonSelection from "./PokemonSelection";
+import Alert from "../Alert";
 import {PokemonClient} from 'pokenode-ts';
 import {IPokemon} from '../../interfaces/Pokemon';
 import { useDispatch } from "react-redux";
 import styles from './style.module.css';
+import { Navigate } from "react-router-dom";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -12,14 +14,23 @@ const Register = () => {
     email: "",
     password: "",
     phone: "",
+    points: 0,
+    level: 5,
     starterId: 1,
   });
   // represents which region we want to display:
   const [region, setRegion] = useState("kanto");
+
   // each region will only display 3 pokemon:
   const [pokemon1, setPokemon1] = useState<IPokemon>()
   const [pokemon2, setPokemon2] = useState<IPokemon>()
   const [pokemon3, setPokemon3] = useState<IPokemon>()
+
+  // show alert upon success/failure
+  const [alert, setAlert] = useState(<div></div>);
+
+  // redirect after we register:
+  const [redirect, setRedirect] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -58,7 +69,7 @@ const Register = () => {
     axios.get("https://pokeapi.co/api/v2/pokemon/" + pokemonId + "/")
     .then((response) => {setPokemon3(response.data);})
 
-    axios.get('localhost:9001/test').then(response => console.log('response'));
+    axios.get("http://localhost:9001/users/getAll").then(response => console.log(response));
   }, [region]);
 
   // update the state when input changes
@@ -73,11 +84,28 @@ const Register = () => {
   function onSubmitHandler(event: any) {
     // update the redux store:
     dispatch({type: 'UPDATE_USER', payload: user});
+
+    axios.post('http://localhost:9001/users/register', user)
+    .then((response) => {
+      // set alert to empty div to "reset" the alert show property:
+      setAlert(<div></div>)
+      setAlert(<Alert message = "Registration successful!" type = "success"/>);
+      // redirect to profile page:
+      setRedirect(true);
+    })
+    .catch( (error) => {
+      // set alert to empty div to "reset" the alert show property:
+      setAlert(<div></div>)
+      setAlert(<Alert message = "Registration failed (email already exists)" type = "danger"/>);
+      
+    });
     event.preventDefault();
   }
 
   return (
     <div className="container">
+      {alert}
+      {redirect ? <Navigate to="/profile" /> : null}
       <form onSubmit={onSubmitHandler} className = {styles.form}>
       <h2>Register</h2>
         <div className="form-group">

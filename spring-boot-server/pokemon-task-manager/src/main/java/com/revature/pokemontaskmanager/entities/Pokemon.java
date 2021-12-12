@@ -1,5 +1,6 @@
 package com.revature.pokemontaskmanager.entities;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,10 +16,16 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @ToString
 @Entity
-public class Post {
+// Pokemon just stores the id of a pokemon
+// as well as an auto-generated id
+public class Pokemon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String description;
+    private int pokemonId;
+
+    public Pokemon(int pokemonId){
+        this.pokemonId = pokemonId;
+    }
+
 }

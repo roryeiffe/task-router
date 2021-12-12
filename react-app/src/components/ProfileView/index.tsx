@@ -2,6 +2,8 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import {useDispatch} from "react-redux";
 import styles from './style.module.css';
+import axios from "axios";
+import Alert from "../../components/Alert";
 
 const ProfileView = () => {
   // get user from redux store and set it to state;
@@ -9,6 +11,7 @@ const ProfileView = () => {
   const [user, setUser] = useState(temp);
   // whether we want to edit the info:
   const [editMode, setEditMode] = useState(false);
+  const [alert, setAlert] = useState(<div></div>);
 
   const dispatch = useDispatch();
 
@@ -25,6 +28,12 @@ const ProfileView = () => {
     // update the redux store:
     dispatch({type: 'UPDATE_USER', payload: user});
     event.preventDefault();
+    // upate the database:
+    axios.put("http://localhost:9001/users/update/" + user.id, user)
+    .then(response => {
+      setAlert(<div></div>);
+      setAlert(<Alert type="success" message="Profile updated successfully!" />);
+    });
     setEditMode(false);
     // TODO: update the user in the database
   }
@@ -33,6 +42,7 @@ const ProfileView = () => {
   if (!editMode)
     return (
       <div className = {styles.wrapper}>
+        {alert}
         <h1>Profile</h1>
         <table className = 'table table-bordered'>
           <tbody>

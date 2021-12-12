@@ -1,8 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Mono&family=PT+Sans&display=swap');
+
 .container {
     font-family: "PT Sans", sans-serif;
-    text-align: left;
+    text-align: center;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: -20px;
 }
 .checklist {
     list-style: none;
+    column-count: 3;
+    text-align: center;
+}
+.alt-list {
+    text-align: left;
+}
+.dex-entry {
+    border-color: black;
+    border-radius: 5px;
 }
