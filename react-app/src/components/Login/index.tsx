@@ -12,6 +12,8 @@ const Login = () => {
   });
   // show alert upon success/failure
   const [alert, setAlert] = useState(<div></div>);
+
+  // redirect to profile page after logging in:
   const [redirect, setRedirect] = useState(false);
 
   const dispatch = useDispatch();
@@ -39,6 +41,7 @@ const Login = () => {
         setAlert(<Alert message = "Login successful!" type = "success"/>);
         // update the store with the user object
         dispatch({type: 'UPDATE_USER', payload: response.data})
+        // redirect to profile page:
         setRedirect(true);
       }
     })

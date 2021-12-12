@@ -8,12 +8,15 @@ import {useSelector} from 'react-redux';
 const NavbarItem = (props: any) => {
   // default icon to stationary pokeball:
   const [icon, setIcon] = useState(pokeBallStationary);
+
   // should we apply the active class to the current nav item:
   const [navClass, setNavClass] = useState('');
   const [navLinkClass, setNavLinkClass] = useState('');
+
   // get user from redux store and set it to state;
   const user = useSelector((state: any) => state.user);
 
+  // change the pokeball to animted if we hover over it:
   const changePokeballType = (action:string) => {
     if (action === "enter") {
         setIcon(pokeballMoving);
@@ -31,6 +34,7 @@ const NavbarItem = (props: any) => {
     }
     // if the user is not logged in, make this link inactive:
     if(user.email === null) {
+      // login and register and home page should always be active:
       if(props.to !== '/login' && props.to !== '/register' && props.to !== '/') {
         setNavLinkClass('disabled');
       }

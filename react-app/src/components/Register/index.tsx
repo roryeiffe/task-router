@@ -20,12 +20,15 @@ const Register = () => {
   });
   // represents which region we want to display:
   const [region, setRegion] = useState("kanto");
+
   // each region will only display 3 pokemon:
   const [pokemon1, setPokemon1] = useState<IPokemon>()
   const [pokemon2, setPokemon2] = useState<IPokemon>()
   const [pokemon3, setPokemon3] = useState<IPokemon>()
+
   // show alert upon success/failure
   const [alert, setAlert] = useState(<div></div>);
+
   // redirect after we register:
   const [redirect, setRedirect] = useState(false);
 
@@ -87,6 +90,7 @@ const Register = () => {
       // set alert to empty div to "reset" the alert show property:
       setAlert(<div></div>)
       setAlert(<Alert message = "Registration successful!" type = "success"/>);
+      // redirect to profile page:
       setRedirect(true);
     })
     .catch( (error) => {
