@@ -59,7 +59,17 @@ const TaskPage = () => {
 
     //delete task
     const deleteTask = (id: any) => {
-        setTasks(tasks.filter((task) => task.id !== id))
+        // setTasks(tasks.filter((task) => task.id !== id))
+        dispatch({type: 'UPDATE_TASK', payload: tasks});
+        axios.post('http://localhost:9001/tasks/remove', tasks)
+        .then((response) => {
+            alert("Task removed successfully")
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Task failed to remove")
+        });
+        id.preventDefault();
     }
 
     return <div className={styles.background}>
