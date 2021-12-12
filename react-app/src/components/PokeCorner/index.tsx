@@ -19,6 +19,10 @@ function getFrontSpriteOf(dexNo:number):JSX.Element {
     return <img src={url1+dexNo+url2} height="65" alt={""+dexNo+".png"}/>;
 }
 
+export function capitalizeFirstLetter(name:string) {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
 function PokeCorner(dexNo: number):JSX.Element {
     return(
         <div>
@@ -136,13 +140,7 @@ export default { PokeCorner, pokeApi, getPkmnNameByDexNo, getFrontSpriteOf };
 //     }
 //     return arr;
 // }
-
 // ======================================================================
-
-// export function capitalizeFirstLetter(name:string) {
-//     return name.charAt(0).toUpperCase() + name.slice(1);
-// }
-
 // export default {
 //     PokeCorner,
 //     pokeApi, 

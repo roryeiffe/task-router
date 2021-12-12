@@ -12,9 +12,9 @@ import pokeball2l from "../../images/pokeball2.png";
 // editable parameters =======================================
 let showSpriteOfUncaughtPokemonInitial:boolean = false;
 let dexLimit = 151; // 898 total Pokemon
-let isCaught:boolean = false; // for testing
+let isAllCaught:boolean = false; // for testing
 // ===========================================================
-
+export let caughtList:number[] = [1,38,129,151,152];
 let count:number = 1;
 let dupeTracker:number[] = []; // for debugging
 let arr2:string[] = [];
@@ -94,7 +94,10 @@ function getFrontSprite(dexNo:number, spriteOfUncaught:boolean):JSX.Element {
 }
 
 function isRegistered(dexNo:number):boolean { // returns the dex number if registered, 0 if unregistered
-    return isCaught; // for testing
+    caughtList.forEach(entry => {
+        if(entry===dexNo) return true;
+    })
+    return isAllCaught; // for testing, should be false
     // let caught:boolean = ; // TODO: check database if pokemon on User's caught list
     // if(caught) {
     //     return true;

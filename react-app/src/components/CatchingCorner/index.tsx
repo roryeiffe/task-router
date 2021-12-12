@@ -1,9 +1,13 @@
-// a factory / tool set
 import { PokemonClient } from 'pokenode-ts';
 import React from 'react';
 import { useState } from 'react';
 import './style.css';
-import PokeCorner, { pokeApi } from '../PokeCorner';
+import PokeCorner, { pokeApi, capitalizeFirstLetter } from '../PokeCorner';
+import {caughtList} from '../PokedexList';
+
+// editable parameters ================================
+let catchRateMultiplier:number = 3;
+//=====================================================
 
 let url1:string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 let url2:string = ".png";
@@ -12,7 +16,7 @@ function getFrontSpriteOf(dexNo:number):JSX.Element {
     return <img src={url1+dexNo+url2} height="100" alt={""+dexNo+".png"}/>;
 }
 
-// // too complex for the scope of the project:
+// // bag is too complex for the scope of the project:
 // export function addPokeballToBag(points:number) {}
 // function bagHandler():JSX.Element {
 //     let [bag, setBag] = useState([0]);
@@ -20,23 +24,42 @@ function getFrontSpriteOf(dexNo:number):JSX.Element {
 // }
 
 function CatchingCorner(points: number):JSX.Element {
-    let [opponentPkmn, setOpponentPokemon] = useState(Math.round(898*Math.random()));
-    let getOpponentPkmnName:Promise<string> = pokeApi.getPokemonById(opponentPkmn).then(value => {return value.name});
+    let [opponentPkmn, setOpponentPkmn] = useState(Math.round(898*Math.random()));
+    let [textBox, setTextBox] = useState("");
+
+    PokeCorner.getPkmnNameByDexNo(opponentPkmn).then(pkmnName => {
+        let newPkmnName = capitalizeFirstLetter(pkmnName);
+        console.log("A wild "+newPkmnName+" appeared!")
+        setTextBox("A wild "+newPkmnName+" appeared!")
+    });
     
-    function refresh() {
-        console.log("A wild "+" appeared!")
-        setOpponentPokemon(Math.round(898*Math.random()));
+    async function refresh() {
+        setOpponentPkmn(Math.round(898*Math.random())); // only pick from uncaught pkmn
+        // await PokeCorner.getPkmnNameByDexNo(opponentPkmn).then(pkmnName => {
+        //     console.log("A wild "+pkmnName+" appeared!")
+        //     setTextBox("A wild "+pkmnName+" appeared!")
+        // });
     }
-    let url3:string = "https://pokeapi.co/api/v2/pokemon-species/";
+    const delay = async (ms: number) => new Promise(res => setTimeout(res, ms));
     
     async function throwPokeball(points:number) { // points = number of tries?
         await pokeApi.getPokemonSpeciesById(opponentPkmn).then(pkmn => {
-            let successRate:number = pkmn.capture_rate/255; // always out of 255
+            let successRate:number = pkmn.capture_rate*catchRateMultiplier; // always out of 255
+            console.log("You threw "+points+" pokeballs.");
+            setTextBox("You threw "+points+" pokeballs.");
+            console.log("Catch rate: "+ successRate);
+            setTimeout(() => null, 2000);
             for(let i=0; i<points; i++) {
-                console.log("You threw a pokeball.")
-                if(255*Math.random()<successRate) {
+                let rngesus = 255*Math.random();
+                delay(2000); // wait for 2 seconds
+                if(rngesus < successRate) {
                     // Pokemon is caught
                     console.log(opponentPkmn+" is caught!");
+                    setTextBox(opponentPkmn+" is caught!");
+                    delay(2000); // wait for 2 seconds
+                    caughtList.push(opponentPkmn); // add to user's pokedex
+                    refresh();
+                    break;
                 }
                 else {
                     // Pokemon broke free
@@ -50,7 +73,8 @@ function CatchingCorner(points: number):JSX.Element {
     return(
         <span className='catching-corner'>
             {/* {bagHandler} */}
-            <button onClick={() => throwPokeball(5)}>throw Pokéball</button>
+            {textBox} <br/>
+            <button onClick={() => throwPokeball(5)}>throw 5 Pokéballs</button>
             <button onClick={refresh}>refresh</button>
             {getFrontSpriteOf(opponentPkmn)}
         </span>
