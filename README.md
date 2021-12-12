@@ -18,8 +18,8 @@ What began as a task manager application quickly became a simple social media si
 * Spring Boot
 
 # Features
-* Login Page
-* Register Page
+* Login Page - users can log in to their account
+* Register Page - users can input some basic information, as well as choose a starter Pokemon that grows as tasks are completed
 * Friend Page - users can accept incoming friend requests and view their current friends
 * Tasks Page - users can add tasks to their schedule and mark them as complete, granting them a new Pokemon
 * Posts Page - users can add posts and view posts from other users
