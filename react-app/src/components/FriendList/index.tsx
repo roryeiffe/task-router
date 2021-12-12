@@ -2,7 +2,9 @@
 // let friends:string[] = new Array();
 
 import { useState } from "react";
+import "./style.css";
 
+// TODO: get list of friends from database
 const FriendList = () => {
     // const friends:string[] = ["Friend A", "Friend B", "Friend C"];
     
@@ -21,9 +23,9 @@ const FriendList = () => {
         //     ...newFriend,
         //     [event.target.name]: event.target.value,
         // })
-        let friendName:string = tempText; // TODO: Textbox appears
+        let friendName:string = tempText;
         // friends.push(friendName);
-        setFriends([...friends, friendName]);
+        setFriends([...friends, friendName]); // TODO: implement friend request before this
         console.log(friends); // goes before the above
         console.log(event);
         console.log(event.target.value);
@@ -34,7 +36,7 @@ const FriendList = () => {
     }
     //================================================================
     return(
-        <div className="container">
+        <div className="friend-list">
             {/* <form onClick={e => addFriend(e)}>
                 <label>
                     <input type="text" name="friendName"/>
@@ -43,18 +45,15 @@ const FriendList = () => {
             </form> */}
             
             <input type="text" onChange={event => addFriendHandler(event)} />
+            <span>&ensp;</span>
             <button name="friendName" onClick={event => addFriend(event)}>Add friend</button>
-
+            <p />
             {/* <input type="submit" /> */}
-            <p> -------------------------------------------- Beginning
-                -------------------------------------------- </p>
             <ul>
                 {friends.map(value => {
                     return <li>{value}</li>;
                 })}
             </ul>
-            <p> ------------------------------------------------ End
-                ------------------------------------------------ </p>
         </div>
     );
 }
