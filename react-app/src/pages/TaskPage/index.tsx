@@ -7,7 +7,7 @@ import AddTask from '../../components/Tasks/AddTask'
 import TaskHeader from "../../components/Tasks/TaskHeader"
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import CatchingCorner, {throwPokeball2} from '../../components/CatchingCorner'
+import CatchingCorner from '../../components/CatchingCorner'
 import PokeCorner from '../../components/PokeCorner'
 
 const TaskPage = () => {
@@ -39,6 +39,7 @@ const TaskPage = () => {
         //     //reminder: false,
         // }
     ])
+    const [catchPokemon, setCatchPokemon] = useState(<div></div>);
 
     
   // get user from redux store and set it to state;
@@ -97,7 +98,7 @@ const TaskPage = () => {
             user.points += task.points;
             dispatch({type: 'UPDATE_USER', payload: user});
             // TODO save this user to database
-            PokeCorner.throw(task.points);
+            setCatchPokemon(<CatchingCorner points = {task.points} setCatchPokemon = {setCatchPokemon}/>);
 
         })
         .catch((error) => {
@@ -113,7 +114,10 @@ const TaskPage = () => {
         <TaskHeader onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
         {showAddTask && <AddTask onAdd={addTask}/>}
         {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onComplete={completeTask}/> : 'No Tasks to Show'}
+        {catchPokemon}
         </div>
+
+        
         
     </div>
 }

@@ -27,7 +27,7 @@ function getFrontSpriteOf(dexNo:number):JSX.Element {
 //     // .map onClick={throwPokeball}
 // }
 
-function CatchingCorner(points: number):JSX.Element {
+function CatchingCorner(props: any):JSX.Element {
     let [opponentPkmn, setOpponentPkmn] = useState(1+Math.floor(dexLimit*Math.random()));
     let [textBox, setTextBox] = useState("");
 
@@ -55,7 +55,7 @@ function CatchingCorner(points: number):JSX.Element {
         //     setTextBox("A wild "+capitalizeFirstLetter(pkmnName)+" appeared!");
         // });
     }
-    const delay = async (ms: number) => new Promise(res => setTimeout(res, ms));
+    const delay = async (ms: any) => new Promise(res => setTimeout(res, ms));
     
     async function throwPokeball(points:number) { // points = number of tries?
         await pokeApi.getPokemonSpeciesById(opponentPkmn).then(pkmn => {
@@ -71,7 +71,7 @@ function CatchingCorner(points: number):JSX.Element {
                     delay(1000); // wait for 2 seconds
                      // TODO: add to user's pokedex
                     //  caughtList.push(opponentPkmn);
-                    // axios.put("http://localhost:9001/user/caught/add", opponentPkmn);            
+                    // axios.put("http://localhost:9001/user/caught/add", opponentPkmn);      
                     refresh();
                     break;
                 }
@@ -81,16 +81,22 @@ function CatchingCorner(points: number):JSX.Element {
                 }
             }
             pokeballWiggle=false; 
+            //
         })
 
     }
+
     
     return(
         <span className='catching-corner'>
             {/* {bagHandler} */}
             {textBox} <br/>
-            <button onClick={() => throwPokeball(5)}>throw 5 Pokéballs</button>
-            <button onClick={refresh}>refresh</button>
+            {pokeballWiggle ? <button onClick = {() => {props.setCatchPokemon(<div></div>)}}>Close</button> : 
+                <div>
+                    <button onClick={() => throwPokeball(props.points)}>throw {props.points} Pokéball</button>
+                    <button onClick={refresh}>refresh</button>
+                </div>
+            }
             {wildPkmnArea()}
         </span>
     );
