@@ -11,7 +11,7 @@ import pokeball2l from "../../images/pokeball2.png";
 
 // editable parameters =======================================
 let showSpriteOfUncaughtPokemonInitial:boolean = false;
-let dexLimit = 151; // 898 total Pokemon
+let dexLimit = 898; // 898 total Pokemon
 let isAllCaught:boolean = false; // for testing
 // ===========================================================
 export let caughtList:number[] = [1,38,129,151,152];
