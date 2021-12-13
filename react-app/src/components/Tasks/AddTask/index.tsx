@@ -64,6 +64,7 @@ const AddTask = ({ onAdd }: any) => {
                 </div>
             </div>
 
+
             <input type='submit' value='Save Task' className={`${styles.btn} btn-block`} />
         </form>
     )
