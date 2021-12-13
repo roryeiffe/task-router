@@ -5,7 +5,7 @@ export const pokeApi = new PokemonClient();
 export async function getPkmnNameByDexNo(dexNo:number):Promise<string> {
     let name:String = 'missingNo.';
     
-    await pokeApi.getPokemonById(dexNo)
+    await pokeApi.getPokemonSpeciesById(dexNo)
     .then((data:any) => { name = data.name; })
     .catch(error => { console.error(error); });
     
