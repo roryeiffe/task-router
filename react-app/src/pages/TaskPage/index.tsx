@@ -7,6 +7,8 @@ import AddTask from '../../components/Tasks/AddTask'
 import TaskHeader from "../../components/Tasks/TaskHeader"
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
+import CatchingCorner from '../../components/CatchingCorner'
+import PokeCorner from '../../components/PokeCorner'
 
 const TaskPage = () => {
     const [showAddTask, setShowAddTask] = useState(false)
@@ -37,6 +39,7 @@ const TaskPage = () => {
         //     //reminder: false,
         // }
     ])
+    const [catchPokemon, setCatchPokemon] = useState(<div></div>);
 
     
   // get user from redux store and set it to state;
@@ -87,16 +90,22 @@ const TaskPage = () => {
 
     //complete task
     const completeTask = (task: any) => {
+        console.log('Got to complete task');
         dispatch({type: 'UPDATE_TASK', payload: tasks});
-        axios.post('http://localhost:9001/tasks/remove'+ user.id, task)
+        axios.put('http://localhost:9001/tasks/complete/'+ task.id)
         .then((response) => {
-            alert("Task removed successfully")
+            alert("Task updated successfully");
+            user.points += task.points;
+            dispatch({type: 'UPDATE_USER', payload: user});
+            // TODO save this user to database
+            setCatchPokemon(<CatchingCorner points = {task.points} setCatchPokemon = {setCatchPokemon}/>);
+            deleteTask(task.id);
         })
         .catch((error) => {
             console.log(error);
-            alert("Task failed to remove")
+            alert("Task failed to update")
         });
-        task.preventDefault();
+        // task.preventDefault();
     }
 
     return <div className={styles.background}>
@@ -105,7 +114,10 @@ const TaskPage = () => {
         <TaskHeader onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
         {showAddTask && <AddTask onAdd={addTask}/>}
         {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onComplete={completeTask}/> : 'No Tasks to Show'}
+        {catchPokemon}
         </div>
+
+        
         
     </div>
 }

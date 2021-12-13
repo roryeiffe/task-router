@@ -51,4 +51,12 @@ public class TaskController {
     public void deleteTask(@PathVariable("id") int taskId){
         taskRepository.deleteById(taskId);
     }
+
+    // Complete task:
+    @PutMapping("/complete/{id}")
+    public void completeTask(@PathVariable("id") int taskId) {
+        Task task = taskRepository.getById(taskId);
+        task.setCompleted(true);
+        taskRepository.save(task);
+    }
 }
