@@ -5,8 +5,9 @@ import { FaTimes } from 'react-icons/fa'
 const Task = ({task, onDelete, onComplete}: any) => {
     return (
         <div className={styles.task}>
-            <h3>{task.text} <FaTimes onClick={() => onDelete(task.id)}/> <input type="checkbox" onClick={onComplete}/></h3>
-            <p>{task.day}</p>
+            <h3>{task.title} <FaTimes onClick={() => onDelete(task.id)}/> <input type="checkbox" onClick={onComplete}/></h3>
+            <p>{task.date}</p>
+            <p>{task.points} points</p>
         </div>
     )
 }

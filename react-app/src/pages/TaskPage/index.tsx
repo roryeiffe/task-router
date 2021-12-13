@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import styles from './style.module.css'
 import Navbar from "../../components/Navbar"
@@ -37,10 +37,17 @@ const TaskPage = () => {
         //     //reminder: false,
         // }
     ])
+
     
   // get user from redux store and set it to state;
   const temp = useSelector((state: any) => state.user);
   const [user, ] = useState(temp);
+
+    useEffect(() => {
+        axios.get('http://localhost:9001/tasks/get/' + user.id)
+        .then(response => setTasks(response.data));
+    }, [tasks])
+    
 
     const dispatch = useDispatch();
 
@@ -63,10 +70,11 @@ const TaskPage = () => {
     }
 
     //delete task
-    const deleteTask = (id: any) => {
+    const deleteTask = (id:any) => {
+        // console.log(task.id);
         // setTasks(tasks.filter((task) => task.id !== id))
         dispatch({type: 'UPDATE_TASK', payload: tasks});
-        axios.delete('http://localhost:9001/tasks/remove'+ user.id, id)
+        axios.delete('http://localhost:9001/tasks/remove/'+ id)
         .then((response) => {
             alert("Task removed successfully")
         })
@@ -74,7 +82,7 @@ const TaskPage = () => {
             console.log(error);
             alert("Task failed to remove")
         });
-        id.preventDefault();
+        // id.preventDefault();
     }
 
     //complete task

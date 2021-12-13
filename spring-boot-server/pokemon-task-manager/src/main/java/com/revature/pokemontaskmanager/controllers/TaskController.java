@@ -39,9 +39,16 @@ public class TaskController {
         userRepository.save(user);
     }
 
+    @GetMapping("/get/{id}")
+    public List<Task> getTasks(@PathVariable("id") Long userId) {
+        User user = userRepository.getById(userId);
+        List<Task> tasks = user.getTasks();
+        return tasks;
+    }
+
     //delete task
     @DeleteMapping("/remove/{id}")
-    public void deleteTask(Task task){
-        taskRepository.delete(task);
+    public void deleteTask(@PathVariable("id") int taskId){
+        taskRepository.deleteById(taskId);
     }
 }
