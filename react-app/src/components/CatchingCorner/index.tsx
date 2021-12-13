@@ -89,7 +89,7 @@ function CatchingCorner(points: number):JSX.Element {
         <span className='catching-corner'>
             {/* {bagHandler} */}
             {textBox} <br/>
-            <button onClick={() => throwPokeball(5)}>throw 5 Pokéballs</button>
+            <button onClick={() => throwPokeball(5)}>throw {points} Pokéballs</button>
             <button onClick={refresh}>refresh</button>
             {wildPkmnArea()}
         </span>
