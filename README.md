@@ -44,7 +44,7 @@ Specifically these fields:
 ## Running the back-end
 When these properties are set, run the file "PokemonTaskManagerApplication.java" to start the server. 
 
-## running the front-end
+## Running the front-end
 For the react-app, open up the folder "react-app" in your favorite code editor (we recommend Visual Studio Code). Open up the command prompt and type 
 ```
 npm start
