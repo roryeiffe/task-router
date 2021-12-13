@@ -40,7 +40,7 @@ public class TaskController {
     }
 
     //delete task
-    @DeleteMapping("/remove")
+    @DeleteMapping("/remove/{id}")
     public void deleteTask(Task task){
         taskRepository.delete(task);
     }
