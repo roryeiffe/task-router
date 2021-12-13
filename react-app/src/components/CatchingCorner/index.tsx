@@ -70,7 +70,7 @@ function CatchingCorner(props: any):JSX.Element {
                     delay(1000); // wait for 2 seconds
                      // TODO: add to user's pokedex
                     //  caughtList.push(opponentPkmn);
-                    axios.put('http://localhost:9001/pokemon/'+props.user.id , {pokemonId: opponentPkmn})
+                    axios.put('http://localhost:9001/pokemon/update/'+props.user.id , {pokemonId: opponentPkmn})
                     refresh();
                     break;
                 }
@@ -94,6 +94,7 @@ function CatchingCorner(props: any):JSX.Element {
     return(
         <span className='catching-corner'>
             {/* {bagHandler} */}
+            <br/>
             {textBox} <br/>
             {pokeballWiggle ? <button onClick = {() => {props.setCatchPokemon(<div></div>)}}>Close</button> : 
             <div>
