@@ -2,7 +2,7 @@
 // let friends:string[] = new Array();
 
 import { useState } from "react";
-import "./style.css";
+import styles from"./style.module.css";
 
 // TODO: get list of friends from database
 const FriendList = () => {
@@ -36,8 +36,9 @@ const FriendList = () => {
     }
     //================================================================
     return(
-        <div className="friend-list">
-            {/* <form onClick={e => addFriend(e)}>
+        <div className={styles.container}>
+            <div className={styles.friendList}>
+                {/* <form onClick={e => addFriend(e)}>
                 <label>
                     <input type="text" name="friendName"/>
                 </label>
@@ -54,6 +55,7 @@ const FriendList = () => {
                     return <li>{value}</li>;
                 })}
             </ul>
+            </div>
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import styles from "./style.module.css";
+import styles from './style.module.css';
 import { useDispatch } from "react-redux";
 import Alert from '../Alert';
 import {Navigate} from 'react-router-dom';
