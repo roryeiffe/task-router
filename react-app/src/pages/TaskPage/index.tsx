@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import { useSelector } from 'react-redux'
 import styles from './style.module.css'
 import Navbar from "../../components/Navbar"
 import Tasks from '../../components/Tasks'
@@ -10,13 +11,13 @@ import { useDispatch } from 'react-redux'
 const TaskPage = () => {
     const [showAddTask, setShowAddTask] = useState(false)
     const [tasks, setTasks] = useState([
-        {
-            id: '',
-            completed: false,
-            title: '',
-            points: '',
-            date: ''
-        }
+        // {
+        //     id: '',
+        //     completed: false,
+        //     title: '',
+        //     points: '',
+        //     date: ''
+        // }
         // {
         //     id: 1,
         //     text: 'Doctors Appointment',
@@ -37,16 +38,27 @@ const TaskPage = () => {
         // }
     ])
 
+    
+  // get user from redux store and set it to state;
+  const temp = useSelector((state: any) => state.user);
+  const [user, ] = useState(temp);
+
+    useEffect(() => {
+        axios.get('http://localhost:9001/tasks/get/' + user.id)
+        .then(response => setTasks(response.data));
+    }, [tasks])
+    
+
     const dispatch = useDispatch();
 
     //add task
     const addTask = (task: any) => {
         // const id = Math.floor(Math.random() * 10000) + 1
 
-        // const newTask = {id, ...task}
-        // setTasks([...tasks, newTask])
+        const newTask = { completed: false, ...task}
+        //setTasks([...tasks, newTask])
         dispatch({type: 'UPDATE_TASK', payload: tasks});
-        axios.post('http://localhost:9001/tasks/add', tasks)
+        axios.put('http://localhost:9001/tasks/add/'+ user.id, task)
         .then((response) => {
             alert("Task added successfully")
         })
@@ -54,14 +66,15 @@ const TaskPage = () => {
             console.log(error);
             alert("Task failed to add")
         });
-        task.preventDefault();
+        // task.preventDefault();
     }
 
     //delete task
-    const deleteTask = (id: any) => {
+    const deleteTask = (id:any) => {
+        // console.log(task.id);
         // setTasks(tasks.filter((task) => task.id !== id))
         dispatch({type: 'UPDATE_TASK', payload: tasks});
-        axios.post('http://localhost:9001/tasks/remove', tasks)
+        axios.delete('http://localhost:9001/tasks/remove/'+ id)
         .then((response) => {
             alert("Task removed successfully")
         })
@@ -69,7 +82,21 @@ const TaskPage = () => {
             console.log(error);
             alert("Task failed to remove")
         });
-        id.preventDefault();
+        // id.preventDefault();
+    }
+
+    //complete task
+    const completeTask = (task: any) => {
+        dispatch({type: 'UPDATE_TASK', payload: tasks});
+        axios.post('http://localhost:9001/tasks/remove'+ user.id, task)
+        .then((response) => {
+            alert("Task removed successfully")
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Task failed to remove")
+        });
+        task.preventDefault();
     }
 
     return <div className={styles.background}>
@@ -77,7 +104,7 @@ const TaskPage = () => {
         <div className={styles.container}>
         <TaskHeader onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
         {showAddTask && <AddTask onAdd={addTask}/>}
-        {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask}/> : 'No Tasks to Show'}
+        {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onComplete={completeTask}/> : 'No Tasks to Show'}
         </div>
         
     </div>

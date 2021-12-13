@@ -12,7 +12,8 @@ export const initialState = {
         points: 0,
         starterId: 1,
         partnerPokemon: '',
-        tasks:[]
+        tasks:[],
+        pokemon: []
     }
     
 

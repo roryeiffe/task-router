@@ -1,13 +1,15 @@
-import "./style.css";
+import styles from  "./style.module.css";
 import Navbar from "../../components/Navbar"
 import FriendList from "../../components/FriendList";
 
 const FriendPage = () => {
     
     return (
-        <div>
+        <div className={styles.background}>
             <Navbar/>
-            <FriendList />
+            <div className={styles.container}>
+                <FriendList />
+            </div>
         </div>
     )
 }
