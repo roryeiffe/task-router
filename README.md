@@ -40,8 +40,11 @@ Specifically these fields:
 * spring.datasource.username - make sure this username matches what you have on your system
 * spring.datasource.password - make sure this password matches what you have on your system
 * server.port - feel free to change this if the given port is already in use (although, make sure to also update the axios calls in the react-app). 
+
+## Running the back-end
 When these properties are set, run the file "PokemonTaskManagerApplication.java" to start the server. 
 
+## running the front-end
 For the react-app, open up the folder "react-app" in your favorite code editor (we recommend Visual Studio Code). Open up the command prompt and type 
 ```
 npm start
