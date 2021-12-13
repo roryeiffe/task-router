@@ -86,16 +86,22 @@ function CatchingCorner(props: any):JSX.Element {
 
     }
 
+    // function catchOptions() {
+    //     return(
+
+    //     );
+    // }
     
     return(
         <span className='catching-corner'>
             {/* {bagHandler} */}
             {textBox} <br/>
             {pokeballWiggle ? <button onClick = {() => {props.setCatchPokemon(<div></div>)}}>Close</button> : 
-                <div>
-                    <button onClick={() => throwPokeball(props.points)}>throw {props.points} Pokéball</button>
-                    <button onClick={refresh}>refresh</button>
-                </div>
+            <div>
+                <button onClick={() => throwPokeball(props.points)}>throw {props.points} Pokéball</button>
+                <button onClick={refresh}>refresh</button>
+            </div>
+            // {catchOptions}
             }
             {wildPkmnArea()}
         </span>
