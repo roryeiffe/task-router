@@ -6,7 +6,7 @@ import store, { initialState } from "../../store";
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
       <button
         className="navbar-toggler"
         type="button"
