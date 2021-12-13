@@ -7,6 +7,8 @@ import AddTask from '../../components/Tasks/AddTask'
 import TaskHeader from "../../components/Tasks/TaskHeader"
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
+import CatchingCorner, {throwPokeball2} from '../../components/CatchingCorner'
+import PokeCorner from '../../components/PokeCorner'
 
 const TaskPage = () => {
     const [showAddTask, setShowAddTask] = useState(false)
@@ -87,16 +89,22 @@ const TaskPage = () => {
 
     //complete task
     const completeTask = (task: any) => {
+        console.log('Got to complete task');
         dispatch({type: 'UPDATE_TASK', payload: tasks});
-        axios.post('http://localhost:9001/tasks/remove'+ user.id, task)
+        axios.put('http://localhost:9001/tasks/complete/'+ task.id)
         .then((response) => {
-            alert("Task removed successfully")
+            alert("Task updated successfully");
+            user.points += task.points;
+            dispatch({type: 'UPDATE_USER', payload: user});
+            // TODO save this user to database
+            PokeCorner.throw(task.points);
+
         })
         .catch((error) => {
             console.log(error);
-            alert("Task failed to remove")
+            alert("Task failed to update")
         });
-        task.preventDefault();
+        // task.preventDefault();
     }
 
     return <div className={styles.background}>
