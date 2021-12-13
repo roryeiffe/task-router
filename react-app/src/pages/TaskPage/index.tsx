@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { useSelector } from 'react-redux'
 import styles from './style.module.css'
 import Navbar from "../../components/Navbar"
 import Tasks from '../../components/Tasks'
@@ -36,6 +37,10 @@ const TaskPage = () => {
         //     //reminder: false,
         // }
     ])
+    
+  // get user from redux store and set it to state;
+  const temp = useSelector((state: any) => state.user);
+  const [user, ] = useState(temp);
 
     const dispatch = useDispatch();
 
@@ -43,11 +48,10 @@ const TaskPage = () => {
     const addTask = (task: any) => {
         // const id = Math.floor(Math.random() * 10000) + 1
 
-        const newTask = {...task, completed: false}
-        console.log(newTask);
+        const newTask = { completed: false, ...task}
         setTasks([...tasks, newTask])
         dispatch({type: 'UPDATE_TASK', payload: tasks});
-        axios.post('http://localhost:9001/tasks/add', tasks)
+        axios.put('http://localhost:9001/tasks/add/'+ user.id, task)
         .then((response) => {
             alert("Task added successfully")
         })
