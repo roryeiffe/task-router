@@ -21,11 +21,11 @@ public class PostResponse {
     private String userName;
     private String email;
     private int starterId;
+    private Long postId;
     private String title;
     private String description;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date date;
-    private Set<Comment> comments;
 
 
 
