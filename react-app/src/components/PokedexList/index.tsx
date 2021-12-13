@@ -10,10 +10,11 @@ import pokeball1l from "../../images/pokeball1.png";
 import pokeball2l from "../../images/pokeball2.png";
 
 // editable parameters =======================================
-let showSpriteOfUncaughtPokemonInitial:boolean = false;
-let dexLimit = 151; // 898 total Pokemon
-let isAllCaught:boolean = false; // for testing
+export let dexLimit = 898; // 898 total Pokemon
+let isAllCaught:boolean = false; // for testing, set to false
 // ===========================================================
+let showSpriteOfUncaughtPokemonInitial:boolean = false;
+
 export let caughtList:number[] = [1,38,129,151,152];
 let count:number = 1;
 let dupeTracker:number[] = []; // for debugging

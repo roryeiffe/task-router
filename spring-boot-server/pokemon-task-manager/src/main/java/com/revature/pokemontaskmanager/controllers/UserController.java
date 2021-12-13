@@ -74,6 +74,9 @@ public class UserController {
         return userRepository.findByEmail(email);
     }
 
+    @PutMapping("pokedex")
+    public void caughtPokemon(@RequestBody int dexNo) {
 
+    }
 
 }

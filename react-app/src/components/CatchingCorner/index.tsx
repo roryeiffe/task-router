@@ -1,14 +1,18 @@
 import { PokemonClient } from 'pokenode-ts';
 import React from 'react';
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import './style.css';
 import PokeCorner, { pokeApi, capitalizeFirstLetter } from '../PokeCorner';
-import {caughtList} from '../PokedexList';
+import { caughtList, dexLimit } from '../PokedexList';
+import Login from '../Login';
+import pokeball from '../../images/pokeball_opening.gif';
 
 // editable parameters ================================
-let catchRateMultiplier:number = 3;
+let catchRateMultiplier:number = 1;
 //=====================================================
 
+let pokeballWiggle:boolean = false;
 let url1:string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 let url2:string = ".png";
 
@@ -24,20 +28,31 @@ function getFrontSpriteOf(dexNo:number):JSX.Element {
 // }
 
 function CatchingCorner(points: number):JSX.Element {
-    let [opponentPkmn, setOpponentPkmn] = useState(Math.round(898*Math.random()));
+    let [opponentPkmn, setOpponentPkmn] = useState(1+Math.floor(dexLimit*Math.random()));
     let [textBox, setTextBox] = useState("");
 
-    PokeCorner.getPkmnNameByDexNo(opponentPkmn).then(pkmnName => {
-        let newPkmnName = capitalizeFirstLetter(pkmnName);
-        console.log("A wild "+newPkmnName+" appeared!")
-        setTextBox("A wild "+newPkmnName+" appeared!")
-    });
+    if(!pokeballWiggle) {
+        PokeCorner.getPkmnNameByDexNo(opponentPkmn).then(pkmnName => {
+            let newPkmnName = capitalizeFirstLetter(pkmnName);
+            console.log("A wild "+capitalizeFirstLetter(newPkmnName)+" appeared!")
+            setTextBox("A wild "+capitalizeFirstLetter(newPkmnName)+" appeared!")
+        });
+    }
+    
+    function wildPkmnArea():JSX.Element {
+        if(pokeballWiggle) {
+            return <img src={pokeball} height={50}/>;
+        }
+        else {
+            return <>{getFrontSpriteOf(opponentPkmn)}</>;
+        }
+    }
     
     async function refresh() {
-        setOpponentPkmn(Math.round(898*Math.random())); // only pick from uncaught pkmn
+        setOpponentPkmn(1+Math.floor(dexLimit*Math.random())); // TODO: only pick from uncaught pkmn
         // await PokeCorner.getPkmnNameByDexNo(opponentPkmn).then(pkmnName => {
-        //     console.log("A wild "+pkmnName+" appeared!")
-        //     setTextBox("A wild "+pkmnName+" appeared!")
+        //     console.log("A wild "+capitalizeFirstLetter(pkmnName)+" appeared!");
+        //     setTextBox("A wild "+capitalizeFirstLetter(pkmnName)+" appeared!");
         // });
     }
     const delay = async (ms: number) => new Promise(res => setTimeout(res, ms));
@@ -45,27 +60,27 @@ function CatchingCorner(points: number):JSX.Element {
     async function throwPokeball(points:number) { // points = number of tries?
         await pokeApi.getPokemonSpeciesById(opponentPkmn).then(pkmn => {
             let successRate:number = pkmn.capture_rate*catchRateMultiplier; // always out of 255
-            console.log("You threw "+points+" pokeballs.");
-            setTextBox("You threw "+points+" pokeballs.");
-            console.log("Catch rate: "+ successRate);
-            setTimeout(() => null, 2000);
+            pokeballWiggle=true;
             for(let i=0; i<points; i++) {
                 let rngesus = 255*Math.random();
-                delay(2000); // wait for 2 seconds
+                delay(1000); // wait for 2 seconds
                 if(rngesus < successRate) {
                     // Pokemon is caught
-                    console.log(opponentPkmn+" is caught!");
-                    setTextBox(opponentPkmn+" is caught!");
-                    delay(2000); // wait for 2 seconds
-                    caughtList.push(opponentPkmn); // add to user's pokedex
+                    console.log(capitalizeFirstLetter(pkmn.name)+" is caught!");
+                    setTextBox(capitalizeFirstLetter(pkmn.name)+" is caught!");
+                    delay(1000); // wait for 2 seconds
+                     // TODO: add to user's pokedex
+                    //  caughtList.push(opponentPkmn);
+                    // axios.put("http://localhost:9001/user/caught/add", opponentPkmn);            
                     refresh();
                     break;
                 }
                 else {
                     // Pokemon broke free
-                    console.log(opponentPkmn+" broke free!");
+                    console.log(capitalizeFirstLetter(pkmn.name)+" broke free!");
                 }
             }
+            pokeballWiggle=false; 
         })
 
     }
@@ -76,13 +91,12 @@ function CatchingCorner(points: number):JSX.Element {
             {textBox} <br/>
             <button onClick={() => throwPokeball(5)}>throw 5 Pokéballs</button>
             <button onClick={refresh}>refresh</button>
-            {getFrontSpriteOf(opponentPkmn)}
+            {wildPkmnArea()}
         </span>
     );
 }
 
 export default CatchingCorner;
-
 
 // async function getDexNoByName(pkmnName:string):Promise<number> {
 //     let dexNo:number;
