@@ -45,7 +45,7 @@ const AddTask = ({ onAdd }: any) => {
             </div>
             <div className={styles.formControl}>
                 <label>Day & Time</label>
-                <input type='text' placeholder='Add Day & Time' value={day} onChange={(e) => setDay(e.target.value)} />
+                <input type='datetime-local' placeholder='Add Day & Time' value={day} onChange={(e) => setDay(e.target.value)} />
             </div>
             <div className={styles.formControl}>
                 <label>Task Value</label>
@@ -63,6 +63,7 @@ const AddTask = ({ onAdd }: any) => {
                     </div>
                 </div>
             </div>
+
 
             <input type='submit' value='Save Task' className={`${styles.btn} btn-block`} />
         </form>
