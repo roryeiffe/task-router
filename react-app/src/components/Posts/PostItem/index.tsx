@@ -9,7 +9,7 @@ const PostItem = (props:any) => {
         const api = new PokemonClient();
         api.getPokemonById(props.post.starterId)
         .then((pokemon: any) => {setProfilePic(pokemon.sprites.front_default);})
-        console.log(profilePic);
+        // console.log(profilePic);
     }, [])
 
     return (

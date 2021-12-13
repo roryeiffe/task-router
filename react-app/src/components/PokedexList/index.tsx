@@ -30,11 +30,15 @@ const PokedexList = () => { // variable outside this function executes once; avo
     let [caughtList, setCaughtList] = useState<number[]>([]);
     
     useEffect(() => {
-        axios.get('http://localhost:9001/user/'+user.id).then(res => {
-            console.log(res.data);
-            setCaughtList(res.data.pokemon);
-        });
-        console.log("Hello");
+        // axios.get('http://localhost:9001/users/'+user.id).then(res => {
+        //     console.log(res.data);
+        //     setCaughtList(res.data.pokemon);
+        // });
+        console.log("The list: "+user.pokemon);
+        user.pokemon.forEach((entry: any) => {
+            console.log("The data: "+entry.pokemon_id);
+            // setCaughtList(data.pokemon_id);
+        })
     },[caughtList]);
     
     if(count<=dexLimit) {
