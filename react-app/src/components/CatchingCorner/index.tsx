@@ -1,11 +1,10 @@
 import { PokemonClient } from 'pokenode-ts';
 import React from 'react';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './style.css';
 import PokeCorner, { pokeApi, capitalizeFirstLetter } from '../PokeCorner';
-import { caughtList, dexLimit } from '../PokedexList';
-import Login from '../Login';
+import { dexLimit } from '../PokedexList';
 import pokeball from '../../images/pokeball_opening.gif';
 
 // editable parameters ================================
@@ -71,7 +70,7 @@ function CatchingCorner(props: any):JSX.Element {
                     delay(1000); // wait for 2 seconds
                      // TODO: add to user's pokedex
                     //  caughtList.push(opponentPkmn);
-                    // axios.put("http://localhost:9001/user/caught/add", opponentPkmn);      
+                    axios.put('http://localhost:9001/pokemon/'+props.user.id , {pokemonId: opponentPkmn})
                     refresh();
                     break;
                 }
