@@ -9,6 +9,8 @@ const PostItem = (props: any) => {
 
   const [comments, setComments] = useState([]);
 
+  const [showComments, setShowComments] = useState(false);
+
   useEffect(() => {
     const api = new PokemonClient();
     // get the profile image from pokeapi
@@ -40,16 +42,25 @@ const PostItem = (props: any) => {
         </td>
       </tr>
       <tr>
-        <td colSpan={4}>
-          <AddComment post={props.post} />
-          <ul className = 'list-group'>
-            {comments.map((comment: any) => (
-              <li className = 'list-group-item list-group-item-dark'><span style = {{fontWeight:'bold'}}>{comment.name}</span> says <span>"{comment.comment}"</span></li>
-            ))}
-          </ul>
-          <br />
-
-        </td>
+        {showComments ? (
+          <td colSpan={4}>
+            <AddComment post={props.post} />
+            <ul className="list-group">
+              {comments.map((comment: any) => (
+                <li className="list-group-item list-group-item-dark">
+                  <span style={{ fontWeight: "bold" }}>{comment.name}</span>{" "}
+                  says <span>"{comment.comment}"</span>
+                </li>
+              ))}
+            </ul>
+            <br />
+            <button className = 'btn btn-secondary' onClick = {() => setShowComments(false)}>Hide Comments</button>
+          </td>
+        ) : (
+          <div>
+            <button className="btn btn-secondary" onClick = {() => setShowComments(true)}>Show Comments</button>
+          </div>
+        )}
       </tr>
     </>
   );
