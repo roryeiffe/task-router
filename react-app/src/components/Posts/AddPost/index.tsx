@@ -8,7 +8,7 @@ const AddPost = (props:any) => {
   // get user from redux store and set it to state;
   const temp = useSelector((state: any) => state.user);
   const [user, ] = useState(temp);
-  const [post, setPost] = useState({ title: "", description: "" });
+  const [post, setPost] = useState({ title: "", description: "", date: 0, comments : [] });
   const [alert, setAlert] = useState(<div></div>)
 
   // when form data changes:
@@ -19,6 +19,8 @@ const AddPost = (props:any) => {
   // when we submit the post:
   const onSubmitHandler = (event: any) => {
     event.preventDefault();
+    post.date = Date.now();
+    console.log(Date.now())
     // add post to database:
     axios.put('http://localhost:9001/posts/update/' + user.id, post)
     .then(response => {

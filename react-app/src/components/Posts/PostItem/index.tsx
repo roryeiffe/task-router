@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import {PokemonClient} from 'pokenode-ts';
 import styles from './style.module.css';
+import AddComment from './AddComment';
 
 const PostItem = (props:any) => {
     const [profilePic, setProfilePic] = useState("");
@@ -24,6 +25,11 @@ const PostItem = (props:any) => {
                     <h3>{props.post.title}</h3>
                     <br />
                     <h5>{props.post.description}</h5>
+                    <h6>{props.post.date.toString()}</h6>
+                    <div>
+                        {props.post.comments.map((comment_:any) => <h1>{comment_.comment}</h1>)}
+                    </div>
+                    <AddComment post = {props.post}/>
                 </div>
             </td>
         </tr>
