@@ -1,13 +1,16 @@
 package com.revature.pokemontaskmanager.controllers;
 
 import com.revature.pokemontaskmanager.dto.PostResponse;
+import com.revature.pokemontaskmanager.entities.Comment;
 import com.revature.pokemontaskmanager.entities.Post;
 import com.revature.pokemontaskmanager.entities.User;
+import com.revature.pokemontaskmanager.repositories.PostRepository;
 import com.revature.pokemontaskmanager.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -16,6 +19,9 @@ public class PostController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
     // given a user id and a new post, add the post to user
     @PutMapping("/update/{id}")
@@ -32,5 +38,14 @@ public class PostController {
     @GetMapping("/getPosts")
     public List<PostResponse> getPosts() {
         return userRepository.getPostJoin();
+    }
+
+    @PutMapping("/comment/{id}")
+    public void postComment(@PathVariable("id") Long postId, Comment comment){
+        Post post = postRepository.getById(postId);
+        Set<Comment> temp = post.getComments();
+        temp.add(comment);
+        post.setComments(temp);
+        postRepository.save(post);
     }
 }

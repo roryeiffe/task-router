@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import styles from './style.module.css'
 import Navbar from "../../components/Navbar"
+import Task from '../../components/Tasks/Task'
 import Tasks from '../../components/Tasks'
 import AddTask from '../../components/Tasks/AddTask'
 import TaskHeader from "../../components/Tasks/TaskHeader"
@@ -49,6 +50,9 @@ const TaskPage = () => {
     useEffect(() => {
         axios.get('http://localhost:9001/tasks/get/' + user.id)
         .then(response => setTasks(response.data));
+        // if(task.date >= Date.now){
+        //     {tasks.map((task: any) => (<Task key={task.id} completed={styles.taskOverdue} />))}
+        // }
     }, [tasks])
     
 
@@ -107,6 +111,13 @@ const TaskPage = () => {
         });
         // task.preventDefault();
     }
+
+    // const changeStatus = (task: any) => {
+    //     if(task.date >= Date.now){
+    //         //setTasks(tasks.map((task: any) => task.id === id ? {...task, reminder: !task.reminder} : task))
+    //         {tasks.map((task: any) => (<Task key={task.id} status: />))}
+    //     }
+    // }
 
     return <div className={styles.background}>
         <Navbar/>
