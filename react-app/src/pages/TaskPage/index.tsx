@@ -11,13 +11,13 @@ import { useDispatch } from 'react-redux'
 const TaskPage = () => {
     const [showAddTask, setShowAddTask] = useState(false)
     const [tasks, setTasks] = useState([
-        {
-            id: '',
-            completed: false,
-            title: '',
-            points: '',
-            date: ''
-        }
+        // {
+        //     id: '',
+        //     completed: false,
+        //     title: '',
+        //     points: '',
+        //     date: ''
+        // }
         // {
         //     id: 1,
         //     text: 'Doctors Appointment',
@@ -49,7 +49,7 @@ const TaskPage = () => {
         // const id = Math.floor(Math.random() * 10000) + 1
 
         const newTask = { completed: false, ...task}
-        setTasks([...tasks, newTask])
+        //setTasks([...tasks, newTask])
         dispatch({type: 'UPDATE_TASK', payload: tasks});
         axios.put('http://localhost:9001/tasks/add/'+ user.id, task)
         .then((response) => {
@@ -66,7 +66,7 @@ const TaskPage = () => {
     const deleteTask = (id: any) => {
         // setTasks(tasks.filter((task) => task.id !== id))
         dispatch({type: 'UPDATE_TASK', payload: tasks});
-        axios.post('http://localhost:9001/tasks/remove', tasks)
+        axios.delete('http://localhost:9001/tasks/remove'+ user.id, id)
         .then((response) => {
             alert("Task removed successfully")
         })
@@ -77,12 +77,26 @@ const TaskPage = () => {
         id.preventDefault();
     }
 
+    //complete task
+    const completeTask = (task: any) => {
+        dispatch({type: 'UPDATE_TASK', payload: tasks});
+        axios.post('http://localhost:9001/tasks/remove'+ user.id, task)
+        .then((response) => {
+            alert("Task removed successfully")
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Task failed to remove")
+        });
+        task.preventDefault();
+    }
+
     return <div className={styles.background}>
         <Navbar/>
         <div className={styles.container}>
         <TaskHeader onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
         {showAddTask && <AddTask onAdd={addTask}/>}
-        {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask}/> : 'No Tasks to Show'}
+        {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onComplete={completeTask}/> : 'No Tasks to Show'}
         </div>
         
     </div>
