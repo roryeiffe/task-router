@@ -44,7 +44,7 @@ const PostItem = (props: any) => {
           <AddComment post={props.post} />
           <ul className = 'list-group'>
             {comments.map((comment: any) => (
-              <li className = 'list-group-item'>{comment.comment}</li>
+              <li className = 'list-group-item list-group-item-dark'><span style = {{fontWeight:'bold'}}>{comment.name}</span> says <span>"{comment.comment}"</span></li>
             ))}
           </ul>
           <br />

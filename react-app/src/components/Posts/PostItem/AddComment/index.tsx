@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import styles from './style.module.css';
 
 const AddComment = (props: any) => {
   const [comment, setComment] = useState("");
@@ -27,14 +28,13 @@ const AddComment = (props: any) => {
 
   return (
     <div>
-      <form onSubmit={onSubmitHandler}>
+      <form onSubmit={onSubmitHandler} className = {styles.form}>
         <input
           value={comment}
           name="comment"
           onChange={onChangeHandler}
         ></input>
-        <br />
-        <input type="submit" value="Post Comment" className = 'btn btn-primary' />
+        <input type="submit" value="Post Comment" className = {`${styles.submit} btn btn-primary`} />
       </form>
     </div>
   );
