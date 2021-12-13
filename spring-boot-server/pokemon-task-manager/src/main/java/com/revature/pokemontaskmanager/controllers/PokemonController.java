@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pokemon")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class PokemonController {
 
     @Autowired
