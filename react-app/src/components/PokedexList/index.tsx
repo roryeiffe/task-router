@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import "./style.css";
 import { getPkmnNameByDexNo, capFirstLetter } from "../PokeCorner";
@@ -30,12 +30,14 @@ const PokedexList = () => { // variable outside this function executes once; avo
     let [spriteOfUncaught, setSpriteOfUncaught] = useState(false);
     let dexCaughtStates:ICaughtState[] = [{dexNo: 0, isCaught: false}];
     let [dummyArray, setDummyArray] = useState([0]); // removing this stops it for some reason
+    const dispatch = useDispatch();
     
     useEffect(() => {
         if(hadCaughtANewPokemon) {
-            setHadCaughtANewPokemon(false);
             console.log("Show updated dex here");
-        }
+            dispatch({type: 'UPDATE_USER', payload: user});
+            setHadCaughtANewPokemon(false);
+        }  
     });
     
     if(count<=dexLimit) {
@@ -103,11 +105,11 @@ const PokedexList = () => { // variable outside this function executes once; avo
     
     function loadingBar(currentPosition:number) { // TODO: onClick stop loading
         if(currentPosition>dexLimit) { // disappears at 101
-            return;
+            return <></>;
         }
         else {
             let percentage:number = Math.round(100*(currentPosition/dexLimit));
-            return "Loading... " + percentage + "% ["+currentPosition+ "/"+dexLimit+"]";
+            return <>{"Loading... " + percentage + "% ["+currentPosition+ "/"+dexLimit+"]"}</>;
         }
     }
     
@@ -116,7 +118,7 @@ const PokedexList = () => { // variable outside this function executes once; avo
             {/* <button onClick={() => console.log(user)}>print user info to console</button> */}
             <>{user.pokemon.length} of {dexLimit} Pokémon caught</> <br/>
             <button onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button><br/>
-            <>{loadingBar(count)}</> <br/><br/>
+            <>{loadingBar(count)}</> <br/>
             <ul className="checklist"> 
                 {dexArr.map((value, id) => {
                     return <li className="dex-entry">
