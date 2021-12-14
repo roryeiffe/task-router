@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import './style.css';
 import PokeCorner, { pokeApi, capitalizeFirstLetter } from '../PokeCorner';
-import { dexLimit } from '../PokedexList';
+import { dexLimit, setHadCaughtANewPokemon } from '../PokedexList';
 import pokeball from '../../images/pokeball_opening.gif';
 
 // editable parameters ================================
@@ -71,6 +71,7 @@ function CatchingCorner(props: any):JSX.Element {
                      // TODO: add to user's pokedex
                     //  caughtList.push(opponentPkmn);
                     axios.put('http://localhost:9001/pokemon/update/'+props.user.id , {pokemonId: opponentPkmn})
+                    setHadCaughtANewPokemon(true);
                     refresh();
                     break;
                 }
