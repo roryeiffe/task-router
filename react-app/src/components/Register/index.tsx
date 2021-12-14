@@ -16,7 +16,7 @@ const Register = () => {
     phone: "",
     points: 0,
     level: 5,
-    starterId: 1,
+    starterId: 1
   });
   // represents which region we want to display:
   const [region, setRegion] = useState("kanto");
@@ -82,7 +82,8 @@ const Register = () => {
 
   // submit the form:
   function onSubmitHandler(event: any) {
-    axios.post('http://localhost:9001/users/register', user)
+    // pass in starter id as our first pokemon
+    axios.post('http://localhost:9001/users/register', {...user, pokemon: [user.starterId]})
     .then((response) => {
       // set alert to empty div to "reset" the alert show property:
       setAlert(<div></div>)

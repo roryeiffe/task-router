@@ -15,7 +15,7 @@ const FriendRequest = (props:any) => {
     return (
         <div>
             <h6>Incoming Friend Request from {props.request.firstUser.name}</h6>
-            <button onClick = {accept}>Accept</button>
+            <button className = 'btn btn-success' onClick = {accept}>Accept</button>
         </div>
     )
 }

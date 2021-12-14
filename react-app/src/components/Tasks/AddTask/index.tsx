@@ -59,6 +59,7 @@ const AddTask = ({ onAdd }: any) => {
                         <a className="dropdown-item" onClick = {() => {setPoints(10); setCategory('Studying')}}>Studying - 10 points</a>
                         <a className="dropdown-item" onClick = {() => {setPoints(15); setCategory('Coding')}}>Coding = 15 points</a>
                         <a className="dropdown-item" onClick = {() => {setPoints(500); setCategory('Cure Covid')}}>Cure Covid = 500 points</a>
+                        <a className="dropdown-item" onClick = {() => {setPoints(5000); setCategory('Mega Task')}}>Mega Task = 5000 points</a>
                         <div className="dropdown-divider"></div>
                         <a className="dropdown-item">New Option</a>
                     </div>
