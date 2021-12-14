@@ -26,7 +26,7 @@ export function capFirstLetter(name:string) {
 
 function PokeCorner(dexNo: number):JSX.Element {
     return(
-        <div>
+        <div className='PokeCorner'>
             {getFrontSpriteOf(dexNo)}
         </div>
     );
