@@ -81,7 +81,7 @@ const TaskPage = () => {
         dispatch({type: 'UPDATE_TASK', payload: tasks});
         axios.delete('http://localhost:9001/tasks/remove/'+ id)
         .then((response) => {
-            alert("Task removed successfully")
+            // alert("Task removed successfully")
         })
         .catch((error) => {
             console.log(error);
@@ -92,11 +92,11 @@ const TaskPage = () => {
 
     //complete task
     const completeTask = (task: any) => {
-        console.log('Got to complete task');
+        // console.log('Got to complete task');
         dispatch({type: 'UPDATE_TASK', payload: tasks});
         axios.put('http://localhost:9001/tasks/complete/'+ task.id)
         .then((response) => {
-            alert("Task updated successfully");
+            // alert("Task updated successfully");
             user.points += task.points;
             // user.level = user.points/50
             dispatch({type: 'UPDATE_USER', payload: user});
