@@ -10,7 +10,7 @@ import pokeball2s from "../../images/pokeball2-small.png";
 // editable parameters =======================================
 export let dexLimit = 898; // 898 total Pokemon
 //============================================================
-export let hadCaughtANewPokemon:boolean = false;
+let hadCaughtANewPokemon:boolean = false;
 let count:number = 1;
 let dupeTracker:number[] = []; // for debugging
 let dexArr:string[] = [];
@@ -22,16 +22,6 @@ interface ICaughtState {
 
 export function setHadCaughtANewPokemon(bool:boolean):void {
     hadCaughtANewPokemon = bool;
-}
-
-function loadingBar(currentPosition:number) { // TODO: onClick stop loading
-    if(currentPosition>dexLimit) { // disappears at 101
-        return;
-    }
-    else {
-        let percentage:number = Math.round(100*(currentPosition/dexLimit));
-        return "Loading... " + percentage + "% ["+currentPosition+ "/"+dexLimit+"]";
-    }
 }
 
 const PokedexList = () => { // variable outside this function executes once; avoid using for loops
@@ -111,18 +101,28 @@ const PokedexList = () => { // variable outside this function executes once; avo
         }
     }
     
+    function loadingBar(currentPosition:number) { // TODO: onClick stop loading
+        if(currentPosition>dexLimit) { // disappears at 101
+            return;
+        }
+        else {
+            let percentage:number = Math.round(100*(currentPosition/dexLimit));
+            return "Loading... " + percentage + "% ["+currentPosition+ "/"+dexLimit+"]";
+        }
+    }
+    
     return(
         <div className="dex">
-            <button onClick={() => console.log(user)}>getUserInfo</button>
+            {/* <button onClick={() => console.log(user)}>print user info to console</button> */}
+            <>{user.pokemon.length} of {dexLimit} Pokémon caught</> <br/>
             <button onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button><br/>
-            <>{loadingBar(count)}</>
+            <>{loadingBar(count)}</> <br/><br/>
             <ul className="checklist"> 
                 {dexArr.map((value, id) => {
                     return <li className="dex-entry">
                         #{id+1} <br/>
                         {getFrontSprite(id+1, spriteOfUncaught)} <br/>
-                        {isRegisteredIcon(id+1)} {" "} {capFirstLetter(value)} <br/>
-                        ---------------<br/>
+                        {isRegisteredIcon(id+1)} {" "} {capFirstLetter(value)} <br/><br/>
                     </li>;
                 })}
             </ul>
