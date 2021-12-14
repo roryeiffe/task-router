@@ -2,14 +2,12 @@ import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import styles from './style.module.css'
 import Navbar from "../../components/Navbar"
-import Task from '../../components/Tasks/Task'
 import Tasks from '../../components/Tasks'
 import AddTask from '../../components/Tasks/AddTask'
 import TaskHeader from "../../components/Tasks/TaskHeader"
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import CatchingCorner from '../../components/CatchingCorner'
-import PokeCorner from '../../components/PokeCorner'
 
 const TaskPage = () => {
     const [showAddTask, setShowAddTask] = useState(false)
