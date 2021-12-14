@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
-import { useSelector } from 'react-redux'
-import styles from './style.module.css'
+import { useDispatch, useSelector } from 'react-redux'
 import "./style.css";
+import styles from './style.module.css'
 import { getPkmnNameByDexNo, capFirstLetter } from "../PokeCorner";
-
 import pokeball1s from "../../images/pokeball1-small.png";
 import pokeball2s from "../../images/pokeball2-small.png";
 
 // editable parameters =======================================
 export let dexLimit = 898; // 898 total Pokemon
 //============================================================
-export let hadCaughtANewPokemon:boolean = false;
+let hadCaughtANewPokemon:boolean = false;
 let count:number = 1;
 let dupeTracker:number[] = []; // for debugging
 let dexArr:string[] = [];
@@ -24,28 +23,20 @@ export function setHadCaughtANewPokemon(bool:boolean):void {
     hadCaughtANewPokemon = bool;
 }
 
-function loadingBar(currentPosition:number) { // TODO: onClick stop loading
-    if(currentPosition>dexLimit) { // disappears at 101
-        return;
-    }
-    else {
-        let percentage:number = Math.round(100*(currentPosition/dexLimit));
-        return "Loading... " + percentage + "% ["+currentPosition+ "/"+dexLimit+"]";
-    }
-}
-
 const PokedexList = () => { // variable outside this function executes once; avoid using for loops
     const temp = useSelector((state: any) => state.user);
     const [user, setUser] = useState(temp);
     let [spriteOfUncaught, setSpriteOfUncaught] = useState(false);
     let dexCaughtStates:ICaughtState[] = [{dexNo: 0, isCaught: false}];
     let [dummyArray, setDummyArray] = useState([0]); // removing this stops it for some reason
+    const dispatch = useDispatch();
     
     useEffect(() => {
         if(hadCaughtANewPokemon) {
-            setHadCaughtANewPokemon(false);
             console.log("Show updated dex here");
-        }
+            dispatch({type: 'UPDATE_USER', payload: user});
+            setHadCaughtANewPokemon(false);
+        }  
     });
     
     if(count<=dexLimit) {
@@ -111,18 +102,28 @@ const PokedexList = () => { // variable outside this function executes once; avo
         }
     }
     
+    function loadingBar(currentPosition:number) { // TODO: onClick stop loading
+        if(currentPosition>dexLimit) { // disappears at 101
+            return <></>;
+        }
+        else {
+            let percentage:number = Math.round(100*(currentPosition/dexLimit));
+            return <>{"Loading... " + percentage + "% ["+currentPosition+ "/"+dexLimit+"]"}</>;
+        }
+    }
+    
     return(
-        <div className={styles.dex}>
-            <button onClick={() => console.log(user)}>getUserInfo</button>
+        <div className="dex">
+            {/* <button onClick={() => console.log(user)}>print user info to console</button> */}
+            <>{user.pokemon.length} of {dexLimit} Pokémon caught</> <br/>
             <button onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button><br/>
-            <>{loadingBar(count)}</>
-            <ul className={styles.checklist}> 
+            <>{loadingBar(count)}</> <br/>
+            <ul className="checklist"> 
                 {dexArr.map((value, id) => {
                     return <li className={styles.dexEntry}>
                         #{id+1} <br/>
                         {getFrontSprite(id+1, spriteOfUncaught)} <br/>
-                        {isRegisteredIcon(id+1)} {" "} {capFirstLetter(value)} <br/>
-                        <br/>
+                        {isRegisteredIcon(id+1)} {" "} {capFirstLetter(value)} <br/><br/>
                     </li>;
                 })}
             </ul>

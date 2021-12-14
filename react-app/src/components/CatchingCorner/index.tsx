@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './style.css';
 import { pokeApi, getPkmnNameByDexNo, capFirstLetter } from '../PokeCorner';
 import { dexLimit, setHadCaughtANewPokemon } from '../PokedexList';
@@ -34,7 +34,9 @@ function getFrontSpriteOf(dexNo:number):JSX.Element {
 // }
 
 function CatchingCorner(props: any):JSX.Element {
-    let [opponentPkmn, setOpponentPkmn] = useState(1+Math.floor(dexLimit*Math.random()));
+    const temp = useSelector((state: any) => state.user);
+    const [user, setUser] = useState(temp);
+    let [opponentPkmn, setOpponentPkmn] = useState(getPkmnDexNo());
     let [textBox, setTextBox] = useState(""); 
     let [storedPoints, setStoredPoints] = useState(0);
     let [newPkmnAppeared, setNewPkmnAppeared] = useState(false);
@@ -73,9 +75,30 @@ function CatchingCorner(props: any):JSX.Element {
             }
         }
     }
+    let repeats:number[] = [];
+    function getPkmnDexNo():number {
+        let tempNum = 1+Math.floor(dexLimit*Math.random());
+        if(user.pokemon.length === 0) {
+            return tempNum;
+        }
+        // for optimization if user's pokedex is more than 50% complete
+        // else if(user.pokemon.length > (dexLimit/2)) { 
+        //     // TODO: change later
+        //     return tempNum;
+        // }
+        else { // check if random number is already in user's dex
+            user.pokemon.forEach((entry:any) => { 
+                if(entry.pokemonId===tempNum) {
+                    repeats.push(tempNum);
+                    return getPkmnDexNo();
+                }
+            });
+            return tempNum;
+        }  
+    }
     
     async function refresh() {
-        setOpponentPkmn(1+Math.floor(dexLimit*Math.random())); // TODO: only pick from uncaught pkmn
+        setOpponentPkmn(getPkmnDexNo());
         // await PokeCorner.getPkmnNameByDexNo(opponentPkmn).then(pkmnName => {
         //     console.log("A wild "+capFirstLetter(pkmnName)+" appeared!");
         //     setTextBox("A wild "+capFirstLetter(pkmnName)+" appeared!");
