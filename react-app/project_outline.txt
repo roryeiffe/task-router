@@ -231,6 +231,22 @@ Phase 4 Extra Features
 	other special stuff we can think of
 	Search pokedex by region
 
+Phase 5 Minor Stuff
+	Rory:
+		 - logout button
+		 - animation for starter pokemon on navbar
+		 - styling for posts/tasks/friends/friend cards
+		 - friends posts
+	AJ:
+		 - background
+		 - opacity fix
+	Cathy:
+		 - update pokeball throws
+		 - settings
+	
+	Everybody:
+		 - try to get pokedex to load faster
+
 Redux State:
 	For now, I think we can just store user info
 	And then whenever we need info, we can make the axios calls

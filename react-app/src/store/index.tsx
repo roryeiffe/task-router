@@ -30,6 +30,11 @@ const taskReducer:any = (state = initialState, action:any) => {
                 ...state,
                 user: {...state.user, tasks: action.payload }
             }
+        case 'ADD_POKEMON':
+            return {
+                ...state,
+                user:{...state.user, pokemon: [...state.user.pokemon, action.payload]}
+            }
         }
 
     return state;

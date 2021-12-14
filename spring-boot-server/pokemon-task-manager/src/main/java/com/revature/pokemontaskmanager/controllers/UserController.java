@@ -58,6 +58,8 @@ public class UserController {
         user_db.setName(updatedUser.getName());
         user_db.setPhone(updatedUser.getPhone());
         user_db.setPassword(updatedUser.getPassword());
+        user_db.setPoints(updatedUser.getPoints());
+        user_db.setLevel(updatedUser.getLevel());
         // save to repository:
         return userRepository.save((user_db));
     }

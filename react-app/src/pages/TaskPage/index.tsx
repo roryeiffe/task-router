@@ -98,10 +98,13 @@ const TaskPage = () => {
         .then((response) => {
             alert("Task updated successfully");
             user.points += task.points;
+            // user.level = user.points/50
             dispatch({type: 'UPDATE_USER', payload: user});
             // TODO save this user to database
+            axios.put('http://localhost:9001/users/update/' + user.id, user)
+            .then(response => console.log(response))
+            .catch(error => console.error(error));
             setCatchPokemon(<CatchingCorner user={user} points = {task.points} setCatchPokemon = {setCatchPokemon}/>);
-            // deleteTask(task.id); 
         })
         .catch((error) => {
             console.log(error);

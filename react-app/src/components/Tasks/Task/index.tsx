@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../style.module.css'
 import { FaTimes } from 'react-icons/fa'
-import moment from 'moment'
 
 
 
