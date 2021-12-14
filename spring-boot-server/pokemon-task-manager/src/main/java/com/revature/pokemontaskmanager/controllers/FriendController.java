@@ -27,11 +27,17 @@ public class FriendController {
         User user1 = userRepository.findByEmail(email1);
         User user2 = userRepository.findByEmail(email2);
         Friend friend = new Friend(user1, user2, "pending");
-        friendRepository.save(friend);
+        // only save if user is non-null:
+        if(user2 != null) {
+            System.out.println(friend);
+            friendRepository.save(friend);
+        }
     }
 
-    @GetMapping("/getIncoming")
-    public List<Friend> getIncomingFriendRequests(@RequestBody User user) {
+    // get incoming friend requests for a given user:
+    @GetMapping("/getIncoming/{id}")
+    public List<Friend> getIncomingFriendRequests(@PathVariable("id") Long id) {
+        User user = userRepository.findById(id).get();
         List<Friend> temp = friendRepository.findBySecondUser(user);
         List<Friend> friendRequests = new ArrayList<Friend>();
         for(Friend friend: temp) {

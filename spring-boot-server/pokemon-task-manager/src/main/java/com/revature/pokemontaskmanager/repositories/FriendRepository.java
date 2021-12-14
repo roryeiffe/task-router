@@ -10,7 +10,7 @@ import java.util.List;
 public interface FriendRepository extends JpaRepository<Friend, Integer> {
     public List<Friend> findBySecondUser(User user);
 
-    @Query(value = "SELECT second_user_id FROM friend WHERE first_user_id = ?1 UNION SELECT first_user_id FROM FRIEND WHERE second_user_id = ?1",
+    @Query(value = "SELECT second_user_id FROM friend WHERE first_user_id = ?1 AND status = 'accepted' UNION SELECT first_user_id FROM FRIEND WHERE second_user_id = ?1 AND status = 'accepted'",
     nativeQuery = true)
     List<Integer> findFriendIds(Long userId);
 }
