@@ -18,13 +18,15 @@ public class PokemonController {
 
     // given a user id and a new post, add the pokemon to user
     @PutMapping("/update/{id}")
-    public void updateUserPokemon(@PathVariable("id") Long id, @RequestBody Pokemon pokemon) {
+    public Pokemon updateUserPokemon(@PathVariable("id") Long id, @RequestBody Pokemon pokemon) {
         // get the posts from the request:
         User user = userRepository.findById(id).get();
         List<Pokemon> pokemon_db = user.getPokemon();
-        pokemon_db.add(new Pokemon(pokemon.getPokemonId()));
+        Pokemon newPokemon = new Pokemon(pokemon.getPokemonId());
+        pokemon_db.add(newPokemon);
         user.setPokemon(pokemon_db);
         userRepository.save(user);
+        return newPokemon;
     }
 
 }

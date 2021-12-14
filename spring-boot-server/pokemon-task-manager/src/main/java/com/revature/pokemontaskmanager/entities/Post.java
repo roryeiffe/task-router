@@ -29,5 +29,5 @@ public class Post {
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
     // foreign key: references user id:
     @JoinColumn(name = "comment_fk", referencedColumnName="id")
-    private Set<Comment> comments;
+    private List<Comment> comments;
 }

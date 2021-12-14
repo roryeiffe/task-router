@@ -58,6 +58,8 @@ public class UserController {
         user_db.setName(updatedUser.getName());
         user_db.setPhone(updatedUser.getPhone());
         user_db.setPassword(updatedUser.getPassword());
+        user_db.setPoints(updatedUser.getPoints());
+        user_db.setLevel(updatedUser.getLevel());
         // save to repository:
         return userRepository.save((user_db));
     }
@@ -72,6 +74,12 @@ public class UserController {
     @GetMapping("/getByEmail/{email}")
     public User getUserByEmail(@PathVariable("email") String email) {
         return userRepository.findByEmail(email);
+    }
+
+    // get a user by id:
+    @GetMapping("/getById/{id}")
+    public User getUserById(@PathVariable("id") Long id) {
+        return userRepository.findById(id).get();
     }
 
     @PutMapping("pokedex")

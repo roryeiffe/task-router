@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import './style.css';
 import { pokeApi, getPkmnNameByDexNo, capFirstLetter } from '../PokeCorner';
 import { dexLimit, setHadCaughtANewPokemon } from '../PokedexList';
@@ -34,12 +35,12 @@ function getFrontSpriteOf(dexNo:number):JSX.Element {
 
 function CatchingCorner(props: any):JSX.Element {
     let [opponentPkmn, setOpponentPkmn] = useState(1+Math.floor(dexLimit*Math.random()));
-    let [textBox, setTextBox] = useState("");
-    
+    let [textBox, setTextBox] = useState(""); 
     let [storedPoints, setStoredPoints] = useState(0);
     let [newPkmnAppeared, setNewPkmnAppeared] = useState(false);
     let [inBall, setInBall] = useState(false);
-    
+    const dispatch = useDispatch();
+
     useEffect(() => {
         setNewPkmnAppeared(true);
         let temp = props.points;
@@ -98,6 +99,10 @@ function CatchingCorner(props: any):JSX.Element {
                     // delay(1000);
                     // add to user's pokedex:
                     axios.put('http://localhost:9001/pokemon/update/'+props.user.id , {pokemonId: opponentPkmn})
+                    .then(response => dispatch({type: 'ADD_POKEMON', payload: response.data}))
+                    .catch(error => console.error(error));
+                    
+
                     setHadCaughtANewPokemon(true);
                     setInBall(true);
                     refresh();

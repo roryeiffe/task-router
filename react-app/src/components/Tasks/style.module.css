@@ -53,8 +53,16 @@
   cursor: pointer;
 }
 
-.task.reminder {
-  border-left: 5px solid green;
+.taskCompleted {
+  border-left: 20px solid green;
+}
+
+.taskOverdue {
+  border-left: 20px solid red;
+}
+
+.taskPending {
+  border-left: 20px solid yellow;
 }
 
 .task h3,p {

@@ -113,7 +113,7 @@ const PokedexList = () => { // variable outside this function executes once; avo
     
     return(
         <div className="dex">
-            {/* <button onClick={() => console.log(user)}>getUserInfo</button> */}
+            <button onClick={() => console.log(user)}>getUserInfo</button>
             <button onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button><br/>
             <>{loadingBar(count)}</>
             <ul className="checklist"> 
