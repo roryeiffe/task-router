@@ -10,6 +10,7 @@ import Posts from './pages/Posts';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import PokemonList from './components/PokemonList';
+import Logout from './components/Logout';
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path = '/profile' element = {<ProfilePage/>}/>
                 <Route path = '/pokedex' element = {<PokedexPage/>}/>
                 <Route path = '/pokemontest' element = {<PokemonList/>}/>
+                <Route path = '/logout' element = {<Logout/>}/>
             </Routes>
         </div>
     );

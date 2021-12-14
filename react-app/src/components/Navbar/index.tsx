@@ -22,13 +22,14 @@ const Navbar = () => {
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav mr-auto">
           <NavbarItem to = '/' pageName = 'Home' />
-          <NavbarItem to = '/login' pageName = 'Login'/>
-          <NavbarItem to = '/register' pageName = 'Register'/>
+          {user.id === null && <NavbarItem to = '/login' pageName = 'Login'/>}
+          {user.id === null && <NavbarItem to = '/register' pageName = 'Register'/>}
           <NavbarItem to = '/task' pageName = 'Tasks'/>
           <NavbarItem to = '/friend' pageName = 'Friends'/>
           <NavbarItem to = '/posts' pageName = 'View Posts'/>
           <NavbarItem to = '/profile' pageName = 'View Profile'/>
           <NavbarItem to = '/pokedex' pageName = 'Pokédex'/>
+          {user.id !== null && <NavbarItem to = '/logout' pageName = 'Logout'/>}
         </ul>
       </div>
       {PokeCorner(user.starterId)}
