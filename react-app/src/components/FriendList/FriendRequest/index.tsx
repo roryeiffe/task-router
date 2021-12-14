@@ -1,10 +1,16 @@
 import axios from "axios";
+import { Navigate } from "react-router-dom";
+import {useState} from 'react';
 
 const FriendRequest = (props:any) => {
     const accept = () => {
         axios.put('http://localhost:9001/friends/approveRequest/' + props.request.id)
-        .then(response => console.log(response.data))
-        .catch(error => console.error(error));
+        .then(response => {
+            alert('Successfully accepted friend request!');
+            props.setEmail(' ');
+        })
+        .catch(error => alert('There was an error accepting the friend request.'));
+        
     }
     return (
         <div>

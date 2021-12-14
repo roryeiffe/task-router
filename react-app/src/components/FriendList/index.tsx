@@ -10,12 +10,11 @@ import styles from"./style.module.css";
 
 // TODO: get list of friends from database
 const FriendList = () => {
-    // const friends:string[] = ["Friend A", "Friend B", "Friend C"];
-    
     const [friends, setFriends] = useState([]);
     const [friendRequests, setFriendRequests] = useState([]);
     const temp = useSelector((state:any) => state.user)
     const [user, ] = useState(temp);
+    const [email, setEmail] = useState("");
     // testing ======================================================
     // let howManyFriends = 5;
     // for(let i=1; i<=howManyFriends; i++) {
@@ -23,15 +22,14 @@ const FriendList = () => {
     //     friends.push("Friend "+i);
     // }
     //================================================================
-    const [email, setEmail] = useState("");
 
     function addFriend(event:any) {
         // send friend request to back end:
         var req = 'http://localhost:9001/friends/add?email1=' + user.email + '&email2=' + email;
         console.log(req);
         axios.post(req)
-        .then(response => console.log(response.data))
-        .catch(error => console.log(error));
+        .then(response => alert('Friend request sent!'))
+        .catch(error => alert('There was an error submitting your friend request.'));
         // // setNewFriend({
         // //     ...newFriend,
         // //     [event.target.name]: event.target.value,
@@ -51,6 +49,7 @@ const FriendList = () => {
         // get friend ids from database:
         axios.get('http://localhost:9001/friends/getAllFriends/' + user.id)
         .then(response => {
+            console.log('data fetch');
             setFriends(response.data)
         })
         .catch(error => console.error(error));
@@ -60,7 +59,7 @@ const FriendList = () => {
             setFriendRequests(response.data)
         })
         .catch(error => console.error(error));
-    }, [])
+    }, [email])
     //================================================================
     return(
         <div className={styles.container}>
@@ -72,7 +71,7 @@ const FriendList = () => {
                 <input type="submit" value="Add Friend" />
             </form> */}
             
-            <input type="text" onChange={event => addFriendHandler(event)} placeholder="Enter email"/>
+            <input type="text" value = {email} onChange={event => addFriendHandler(event)} placeholder="Enter email"/>
             <span>&ensp;</span>
             <button name="friendName" onClick={event => addFriend(event)}>Send Friend Request</button>
             <p />
@@ -86,7 +85,7 @@ const FriendList = () => {
             <h1>Incoming Friend Requests</h1>
             <div className = 'row'>
                 {friendRequests.map(request => {
-                    return <FriendRequest setFriends = {setFriends} request = {request}/>
+                    return <FriendRequest setEmail = {setEmail} request = {request}/>
                 })}
             </div>
             </div>

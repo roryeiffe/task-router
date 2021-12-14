@@ -82,14 +82,14 @@ const Register = () => {
 
   // submit the form:
   function onSubmitHandler(event: any) {
-    // update the redux store:
-    dispatch({type: 'UPDATE_USER', payload: user});
 
     axios.post('http://localhost:9001/users/register', user)
     .then((response) => {
       // set alert to empty div to "reset" the alert show property:
       setAlert(<div></div>)
       setAlert(<Alert message = "Registration successful!" type = "success"/>);
+      // update the redux store:
+      dispatch({type: 'UPDATE_USER', payload: response.data});
       // redirect to profile page:
       setRedirect(true);
     })
