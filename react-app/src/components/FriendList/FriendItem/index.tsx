@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { PokemonClient } from "pokenode-ts";
+import styles from './style.module.css';
 
 const FriendItem = (props: any) => {
   const [user, setUser] = useState<any>({});
@@ -21,16 +22,15 @@ const FriendItem = (props: any) => {
       .catch((error) => console.error(error));
   }, [profileImg]);
   return (
-    <div className="col col-lg-6">
+    <div className="col col-lg-3">
       <div className="card">
-        <img className="card-img-top" src={profileImg} alt="Card image cap" />
+        <img className={`card-img-top ${styles.img}`}src={profileImg} alt="Card image cap"/>
+        
         <div className="card-body">
           <h5 className="card-title">{user.name}</h5>
           <h6 className="card-text">Level {user.level}</h6>
+          <h6>{(user.pokemon.length)} Pokemon</h6>
           <p className="card-text"></p>
-          <a href="#" className="btn btn-primary">
-            View Profile
-          </a>
         </div>
       </div>
     </div>

@@ -71,18 +71,21 @@ const FriendList = () => {
                 <input type="submit" value="Add Friend" />
             </form> */}
             
-            <input type="text" value = {email} onChange={event => addFriendHandler(event)} placeholder="Enter email"/>
+            <h4>Send Friend Request</h4>
+            <input className = {`form-control`} type="text" value = {email} onChange={event => addFriendHandler(event)} placeholder="Enter email"/>
             <span>&ensp;</span>
-            <button name="friendName" onClick={event => addFriend(event)}>Send Friend Request</button>
+            <button className = {`btn btn-primary ${styles.button}`} name="friendName" onClick={event => addFriend(event)}>Send Friend Request</button>
             <p />
+            <hr />
             {/* <input type="submit" /> */}
-            <h1>Current Friends</h1>
+            <h2>Current Friends</h2>
             <div className = 'row'>
                 {friends.map(value => {
                     return <FriendItem id = {value}/>;
                 })}
             </div>
-            <h1>Incoming Friend Requests</h1>
+            <hr />
+            <h4>Incoming Friend Requests</h4>
             <div className = 'row'>
                 {friendRequests.map(request => {
                     return <FriendRequest setEmail = {setEmail} request = {request}/>
