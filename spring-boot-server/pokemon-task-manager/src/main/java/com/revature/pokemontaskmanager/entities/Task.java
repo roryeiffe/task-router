@@ -25,5 +25,5 @@ public class Task {
     private String title;
     private int points;
 //    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private String date;
+    private Date date;
 }

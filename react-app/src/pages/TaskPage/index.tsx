@@ -103,7 +103,7 @@ const TaskPage = () => {
             dispatch({type: 'UPDATE_USER', payload: user});
             // TODO save this user to database
             setCatchPokemon(<CatchingCorner user={user} points = {task.points} setCatchPokemon = {setCatchPokemon}/>);
-            deleteTask(task.id);
+            // deleteTask(task.id); 
         })
         .catch((error) => {
             console.log(error);
