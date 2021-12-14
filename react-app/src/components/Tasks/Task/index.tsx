@@ -61,9 +61,9 @@ const Task = ({task, onDelete, onComplete}: any) => {
     return (
         <div className={styles.task}>
             {status}
-            <h3>{task.title} <FaTimes onClick={() => onDelete(task.id)}/> {!task.completed && <button onClick={() => onCompleteHandler()}>Complete</button>}</h3>
-            <p>{dateString}</p>
-            <p>{task.points} points</p>
+            <h3>{task.title} <FaTimes onClick={() => onDelete(task.id)}/> </h3>
+            <p>{dateString} </p>
+            <p>{task.points} points {!task.completed && <button onClick={() => onCompleteHandler()}>Complete</button>}</p>
         </div>
     )
 }
