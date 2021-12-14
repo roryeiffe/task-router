@@ -14,7 +14,7 @@ import Logout from './components/Logout';
 
 function App() {
     return (
-        <div className="App">
+        <div className="background">
             <Routes>
                 <Route path = '/' element = {<HomePage/>}/>
                 <Route path = '/login' element = {<LoginPage/>}/>
