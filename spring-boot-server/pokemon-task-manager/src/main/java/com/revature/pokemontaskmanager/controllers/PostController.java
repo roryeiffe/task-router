@@ -41,6 +41,12 @@ public class PostController {
         return userRepository.getPostJoin();
     }
 
+    // get all posts for specific user:
+    @GetMapping("/getPosts/{id}")
+    public List<PostResponse> getPostsForUser(@PathVariable("id")Long id) {
+        return userRepository.getPostJoinById(id);
+    }
+
     // add a comment to a specific post
     @PutMapping("/comment/{id}")
     public void postComment(@PathVariable("id") Long postId, @RequestBody Comment comment){

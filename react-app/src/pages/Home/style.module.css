@@ -1,8 +1,11 @@
-.background {
-    position: fixed;
+/* .background {
+    background-attachment: fixed;
     top: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-size: cover;
+    background-image: url(../../images/pikachu_shooting_background.jpeg);
+    padding-bottom: 100px;
+} 
     background-image: url(../../images/starter_pokemon_background.png);
-}
+}*/
