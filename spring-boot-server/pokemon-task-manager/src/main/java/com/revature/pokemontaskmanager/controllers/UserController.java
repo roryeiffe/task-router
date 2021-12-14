@@ -60,6 +60,7 @@ public class UserController {
         user_db.setPassword(updatedUser.getPassword());
         user_db.setPoints(updatedUser.getPoints());
         user_db.setLevel(updatedUser.getLevel());
+        user_db.setStarterId(updatedUser.getStarterId());
         // save to repository:
         return userRepository.save((user_db));
     }
