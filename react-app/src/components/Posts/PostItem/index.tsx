@@ -37,7 +37,7 @@ const PostItem = (props: any) => {
             <h3>{props.post.title}</h3>
             <br />
             <h5>{props.post.description}</h5>
-            <h6>{props.post.date.toString()}</h6>
+            {props.post.date && <h6>{props.post.date.toString()}</h6>}
           </div>
         </td>
       </tr>
