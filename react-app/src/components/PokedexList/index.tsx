@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux'
-
+import styles from './style.module.css'
 import "./style.css";
 import { getPkmnNameByDexNo, capFirstLetter } from "../PokeCorner";
 
@@ -112,17 +112,17 @@ const PokedexList = () => { // variable outside this function executes once; avo
     }
     
     return(
-        <div className="dex">
+        <div className={styles.dex}>
             <button onClick={() => console.log(user)}>getUserInfo</button>
             <button onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button><br/>
             <>{loadingBar(count)}</>
-            <ul className="checklist"> 
+            <ul className={styles.checklist}> 
                 {dexArr.map((value, id) => {
-                    return <li className="dex-entry">
+                    return <li className={styles.dexEntry}>
                         #{id+1} <br/>
                         {getFrontSprite(id+1, spriteOfUncaught)} <br/>
                         {isRegisteredIcon(id+1)} {" "} {capFirstLetter(value)} <br/>
-                        ---------------<br/>
+                        <br/>
                     </li>;
                 })}
             </ul>
