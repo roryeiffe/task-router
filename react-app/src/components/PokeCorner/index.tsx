@@ -12,11 +12,12 @@ export async function getPkmnNameByDexNo(dexNo:number):Promise<string> {
     return name as string;
 }
 
-let url1:string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
-let url2:string = ".png";
+let urlA:string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+let urlB:string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/";
+let urlEnd:string = ".png";
 
 function getFrontSpriteOf(dexNo:number):JSX.Element {
-    return <img src={url1+dexNo+url2} height="65" alt={""+dexNo+".png"}/>;
+    return <img src={urlA+dexNo+urlEnd} height="65" alt={""+dexNo+".png"}/>;
 }
 
 export function capitalizeFirstLetter(name:string) {

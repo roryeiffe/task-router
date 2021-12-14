@@ -1,12 +1,13 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import NavbarItem from "./NavbarItem";
 import PokeCorner from '../PokeCorner';
+import store, { initialState } from "../../store";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const temp = useSelector((state:any) => state.user);
-  const [user, ] = useState(temp)
+    const temp = useSelector((state: any) => state.user);
+    const [user, setUser] = useState(temp);
   return (
     <nav className="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
       <button

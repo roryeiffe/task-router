@@ -45,7 +45,7 @@ const AddTask = ({ onAdd }: any) => {
             </div>
             <div className={styles.formControl}>
                 <label>Day & Time</label>
-                <input type='text' placeholder='Add Day & Time' value={day} onChange={(e) => setDay(e.target.value)} />
+                <input type='datetime-local' placeholder='Add Day & Time' value={day} onChange={(e) => setDay(e.target.value)} />
             </div>
             <div className={styles.formControl}>
                 <label>Task Value</label>
@@ -55,14 +55,15 @@ const AddTask = ({ onAdd }: any) => {
                     </button>
 
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a className="dropdown-item" href="#" onClick = {() => {setPoints(5); setCategory('Cleaning')}}>Cleaning - 5 points</a>
-                        <a className="dropdown-item" href="#" onClick = {() => {setPoints(10); setCategory('Studying')}}>Studying - 10 points</a>
-                        <a className="dropdown-item" href="#" onClick = {() => {setPoints(15); setCategory('Coding')}}>Coding = 15 points</a>
+                        <a className="dropdown-item" onClick = {() => {setPoints(5); setCategory('Cleaning')}}>Cleaning - 5 points</a>
+                        <a className="dropdown-item" onClick = {() => {setPoints(10); setCategory('Studying')}}>Studying - 10 points</a>
+                        <a className="dropdown-item" onClick = {() => {setPoints(15); setCategory('Coding')}}>Coding = 15 points</a>
                         <div className="dropdown-divider"></div>
-                        <a className="dropdown-item" href="#">New Option</a>
+                        <a className="dropdown-item">New Option</a>
                     </div>
                 </div>
             </div>
+
 
             <input type='submit' value='Save Task' className={`${styles.btn} btn-block`} />
         </form>

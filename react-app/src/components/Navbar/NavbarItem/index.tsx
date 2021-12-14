@@ -16,7 +16,7 @@ const NavbarItem = (props: any) => {
   // get user from redux store and set it to state;
   const user = useSelector((state: any) => state.user);
 
-  // change the pokeball to animted if we hover over it:
+  // pokeball animates if we hover over it:
   const changePokeballType = (action:string) => {
     if (action === "enter") {
         setIcon(pokeballMoving);

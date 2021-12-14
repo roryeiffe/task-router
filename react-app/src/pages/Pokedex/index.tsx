@@ -3,21 +3,7 @@ import PokeCorner from '../../components/PokeCorner';
 import PokedexList from '../../components/PokedexList';
 import { useState } from 'react';
 
-const PokedexPage = () => {
-    
-    // testing ======================================================
-    let tempNum = 151;
-    let [tempPkmnName, setTempPkmnName] = useState("missingNo..");
-    PokeCorner.getPkmnNameByDexNo(tempNum).then(pkmnString => {
-        // console.log(pkmnString);
-        setTempPkmnName(pkmnString);
-    });
-    console.log(tempPkmnName);
-    
-    // let [tempSprite, setTempSprite] = useState(null);
-    // setTempSprite(PokeCorner.getPokemonSprite.front(tempNum));
-    //================================================================
-    
+const PokedexPage = () => {    
     return (
         <div>
             <Navbar/>

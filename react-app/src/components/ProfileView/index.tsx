@@ -28,7 +28,7 @@ const ProfileView = () => {
     // update the redux store:
     dispatch({type: 'UPDATE_USER', payload: user});
     event.preventDefault();
-    // upate the database:
+    // update the database:
     axios.put("http://localhost:9001/users/update/" + user.id, user)
     .then(response => {
       setAlert(<div></div>);

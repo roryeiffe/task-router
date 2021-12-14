@@ -30,7 +30,7 @@ const Login = () => {
     axios.post('http://localhost:9001/users/login', user)
     .then((response) => {
       console.log(response.data);
-      // if reponse is empty, either the username or password is incorrect:
+      // if response is empty, either the username or password is incorrect:
       if(response.data === ""){
         setAlert(<div></div>)
         setAlert(<Alert message = "Login failed, email or password incorrect" type = "danger"/>);
