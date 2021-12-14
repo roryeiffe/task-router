@@ -12,6 +12,7 @@ const Task = ({task, onDelete, onComplete}: any) => {
 
     
     var dateTask = new Date(task.date)
+    var dateString = dateTask.toLocaleString()
     // console.log(date2)
     var date = Date.now();
     var d = new Date(date);
@@ -61,7 +62,7 @@ const Task = ({task, onDelete, onComplete}: any) => {
         <div className={styles.task}>
             {status}
             <h3>{task.title} <FaTimes onClick={() => onDelete(task.id)}/> {!task.completed && <button onClick={() => onCompleteHandler()}>Complete</button>}</h3>
-            <p>{task.date}</p>
+            <p>{dateString}</p>
             <p>{task.points} points</p>
         </div>
     )
