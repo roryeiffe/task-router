@@ -19,17 +19,25 @@ export const initialState = {
 // reducer:
 const taskReducer:any = (state = initialState, action:any) => {
     switch (action.type) {
+        // update user with payload:
         case 'UPDATE_USER':
             return {
                 ...state,
                 user: {...state.user, ...action.payload}
             }
-        
+        // reset user to initial state:
+        case 'LOGOUT':
+            return {
+                ...state,
+                user: initialState.user
+            }
+        // update tasks with payload:
         case 'UPDATE_TASK':
             return{
                 ...state,
                 user: {...state.user, tasks: action.payload }
             }
+        // add pokemon to redux store:
         case 'ADD_POKEMON':
             return {
                 ...state,

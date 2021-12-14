@@ -10,10 +10,11 @@ import Posts from './pages/Posts';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import PokemonList from './components/PokemonList';
+import Logout from './components/Logout';
 
 function App() {
     return (
-        <div className="App">
+        <div className="background">
             <Routes>
                 <Route path = '/' element = {<HomePage/>}/>
                 <Route path = '/login' element = {<LoginPage/>}/>
@@ -24,6 +25,7 @@ function App() {
                 <Route path = '/profile' element = {<ProfilePage/>}/>
                 <Route path = '/pokedex' element = {<PokedexPage/>}/>
                 <Route path = '/pokemontest' element = {<PokemonList/>}/>
+                <Route path = '/logout' element = {<Logout/>}/>
             </Routes>
         </div>
     );

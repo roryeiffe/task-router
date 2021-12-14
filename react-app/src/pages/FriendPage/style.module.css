@@ -1,13 +1,3 @@
 .container {
     text-align: left;
 }
-
-.background {
-    background-attachment: fixed;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-image: url(../../images/pikachu_shooting_background.jpeg);
-    padding-bottom: 100px;
-}

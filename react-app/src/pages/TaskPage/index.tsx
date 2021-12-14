@@ -98,7 +98,30 @@ const TaskPage = () => {
         .then((response) => {
             // alert("Task updated successfully");
             user.points += task.points;
-            // user.level = user.points/50
+            // check level:
+            let prevLevel = user.level;
+            user.level = Math.floor(user.points/50) + 5
+            if(user.level > prevLevel) {
+                alert('You leveled up! Your new level is ' + user.level + '!');
+            }
+            // check evolution:
+            if (user.level >= 16 && prevLevel < 16){
+                user.starterId += 1;
+                // add this new pokemon to pokedex:
+                dispatch({type:'ADD_POKEMON', payload: {"pokemonId": user.starterId}});
+                axios.put('http://localhost:9001/pokemon/update/'+user.id, {'pokemonId': user.starterId})
+                .then(response => dispatch({type: 'ADD_POKEMON', payload: response.data}))
+                .catch(error => console.error(error));
+                alert('Your pokemon evolved!')
+            }
+            if(user.level >= 36 && prevLevel < 36){
+                user.starterId += 1;
+                dispatch({type:'ADD_POKEMON', payload: {"pokemonId": user.starterId}});
+                axios.put('http://localhost:9001/pokemon/update/'+user.id, {'pokemonId': user.starterId})
+                .then(response => dispatch({type: 'ADD_POKEMON', payload: response.data}))
+                .catch(error => console.error(error));
+                alert('Your pokemon evolved!')
+            }
             dispatch({type: 'UPDATE_USER', payload: user});
             // TODO save this user to database
             axios.put('http://localhost:9001/users/update/' + user.id, user)
