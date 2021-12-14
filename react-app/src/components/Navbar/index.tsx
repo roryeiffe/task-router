@@ -33,7 +33,7 @@ const Navbar = () => {
           <NavbarItem to = '/pokedex' pageName = 'Pokédex'/>
         </ul>
       </div>
-      {PokeCorner.PokeCorner(user.starterID)}
+      {PokeCorner.PokeCorner(user.starterId)}
     </nav>
   );
 };

@@ -10,13 +10,10 @@ export const initialState = {
         phone: 555555,
         level: 5,
         points: 0,
-        starterId: 1,
-        partnerPokemon: '',
+        starterId: 191,
         tasks:[],
         pokemon: []
     }
-    
-
 }
 
 // reducer:
