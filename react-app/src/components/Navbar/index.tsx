@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import NavbarItem from "./NavbarItem";
 import PokeCorner from '../PokeCorner';
-import store, { initialState } from "../../store";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
@@ -33,7 +31,7 @@ const Navbar = () => {
           <NavbarItem to = '/pokedex' pageName = 'Pokédex'/>
         </ul>
       </div>
-      {PokeCorner.PokeCorner(user.starterId)}
+      {PokeCorner(user.starterId)}
     </nav>
   );
 };

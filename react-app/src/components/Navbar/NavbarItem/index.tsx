@@ -51,7 +51,7 @@ const NavbarItem = (props: any) => {
       onMouseLeave={() => changePokeballType('exit')}
     >
       <Link className={`nav-link ${navLinkClass}`} to={props.to}>
-        <img className={styles.pokeball} src={icon} />
+        <img className={styles.pokeball} src={icon} alt="pokeball nav icon" />
         {props.pageName}
       </Link>
     </li>
