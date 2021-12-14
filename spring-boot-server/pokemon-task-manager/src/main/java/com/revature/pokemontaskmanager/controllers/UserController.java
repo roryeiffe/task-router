@@ -74,6 +74,12 @@ public class UserController {
         return userRepository.findByEmail(email);
     }
 
+    // get a user by id:
+    @GetMapping("/getById/{id}")
+    public User getUserById(@PathVariable("id") Long id) {
+        return userRepository.findById(id).get();
+    }
+
     @PutMapping("pokedex")
     public void caughtPokemon(@RequestBody int dexNo) {
 
