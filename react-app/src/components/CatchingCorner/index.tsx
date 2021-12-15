@@ -45,16 +45,16 @@ function CatchingCorner(props: any):JSX.Element {
 
     useEffect(() => {
         setNewPkmnAppeared(true);
-        let temp = props.points;
-        setStoredPoints(temp);
-        setInBall(inBall);
+        // let temp = props.points;
+        setStoredPoints(props.points);
+        setInBall(false);
     },[]);
     
     // useEffect(() => {
     //     storedPoints = props.points;
     // }, []);
     
-    if(newPkmnAppeared && !inBall) {
+    if(newPkmnAppeared&& (storedPoints>0) && !inBall) {
         getPkmnNameByDexNo(opponentPkmn).then(pkmnName => {
             let newPkmnName = capFirstLetter(pkmnName);
             console.log("A wild "+newPkmnName+" appeared!")
@@ -70,7 +70,8 @@ function CatchingCorner(props: any):JSX.Element {
             if(storedPoints>0){
                 return <>{getFrontSpriteOf(opponentPkmn)}</>;
             }
-            else { // the poke escaped
+            else {
+                console.error("!ranOff !inBall storedPoints<=0");
                 return <></>;
             }
         }
@@ -164,13 +165,13 @@ function CatchingCorner(props: any):JSX.Element {
             {/* {bagHandler} */}
             <br/><br/>
             {textBox} <br/>
-            {(inBall) ? <button onClick = {() => {props.setCatchPokemon(<div></div>)}}>Close</button> : 
+            {((storedPoints<1)||inBall) ? <button onClick = {() => {props.setCatchPokemon(<div></div>)}}>Close</button> : 
             <div>
                 {/* {storedPoints = props.points} */}
                 {/* {newPkmnAppeared = true} */}
                 {/* {setBag(props.points)} */}
                 {console.log(newPkmnAppeared, storedPoints)}
-                {(storedPoints>0) ? 
+                {storedPoints>0 ? 
                     <span><button onClick={() => {throwPokeball(storedPoints); setStoredPoints(storedPoints-1);}}>throw 1 of {storedPoints} Pokéballs</button>
                     <button onClick={() => {refresh(); setStoredPoints(storedPoints-1);}}>refresh</button></span>
                     : <></>
