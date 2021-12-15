@@ -1,46 +1,60 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../style.module.css'
 import { FaTimes } from 'react-icons/fa'
+import moment from 'moment'
 
 
 
-const Task = ({task, onDelete, onComplete}: any) => {
+const Task = ({ task, onDelete, onComplete }: any) => {
 
     //change status based on date
     const [status, setStatus] = useState(<div></div>)
 
-    var options:any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC', timeZoneName: 'short'};
-    
+    var options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC', timeZoneName: 'short' };
+
     var dateTask = new Date(task.date)
     var dateString = dateTask.toLocaleTimeString('en-US', options)
-    // console.log(date2)
+
     var date = Date.now();
     var d = new Date(date);
-    // console.log(d)
-    // var ds = d.toLocaleString();
-    // console.log(ds)
+    //var d2 = d.toLocaleTimeString('en-US', options)
     
+
+    //using moment
+
+    //console.log("")
+
+    //console.log(task.date)
+
+    var dateMoment = moment.utc().format();
+
+    var localMoment = moment.utc(dateMoment).local().format('YYYY-MM-DD HH:mm:ss');
+    //console.log(localMoment, "- UTC now to local");
+
+    var taskDateMoment = moment.utc(task.date).format('YYYY-MM-DD HH:mm:ss');
+    //console.log(taskDateMoment, "- this is the task date")
+
     useEffect(() => {
         //console.log("useEffect works!")
-        if(dateTask < d){ // if in the past
+        if (taskDateMoment < localMoment) { // if in the past
             //console.log("It works!")
             setStatus(
-            <div className={`${styles.task} ${styles.taskOverdue}`}>
-                
-            </div>
+                <div className={`${styles.task} ${styles.taskOverdue}`}>
+
+                </div>
             )
         }
-        else if(dateTask > d){ // if in the future
+        else if (taskDateMoment > localMoment) { // if in the future
             setStatus(
                 <div className={`${styles.task} ${styles.taskPending}`}>
 
                 </div>
             )
-        } 
-        if(task.completed == true){
+        }
+        if (task.completed == true) {
             setStatus(
                 <div className={`${styles.task} ${styles.taskCompleted}`}>
-                
+
                 </div>
             )
         }
@@ -55,13 +69,13 @@ const Task = ({task, onDelete, onComplete}: any) => {
             </div>
         )
     }
-    
+
     //{!task.complete && <button>Complete</button>}
-    
+
     return (
         <div className={styles.task}>
             {status}
-            <h3>{task.title} <FaTimes onClick={() => onDelete(task.id)}/> </h3>
+            <h3>{task.title} <FaTimes onClick={() => onDelete(task.id)} /> </h3>
             <p>{dateString} </p>
             <p>{task.points} points {!task.completed && <button onClick={() => onCompleteHandler()}>Complete</button>}</p>
         </div>
