@@ -5,7 +5,7 @@ import styles from './style.module.css'
 import { getPkmnNameByDexNo, capFirstLetter } from "../PokeCorner";
 import pokeball1s from "../../images/pokeball1-small.png";
 import pokeball2s from "../../images/pokeball2-small.png";
-
+import questionMark from "../../images/question_mark.png"
 // editable parameters =======================================
 export let dexLimit = 898; // 898 total Pokemon
 //============================================================
@@ -61,14 +61,15 @@ const PokedexList = () => { // variable outside this function executes once; avo
     // let url2:string = "/sprites/front_default";
     let url1:string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
     let url2:string = ".png";
-    let url3:string = "https://pokemondb.net/pokedex/"
+    let url3:string = "https://pokemondb.net/pokedex/";
+    let url4:string = "https://archives.bulbagarden.net/media/upload/8/8e/Spr_3r_000.png";
 
     function getFrontSprite(dexNo:number, spriteOfUncaught:boolean):JSX.Element {
         if(spriteOfUncaught || isRegistered(dexNo)) {
             return <img src={url1+dexNo+url2} alt={""+dexNo+".png"}/>;
         }
         else {
-            return <img src={url1+0+url2} alt="not registered"/>
+            return <img src={questionMark} alt="not registered"/>
         }
     }
 
