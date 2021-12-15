@@ -7,12 +7,12 @@ import pokeball1s from "../../images/pokeball1-small.png";
 import pokeball2s from "../../images/pokeball2-small.png";
 
 // editable parameters =======================================
-export let dexLimit = 898+1; // 898 total Pokemon
+export let dexLimit = 898; // 898 total Pokemon
 //============================================================
 let hadCaughtANewPokemon:boolean = false;
 let count:number = 1;
 let dupeTracker:number[] = []; // for debugging
-let dexArr:string[] = [];
+let dexArr:string[] = ["bulbasaur"];
 
 interface ICaughtState {
     dexNo:number;
@@ -35,24 +35,27 @@ const PokedexList = () => { // variable outside this function executes once; avo
         if(hadCaughtANewPokemon) {
             dispatch({type: 'UPDATE_USER', payload: user});
             setHadCaughtANewPokemon(false);
-        }  
+        }
+        if(count<dexLimit+2) {
+            getPkmnNameByDexNo(count).then(pkmnString => {
+                setDummyArray([...dummyArray, count]);
+                let temp2:ICaughtState = {dexNo: count, isCaught: false};
+
+                if(pkmnString===dexArr[dexArr.length-1] ||
+                    pkmnString===dexArr[dexArr.length-2]
+                    ) { // if duplicate, do nothing
+                    dupeTracker.push(count);
+                    console.log("Duplicate: "+pkmnString);
+                }
+                else {
+                    dexArr.push(pkmnString);
+                }            
+                count++;
+            });
+        }
     });
     
-    if(count<=dexLimit) {
-        getPkmnNameByDexNo(count).then(pkmnString => {
-            setDummyArray([...dummyArray, count]);
-            if(pkmnString===dexArr[dexArr.length-1] ||
-                pkmnString===dexArr[dexArr.length-2]
-                ) { // if duplicate, do nothing
-                dupeTracker.push(count);
-                console.log("Duplicate: "+pkmnString);
-            }
-            else {
-                dexArr.push(pkmnString);
-            }            
-            count++;
-        });
-    }
+
     
     // let url1:string = "https://pokeapi.co/api/v2/pokemon/";
     // let url2:string = "/sprites/front_default";
@@ -73,9 +76,7 @@ const PokedexList = () => { // variable outside this function executes once; avo
         if(isRegistered(dexNo)) {
             return(<img src={pokeball1s} alt="*" />);
         }
-        else {
-            return(<img src={pokeball2s} alt="_" />);
-        }
+        else { return(<img src={pokeball2s} alt="_" />); }
     }
     
     function isRegistered(dexNo:number):boolean {
@@ -85,13 +86,10 @@ const PokedexList = () => { // variable outside this function executes once; avo
             if(dexCaughtStates[dexCaughtStates.length-1].isCaught) {
                 return true;
             }
-            else {
-                return searchDatabase();
-            }
+            else { return searchDatabase(); }
         }
-        else {
-            return searchDatabase();
-        }
+        else { return searchDatabase(); }
+        
         function searchDatabase():boolean {
             user.pokemon.forEach((entry:any) => {
                 if(entry.pokemonId===dexNo) { // console.log("A match!");
@@ -116,10 +114,12 @@ const PokedexList = () => { // variable outside this function executes once; avo
     
     return(
         <div className="dex">
-            {/* <button onClick={() => console.log(user)}>print user info to console</button> */}
-            <>{user.pokemon.length} of {dexLimit} Pokémon caught</> <br/>
-            <button onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button><br/>
-            <>{loadingBar(count)}</> <br/>
+            <span className="loading">
+                {/* <button onClick={() => console.log(user)}>print user info to console</button> */}
+                <>{user.pokemon.length} of {dexLimit} Pokémon caught</> <br/>
+                <button className="button" onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button><br/>
+                <>{loadingBar(count)}</>
+            </span><br/>
             <ul className="checklist"> 
                 {dexArr.map((value, id) => {
                     return <li className={styles.dexEntry}>
