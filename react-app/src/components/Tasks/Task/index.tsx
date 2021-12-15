@@ -9,9 +9,10 @@ const Task = ({task, onDelete, onComplete}: any) => {
     //change status based on date
     const [status, setStatus] = useState(<div></div>)
 
+    var options:any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC', timeZoneName: 'short'};
     
     var dateTask = new Date(task.date)
-    var dateString = dateTask.toLocaleString()
+    var dateString = dateTask.toLocaleTimeString('en-US', options)
     // console.log(date2)
     var date = Date.now();
     var d = new Date(date);
