@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import "./style.css";
+import './style.css';
 import styles from './style.module.css'
 import { getPkmnNameByDexNo, capFirstLetter } from "../PokeCorner";
 import pokeball1s from "../../images/pokeball1-small.png";
 import pokeball2s from "../../images/pokeball2-small.png";
 
 // editable parameters =======================================
-export let dexLimit = 898; // 898 total Pokemon
+export let dexLimit = 898+1; // 898 total Pokemon
 //============================================================
 let hadCaughtANewPokemon:boolean = false;
 let count:number = 1;
@@ -33,7 +33,6 @@ const PokedexList = () => { // variable outside this function executes once; avo
     
     useEffect(() => {
         if(hadCaughtANewPokemon) {
-            console.log("Show updated dex here");
             dispatch({type: 'UPDATE_USER', payload: user});
             setHadCaughtANewPokemon(false);
         }  
@@ -42,7 +41,9 @@ const PokedexList = () => { // variable outside this function executes once; avo
     if(count<=dexLimit) {
         getPkmnNameByDexNo(count).then(pkmnString => {
             setDummyArray([...dummyArray, count]);
-            if(pkmnString===dexArr[dexArr.length-1]) { // if duplicate, do nothing
+            if(pkmnString===dexArr[dexArr.length-1] ||
+                pkmnString===dexArr[dexArr.length-2]
+                ) { // if duplicate, do nothing
                 dupeTracker.push(count);
                 console.log("Duplicate: "+pkmnString);
             }
@@ -57,6 +58,7 @@ const PokedexList = () => { // variable outside this function executes once; avo
     // let url2:string = "/sprites/front_default";
     let url1:string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
     let url2:string = ".png";
+    let url3:string = "https://pokemondb.net/pokedex/"
 
     function getFrontSprite(dexNo:number, spriteOfUncaught:boolean):JSX.Element {
         if(spriteOfUncaught || isRegistered(dexNo)) {
