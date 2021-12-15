@@ -1,7 +1,7 @@
 import styles from "./style.module.css";
 import { Link } from "react-router-dom";
 
-const Home = () => {
+const Home = () => {    
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -14,7 +14,7 @@ const Home = () => {
           <li className="list-group-item">Manage Your Every Day Tasks</li>
           <li className="list-group-item">Add Friends</li>
           <li className="list-group-item">Make Posts and View Others' Posts</li>
-          <li className="list-group-item">Update Your Proflie Anytime</li>
+          <li className="list-group-item">Update Your Profile Anytime</li>
           <li className="list-group-item">Watch Your Pokedex Collection Grow!</li>
         </ul>
         <br />

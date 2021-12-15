@@ -16,6 +16,9 @@
         column-count: 3;
     }
 }
+.loading {
+    background-color: #fff;
+}
 .alt-list {
     text-align: left;
 }
