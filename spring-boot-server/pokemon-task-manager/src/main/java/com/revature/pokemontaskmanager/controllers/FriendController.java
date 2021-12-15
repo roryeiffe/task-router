@@ -23,12 +23,12 @@ public class FriendController {
 
     // add a new friend request:
     @PostMapping("/add")
-    public void addFriendRequest(@RequestParam String email1, @RequestParam String email2){
+    public void addFriendRequest(@RequestParam String email1, @RequestParam String email2) {
         User user1 = userRepository.findByEmail(email1);
         User user2 = userRepository.findByEmail(email2);
         Friend friend = new Friend(user1, user2, "pending");
         // only save if user is non-null:
-        if(user2 != null) {
+        if (user2 != null) {
             System.out.println(friend);
             friendRepository.save(friend);
         }
@@ -40,8 +40,8 @@ public class FriendController {
         User user = userRepository.findById(id).get();
         List<Friend> temp = friendRepository.findBySecondUser(user);
         List<Friend> friendRequests = new ArrayList<Friend>();
-        for(Friend friend: temp) {
-            if(friend.getStatus().equals("pending")){
+        for (Friend friend : temp) {
+            if (friend.getStatus().equals("pending")) {
                 friendRequests.add(friend);
             }
         }
@@ -56,8 +56,18 @@ public class FriendController {
         return friend_db;
     }
 
+
+    @PutMapping("/denyRequest/{id}")
+    public Friend denyRequest(@PathVariable("id") int id) {
+        Friend friend_db = friendRepository.findById(id).get();
+        friend_db.setStatus("rejected");
+        friendRepository.save(friend_db);
+        return friend_db;
+    }
+
     @GetMapping("/getAllFriends/{id}")
     public List<Integer> getAllFriends(@PathVariable("id") Long userId) {
         return friendRepository.findFriendIds(userId);
     }
 }
+
