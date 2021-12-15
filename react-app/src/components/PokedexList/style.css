@@ -11,11 +11,12 @@
     column-count: 5; /* 3 for small, 5 for large displays */
     text-align: center;
 }
-@media (max-width: 720px) {
-    .checklist {
-        column-count: 3;
-    }
-}
+@media (max-width:  720px) { .checklist { column-count: 3; } }
+@media (max-width:  390px) { .checklist { column-count: 2; } }
+@media (max-width:  270px) { .checklist { column-count: 1; } }
+@media (min-width: 1000px) { .checklist { column-count: 7; } }
+@media (min-width: 1200px) { .checklist { column-count: 9; } }
+@media (min-width: 1560px) { .checklist { column-count:10; } }
 .loading {
     background-color: #fff;
 }

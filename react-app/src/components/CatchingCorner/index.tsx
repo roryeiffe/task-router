@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './style.css';
 import { pokeApi, getPkmnNameByDexNo, capFirstLetter } from '../PokeCorner';
 import { dexLimit, setHadCaughtANewPokemon } from '../PokedexList';
-import pokeball from '../../images/pokeball_opening.gif';
+import pokeball from '../../images/pokeball_stationary.png';
 
 // editable parameters ================================
 let catchRateMultiplier:number = 1;
@@ -146,30 +146,19 @@ function CatchingCorner(props: any):JSX.Element {
                 }
                 // }
             }
-            else {// out of pokeballs
-
+            else {
+                // out of pokeballs
             }
         });
     }
     
-    // function setBag(balls:number) {
-    //     if(newPkmnAppeared) {
-    //         setStoredPoints(balls);
-    //         setNewPkmnAppeared(false);
-    //     }
-    // }
-    // function catchOptions() { return(); } // moving the below div here doesn't work
-    
-    return(
+    return( // if(storedPoints<1)||inBall) { /* press close button */ }
         <span className='CatchingCorner'>
             {/* {bagHandler} */}
             <br/><br/>
             {textBox} <br/>
             {((storedPoints<1)||inBall) ? <button onClick = {() => {props.setCatchPokemon(<div></div>)}}>Close</button> : 
             <div>
-                {/* {storedPoints = props.points} */}
-                {/* {newPkmnAppeared = true} */}
-                {/* {setBag(props.points)} */}
                 {console.log(newPkmnAppeared, storedPoints)}
                 {storedPoints>0 ? 
                     <span><button onClick={() => {throwPokeball(storedPoints); setStoredPoints(storedPoints-1);}}>throw 1 of {storedPoints} Pokéballs</button>
@@ -177,7 +166,7 @@ function CatchingCorner(props: any):JSX.Element {
                     : <></>
                 }
             </div>
-            // {catchOptions} // moving the div to the commented out function above doesn't work
+            // {catchOptions} // moving the div to a function above doesn't work
             }
             {wildPkmnArea()}
         </span>
