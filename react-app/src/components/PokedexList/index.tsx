@@ -32,6 +32,9 @@ const PokedexList = () => { // variable outside this function executes once; avo
     useEffect(() => {
         settingDexCaughtStates();
     },[]);
+    useEffect(() => {
+        dispatch({type: 'UPDATE_USER', payload: user});
+    },[user]);
     
     useEffect(() => {
         if(hadCaughtANewPokemon) {
@@ -41,7 +44,9 @@ const PokedexList = () => { // variable outside this function executes once; avo
     }, [hadCaughtANewPokemon]);
 
     async function settingDexCaughtStates() {
-        // setDexCaughtStates([]);
+        // if(count===0) {
+        //     setDexCaughtStates([]);
+        // }
         while(count<dexLimit) {
             count=count+1;
             await getPkmnNameByDexNo(count).then(pkmnName => {
@@ -84,7 +89,8 @@ const PokedexList = () => { // variable outside this function executes once; avo
                     return false;
                 }
             });
-            return false
+            console.log("users pokedex data is void, undefined or empty");
+            return false;
         }
         else {
             console.error("can't find user's pokedex data");
