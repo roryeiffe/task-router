@@ -32,6 +32,9 @@ const PokedexList = () => { // variable outside this function executes once; avo
     useEffect(() => {
         settingDexCaughtStates();
     },[]);
+    useEffect(() => {
+        dispatch({type: 'UPDATE_USER', payload: user});
+    },[user]);
     
     useEffect(() => {
         if(hadCaughtANewPokemon) {
@@ -41,7 +44,9 @@ const PokedexList = () => { // variable outside this function executes once; avo
     }, [hadCaughtANewPokemon]);
 
     async function settingDexCaughtStates() {
-        // setDexCaughtStates([]);
+        if(count===0) {
+            setDexCaughtStates([]);
+        }
         while(count<dexLimit) {
             count=count+1;
             await getPkmnNameByDexNo(count).then(pkmnName => {
@@ -84,7 +89,8 @@ const PokedexList = () => { // variable outside this function executes once; avo
                     return false;
                 }
             });
-            return false
+            console.log("users pokedex data is void, undefined or empty");
+            return false;
         }
         else {
             console.error("can't find user's pokedex data");
@@ -105,7 +111,7 @@ const PokedexList = () => { // variable outside this function executes once; avo
     return(
         <div className="dex">
             <span className="loading">
-                <button onClick={() => console.log(count, dexCaughtStates)}>print to console</button> <br/>
+                <button onClick={() => console.log(count, dexCaughtStates, user)}>print to console</button> <br/>
                 <>{user.pokemon.length} of {dexLimit} Pokémon caught</> <br/>
                 {showOnlyCaught ? <button className="button" onClick={() => setShowOnlyCaught(false)}>show all</button> 
                     : <span> 
