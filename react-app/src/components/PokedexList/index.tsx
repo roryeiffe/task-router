@@ -118,7 +118,7 @@ const PokedexList = () => { // variable outside this function executes once; avo
     }
     
     function loadingBar() { // TODO: onClick stop loading
-        if(count>dexLimit) { // disappears at 101
+        if(count>=dexLimit) { // disappears at 101
             return <></>;
         }
         else {

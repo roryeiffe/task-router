@@ -5,6 +5,7 @@
     text-align: center;
     padding: 20px;
 }
+
 .checklist {
     list-style: none;
     column-count: 5; /* 3 for small, 5 for large displays */
@@ -16,12 +17,11 @@
 @media (min-width: 1000px) { .checklist { column-count: 7; } }
 @media (min-width: 1200px) { .checklist { column-count: 9; } }
 @media (min-width: 1560px) { .checklist { column-count:10; } }
-.loading {
-    background-color: #fff;
-}
+
 .alt-list {
     text-align: left;
 }
+
 .dexEntry {
     border: 10px gray;
     opacity: .95;
@@ -30,6 +30,13 @@
     margin-bottom: 10px;
     border-radius: 5px;
 }
-.button {
+
+.loading {
+    background-color: #fff;
+    /* position: -webkit-sticky;
+    position: sticky;
+    top: 120px;
     text-align: right;
+    align-self: flex-end; */
 }
+/* .button {} */
