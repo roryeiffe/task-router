@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import styles from '../style.module.css'
 import { useSelector } from 'react-redux'
+import Alert from '../../Alert';
 
 const AddTask = ({ onAdd }: any) => {
     const [text, setText] = useState('')
     const [day, setDay] = useState('')
     const [points, setPoints] = useState(0);
     const [category, setCategory] = useState('Select');
-
-
+    const [alert, setAlert] = useState(<div></div>);
     
   // get user from redux store and set it to state;
   const temp = useSelector((state: any) => state.user);
@@ -26,7 +26,8 @@ const AddTask = ({ onAdd }: any) => {
         e.preventDefault()
 
         if (!text) {
-            alert('Please add task')
+            setAlert(<div></div>)
+            setAlert(<Alert message = "Please add task." type = "danger" />);
             return
         }
 
@@ -39,6 +40,7 @@ const AddTask = ({ onAdd }: any) => {
 
     return (
         <form className={styles.addForm} onSubmit={onSubmit}>
+            {alert}
             <div className={styles.formControl}>
                 <label>Task</label>
                 <input type='text' placeholder='Add Task' value={text} onChange={(e) => setText(e.target.value)} />
