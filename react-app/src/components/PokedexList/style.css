@@ -4,7 +4,6 @@
     font-family: "PT Sans", sans-serif;
     text-align: center;
     padding: 20px;
-    opacity: .95;
 }
 .checklist {
     list-style: none;
@@ -23,8 +22,13 @@
 .alt-list {
     text-align: left;
 }
-.dex-entry {
+.dexEntry {
     border: 10px gray;
+    opacity: .95;
+    background-color: #fff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 10px;
+    border-radius: 5px;
 }
 .button {
     text-align: right;
