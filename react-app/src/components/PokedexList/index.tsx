@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import './style.css';
-import styles from './style.module.css'
 import { getPkmnNameByDexNo, capFirstLetter } from "../PokeCorner";
 import pokeball1s from "../../images/pokeball1-small.png";
 import pokeball2s from "../../images/pokeball2-small.png";
@@ -138,7 +137,7 @@ const PokedexList = () => { // variable outside this function executes once; avo
             </span><br/>
             <ul className="checklist"> 
                 {dexArr.map((value, id) => {
-                    return <li className={styles.dexEntry}>
+                    return <li className="dexEntry">
                         #{id+1} <br/>
                         {getFrontSprite(id+1, false)} <br/>
                         {isRegisteredIcon(id+1)} {" "} {capFirstLetter(value)} <br/><br/>
