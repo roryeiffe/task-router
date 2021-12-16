@@ -10,12 +10,10 @@ import questionMark from "../../images/question_mark.png"
 export let dexLimit = 898; // 898 total Pokemon
 //============================================================
 let hadCaughtANewPokemon:boolean = false;
-let count:number = 1;
-let dupeTracker:number[] = []; // for debugging
-let dexArr:string[] = ["bulbasaur"];
-
+let count:number = 0;
 interface ICaughtState {
     dexNo:number;
+    name:string;
     isCaught:boolean;
 }
 
@@ -25,108 +23,98 @@ export function setHadCaughtANewPokemon(bool:boolean):void {
 
 const PokedexList = () => { // variable outside this function executes once; avoid using for loops
     const temp = useSelector((state: any) => state.user);
-    const [user, setUser] = useState(temp);
+    const [user, ] = useState(temp);
     let [spriteOfUncaught, setSpriteOfUncaught] = useState(false);
-    let dexCaughtStates:ICaughtState[] = [{dexNo: 0, isCaught: false}];
-    let [dummyArray, setDummyArray] = useState([0]); // removing this stops it for some reason
+    let [dexCaughtStates, setDexCaughtStates] =useState<ICaughtState[]>([]);
     const dispatch = useDispatch();
+    
+    useEffect(() => {
+        settingDexCaughtStates();
+    },[]);
     
     useEffect(() => {
         if(hadCaughtANewPokemon) {
             dispatch({type: 'UPDATE_USER', payload: user});
             setHadCaughtANewPokemon(false);
-        }
-        if(count<dexLimit+2) {
-            getPkmnNameByDexNo(count).then(pkmnString => {
-                setDummyArray([...dummyArray, count]);
-                let temp2:ICaughtState = {dexNo: count, isCaught: false};
+        }         
+    }, [hadCaughtANewPokemon]);
 
-                if(pkmnString===dexArr[dexArr.length-1] ||
-                    pkmnString===dexArr[dexArr.length-2]
-                    ) { // if duplicate, do nothing
-                    dupeTracker.push(count);
-                    console.log("Duplicate: "+pkmnString);
-                }
-                else {
-                    dexArr.push(pkmnString);
-                }            
-                count++;
+    async function settingDexCaughtStates() {
+        while(count<dexLimit) {
+            count=count+1;
+            await getPkmnNameByDexNo(count).then(pkmnName => {
+                var temp2:ICaughtState = {dexNo: count, name: pkmnName, isCaught: isRegistered(count)};
+                console.log(temp2);
+                setDexCaughtStates(dexCaughtStates => [...dexCaughtStates, temp2]);
+                console.log(count, dexCaughtStates);
             });
         }
-    });
-    
+    }
 
-    
-    // let url1:string = "https://pokeapi.co/api/v2/pokemon/";
-    // let url2:string = "/sprites/front_default";
     let url1:string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
     let url2:string = ".png";
     let url3:string = "https://pokemondb.net/pokedex/";
     let url4:string = "https://archives.bulbagarden.net/media/upload/8/8e/Spr_3r_000.png";
 
-    function getFrontSprite(dexNo:number, spriteOfUncaught:boolean):JSX.Element {
-        if(spriteOfUncaught || isRegistered(dexNo)) {
-            return <img src={url1+dexNo+url2} alt={""+dexNo+".png"}/>;
+    function getFrontSprite(pkmn:ICaughtState):JSX.Element {
+        if(spriteOfUncaught || pkmn.isCaught) {
+            return <img src={url1+pkmn.dexNo+url2} alt={""+pkmn.dexNo+".png"}/>;
         }
         else {
             return <img src={questionMark} alt="not registered"/>
         }
     }
 
-    function isRegisteredIcon(dexNo:number):JSX.Element {
-        if(isRegistered(dexNo)) {
+    function isRegisteredIcon(pkmn:ICaughtState):JSX.Element {
+        if(isRegistered(pkmn.dexNo)) {
             return(<img src={pokeball1s} alt="*" />);
         }
         else { return(<img src={pokeball2s} alt="_" />); }
     }
     
     function isRegistered(dexNo:number):boolean {
-        let flag:boolean =false;
-        
-        if(dexNo === dexCaughtStates[dexCaughtStates.length-1].dexNo) {
-            if(dexCaughtStates[dexCaughtStates.length-1].isCaught) {
-                return true;
-            }
-            else { return searchDatabase(); }
-        }
-        else { return searchDatabase(); }
-        
-        function searchDatabase():boolean {
-            user.pokemon.forEach((entry:any) => {
-                if(entry.pokemonId===dexNo) { // console.log("A match!");
-                    dexCaughtStates.push({dexNo: dexNo, isCaught: true});
-                    flag = true;
+        // let count2:number = user.pokemon.length;
+        if(user.pokemon) {
+            user.pokemon.forEach((entry:any,id:number) => {
+                if(dexNo===entry.pokemonId) {
                     return true;
                 }
+                else if (id>=user.pokemon.length-1) {
+                    return false;
+                }
             });
-            return flag;
+            return false
+        }
+        else {
+            console.error("can't find user's pokedex data");
+            return false;
         }
     }
     
-    function loadingBar(currentPosition:number) { // TODO: onClick stop loading
-        if(currentPosition>dexLimit) { // disappears at 101
+    function loadingBar() { // TODO: onClick stop loading
+        if(count>=dexLimit) { // disappears at 100
             return <></>;
         }
         else {
-            let percentage:number = Math.round(100*(currentPosition/dexLimit));
-            return <>{"Loading... " + percentage + "% ["+currentPosition+ "/"+dexLimit+"]"}</>;
+            let percentage:number = Math.round(100*(count/dexLimit));
+            return <>{"Loading... " + percentage + "% ["+count+ "/"+dexLimit+"]"}</>;
         }
     }
     
     return(
         <div className="dex">
             <span className="loading">
-                {/* <button onClick={() => console.log(user)}>print user info to console</button> */}
+                {/* <button onClick={() => console.log(dexCaughtStates)}>print dexCaughtStates to console</button> */}
                 <>{user.pokemon.length} of {dexLimit} Pokémon caught</> <br/>
                 <button className="button" onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button><br/>
-                <>{loadingBar(count)}</>
+                <>{loadingBar()}</>
             </span><br/>
             <ul className="checklist"> 
-                {dexArr.map((value, id) => {
+                {dexCaughtStates.map((value) => {
                     return <li className={styles.dexEntry}>
-                        #{id+1} <br/>
-                        {getFrontSprite(id+1, spriteOfUncaught)} <br/>
-                        {isRegisteredIcon(id+1)} {" "} {capFirstLetter(value)} <br/><br/>
+                        #{value.dexNo} <br/>
+                        {getFrontSprite(value)} <br/>
+                        {isRegisteredIcon(value)} {" "} {capFirstLetter(value.name)} <br/><br/>
                     </li>;
                 })}
             </ul>
