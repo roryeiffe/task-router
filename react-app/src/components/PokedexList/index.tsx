@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import './style.css';
-import styles from './style.module.css'
 import { getPkmnNameByDexNo, capFirstLetter } from "../PokeCorner";
 import pokeball1s from "../../images/pokeball1-small.png";
 import pokeball2s from "../../images/pokeball2-small.png";
@@ -11,6 +10,7 @@ export let dexLimit = 898; // 898 total Pokemon
 //============================================================
 let hadCaughtANewPokemon:boolean = false;
 let count:number = 0;
+
 interface ICaughtState {
     dexNo:number;
     name:string;
@@ -25,7 +25,8 @@ const PokedexList = () => { // variable outside this function executes once; avo
     const temp = useSelector((state: any) => state.user);
     const [user, ] = useState(temp);
     let [spriteOfUncaught, setSpriteOfUncaught] = useState(false);
-    let [dexCaughtStates, setDexCaughtStates] =useState<ICaughtState[]>([]);
+    let [showOnlyCaught, setShowOnlyCaught] = useState(true);
+    let [dexCaughtStates, setDexCaughtStates] = useState<ICaughtState[]>([]);
     const dispatch = useDispatch();
     
     useEffect(() => {
@@ -40,13 +41,13 @@ const PokedexList = () => { // variable outside this function executes once; avo
     }, [hadCaughtANewPokemon]);
 
     async function settingDexCaughtStates() {
+        // setDexCaughtStates([]);
         while(count<dexLimit) {
             count=count+1;
             await getPkmnNameByDexNo(count).then(pkmnName => {
                 var temp2:ICaughtState = {dexNo: count, name: pkmnName, isCaught: isRegistered(count)};
-                console.log(temp2);
+                // console.log(temp2);
                 setDexCaughtStates(dexCaughtStates => [...dexCaughtStates, temp2]);
-                console.log(count, dexCaughtStates);
             });
         }
     }
@@ -91,7 +92,7 @@ const PokedexList = () => { // variable outside this function executes once; avo
         }
     }
     
-    function loadingBar() { // TODO: onClick stop loading
+    function loadingBar():JSX.Element { // TODO: onClick stop loading
         if(count>=dexLimit) { // disappears at 100
             return <></>;
         }
@@ -104,20 +105,43 @@ const PokedexList = () => { // variable outside this function executes once; avo
     return(
         <div className="dex">
             <span className="loading">
-                {/* <button onClick={() => console.log(dexCaughtStates)}>print dexCaughtStates to console</button> */}
+                <button onClick={() => console.log(count, dexCaughtStates)}>print to console</button> <br/>
                 <>{user.pokemon.length} of {dexLimit} Pokémon caught</> <br/>
-                <button className="button" onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button><br/>
+                {showOnlyCaught ? <button className="button" onClick={() => setShowOnlyCaught(false)}>show all</button> 
+                    : <span> 
+                        <button className="button" onClick={() => setShowOnlyCaught(true)}>show caught only</button><br/>
+                        <button className="button" onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button>
+                    </span>
+                } <br/>
                 <>{loadingBar()}</>
             </span><br/>
-            <ul className="checklist"> 
-                {dexCaughtStates.map((value) => {
-                    return <li className={styles.dexEntry}>
-                        #{value.dexNo} <br/>
-                        {getFrontSprite(value)} <br/>
-                        {isRegisteredIcon(value)} {" "} {capFirstLetter(value.name)} <br/><br/>
-                    </li>;
-                })}
-            </ul>
+            {showOnlyCaught ?
+                <ul className="checklist">
+                    {dexCaughtStates.map((value) => {
+                        if(value.isCaught) {
+                            return <li className="dexEntry">
+                                #{value.dexNo} <br/>
+                                {getFrontSprite(value)} <br/>
+                                {isRegisteredIcon(value)} {" "} {capFirstLetter(value.name)} <br/><br/>
+                            </li>;
+                        }
+                        else {
+                            // return <p className="dexEntry">blank</p>;
+                        }
+
+                    })}
+                </ul>
+                : 
+                <ul className="checklist"> 
+                    {dexCaughtStates.map((value) => {
+                        return <li className="dexEntry">
+                            #{value.dexNo} <br/>
+                            {getFrontSprite(value)} <br/>
+                            {isRegisteredIcon(value)} {" "} {capFirstLetter(value.name)} <br/><br/>
+                        </li>;
+                    })}
+                </ul>
+            }
         </div>
     );
 }
