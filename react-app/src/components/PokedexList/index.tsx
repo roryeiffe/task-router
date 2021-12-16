@@ -50,9 +50,11 @@ const PokedexList = () => { // variable outside this function executes once; avo
         while(count<dexLimit) {
             count=count+1;
             await getPkmnNameByDexNo(count).then(pkmnName => {
-                var temp2:ICaughtState = {dexNo: count, name: pkmnName, isCaught: isRegistered(count)};
-                // console.log(temp2);
-                setDexCaughtStates(dexCaughtStates => [...dexCaughtStates, temp2]);
+                isRegistered(count).then(status => {
+                    var temp2:ICaughtState = {dexNo: count, name: pkmnName, isCaught: status};
+                    // console.log(temp2);
+                    setDexCaughtStates(dexCaughtStates => [...dexCaughtStates, temp2]);
+                })
             });
         }
     }
@@ -71,21 +73,25 @@ const PokedexList = () => { // variable outside this function executes once; avo
         }
     }
 
-    function isRegisteredIcon(pkmn:ICaughtState):JSX.Element {
-        if(isRegistered(pkmn.dexNo)) {
-            return(<img src={pokeball1s} alt="*" />);
-        }
-        else { return(<img src={pokeball2s} alt="_" />); }
+    async function isRegisteredIcon(pkmn:ICaughtState):Promise<JSX.Element> {
+        await isRegistered(pkmn.dexNo).then(a => {
+            if (a) {
+                return (<img src={pokeball1s} alt="*" />);
+            }
+            else { return (<img src={pokeball2s} alt="_" />); }
+        });
+        console.log("aaaa");
+        return <></>;
     }
     
-    function isRegistered(dexNo:number):boolean {
+    async function isRegistered(dexNo:number):Promise<boolean> {
         // let count2:number = user.pokemon.length;
         if(user.pokemon) {
-            user.pokemon.forEach((entry:any,id:number) => {
+            await user.pokemon.forEach((entry:any) => {
                 if(dexNo===entry.pokemonId) {
                     return true;
                 }
-                else if (id>=user.pokemon.length-1) {
+                else {
                     return false;
                 }
             });
