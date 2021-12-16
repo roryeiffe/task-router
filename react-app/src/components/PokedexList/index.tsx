@@ -5,6 +5,7 @@ import { getPkmnNameByDexNo, capFirstLetter } from "../PokeCorner";
 import pokeball1s from "../../images/pokeball1-small.png";
 import pokeball2s from "../../images/pokeball2-small.png";
 import questionMark from "../../images/question_mark.png"
+import axios from "axios";
 // editable parameters =======================================
 export let dexLimit = 898; // 898 total Pokemon
 //============================================================
@@ -25,8 +26,8 @@ export function setHadCaughtANewPokemon(bool:boolean):void {
 }
 
 const PokedexList = () => { // variable outside this function executes once; avoid using for loops
-    const temp = useSelector((state: any) => state.user);
-    const [user, ] = useState(temp);
+    const temp1 = useSelector((state: any) => state.user);
+    const [user, ] = useState(temp1);
     let [spriteOfUncaught, setSpriteOfUncaught] = useState(false);
     let [dummyArray, setDummyArray] = useState([0]); // removing this stops it for some reason
     const dispatch = useDispatch();
@@ -126,10 +127,27 @@ const PokedexList = () => { // variable outside this function executes once; avo
             return <>{"Loading... " + percentage + "% ["+count+ "/"+dexLimit+"]"}</>;
         }
     }
-        
+    let [tempDexNo, setTempDexNo] = useState(0);
+    function addDebugPkmnHandler1(event:React.ChangeEvent<HTMLInputElement>) {
+        setTempDexNo(parseInt(event.target.value));
+    }
+    function addDebugPkmnHandler2() {
+        if(tempDexNo>0 && tempDexNo<=dexLimit) {
+            // add to user's pokedex:
+            axios.put('http://localhost:9001/pokemon/update/'+user.id , {pokemonId: tempDexNo})
+            .then(response => dispatch({type: 'ADD_POKEMON', payload: response.data}))
+            .catch(error => console.error(error));
+            setHadCaughtANewPokemon(true);
+        }
+        else {
+            alert("Dex number out of range");
+        }
+    }
     return(
         <div className="dex">
             <span className="loading">
+                <input type="number" onChange={(event) => addDebugPkmnHandler1(event)} placeholder="Dex number"/>
+                <button onClick={addDebugPkmnHandler2}>add to Pokedex</button><br/>
                 <button onClick={() => console.log(dexArr)}>print to console</button><br/>
                 <>{user.pokemon.length} of {dexLimit} Pokémon caught</> <br/>
                 <button className="button" onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button><br/>

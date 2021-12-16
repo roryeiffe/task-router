@@ -126,7 +126,6 @@ function CatchingCorner(props: any):JSX.Element {
                     .then(response => dispatch({type: 'ADD_POKEMON', payload: response.data}))
                     .catch(error => console.error(error));
                     
-
                     setHadCaughtANewPokemon(true);
                     setInBall(true);
                     refresh();
