@@ -11,7 +11,7 @@ export let dexLimit = 898; // 898 total Pokemon
 //============================================================
 let hadCaughtANewPokemon:boolean = false;
 let count:number = 1;
-let dupeTracker:number[] = []; // for debugging
+// let dupeTracker:number[] = []; // for debugging
 // let dexArr:string[] = [];
 let dexCaughtStates:ICaughtState[] = [];
 
@@ -32,15 +32,15 @@ const PokedexList = () => { // variable outside this function executes once; avo
     let [dummyArray, setDummyArray] = useState([0]); // removing this stops it for some reason
     const dispatch = useDispatch();
     
-    let [dexEntries, setDexEntries] = useState<JSX.Element[]>([]);
+    // let [dexEntries, setDexEntries] = useState<JSX.Element[]>([]);
     // let [pkmnName3, setPkmnName3] = useState("");
     
     useEffect(() => {
-        loadDex();
         if(hadCaughtANewPokemon) {
             dispatch({type: 'UPDATE_USER', payload: user});
             setHadCaughtANewPokemon(false);
         }
+        loadDex();
         // for(let i=1; i<=dexLimit; i++) {
         //     getPkmnNameByDexNo(i).then(pkmnName2 => {
         //         // setPkmnName3(pkmnName2);
