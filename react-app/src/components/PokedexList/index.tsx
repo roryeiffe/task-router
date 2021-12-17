@@ -173,9 +173,33 @@ const PokedexList = () => { // variable outside this function executes once; avo
                 <button onClick={addDebugPkmnHandler2}>add to Pokedex</button><br/>
                 <button onClick={() => console.log(dexCaughtStates)}>print to console</button><br/>
                 <>{user.pokemon.length} of {dexLimit} Pokémon caught</> <br/>
-                <button className="button" onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button><br/>
+                {/* {showOnlyCaught ? <button className="button" onClick={() => setShowOnlyCaught(false)}>show all</button> 
+                    :  */}
+                <span> 
+                    {/* <button className="button" onClick={() => setShowOnlyCaught(true)}>show caught only</button><br/> */}
+                    <button className="button" onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button>
+                </span>
+                {/* }  */}
+                <br/>
                 <>{loadingBar()}</>
             </span><br/>
+            {/* {showOnlyCaught ?
+                <ul className="checklist">
+                    {dexCaughtStates.map((value) => {
+                        if(value.isCaught) {
+                            return <li className="dexEntry">
+                                #{value.dexNo} <br/>
+                                {getFrontSprite(value)} <br/>
+                                {isRegisteredIcon(value)} {" "} {capFirstLetter(value.name)} <br/><br/>
+                            </li>;
+                        }
+                        else {
+                            // return <p className="dexEntry">blank</p>;
+                        }
+
+                    })}
+                </ul>
+                :  */}
             <ul className="checklist"> 
                 {/* {dexEntries} */}
                 {dexCaughtStates.map((value:ICaughtState) => {
@@ -186,6 +210,7 @@ const PokedexList = () => { // variable outside this function executes once; avo
                     </li>;
                 })}
             </ul>
+            {/* } */}
         </div>
     );
 }
