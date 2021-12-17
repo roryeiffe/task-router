@@ -12,7 +12,7 @@ export let dexLimit = 898; // 898 total Pokemon
 let hadCaughtANewPokemon:boolean = false;
 let count:number = 1;
 let dupeTracker:number[] = []; // for debugging
-let dexArr:string[] = ["bulbasaur"];
+// let dexArr:string[] = [];
 let dexCaughtStates:ICaughtState[] = [];
 
 interface ICaughtState {
@@ -32,14 +32,29 @@ const PokedexList = () => { // variable outside this function executes once; avo
     let [dummyArray, setDummyArray] = useState([0]); // removing this stops it for some reason
     const dispatch = useDispatch();
     
+    let [dexEntries, setDexEntries] = useState<JSX.Element[]>([]);
+    // let [pkmnName3, setPkmnName3] = useState("");
+    
     useEffect(() => {
+        loadDex();
         if(hadCaughtANewPokemon) {
             dispatch({type: 'UPDATE_USER', payload: user});
             setHadCaughtANewPokemon(false);
         }
-        loadDex();
+        // for(let i=1; i<=dexLimit; i++) {
+        //     getPkmnNameByDexNo(i).then(pkmnName2 => {
+        //         // setPkmnName3(pkmnName2);
+        //         setDexEntries([...dexEntries,
+        //             <li className="dexEntry">
+        //                 #{i} <br/>
+        //                 {getFrontSprite(i, false)} <br/>
+        //                 {isRegisteredIcon(i)} {" "} {capFirstLetter(pkmnName2)} <br/><br/>
+        //             </li>
+        //         ]);
+        //     });
+        // }
     });
-    
+
     async function loadDex() {
         if(count<=dexLimit) {
             await getPkmnNameByDexNo(count).then(pkmnString => {
@@ -47,28 +62,28 @@ const PokedexList = () => { // variable outside this function executes once; avo
                 let temp2:ICaughtState = {dexNo: count, name: pkmnString, isCaught: isRegistered(count)};
                 dexCaughtStates.push(temp2);
                 
-                if(pkmnString===dexArr[dexArr.length-1] ||
-                    pkmnString===dexArr[dexArr.length-2] ||
-                    pkmnString===dexArr[dexArr.length-3]
-                    ) { // if duplicate, do nothing
-                    dupeTracker.push(count);
-                    console.log("Duplicate: "+pkmnString);
-                }
-                else {
-                    dexArr.push(pkmnString);
-                }            
+                // if(pkmnString===dexArr[dexArr.length-1] ||
+                //     pkmnString===dexArr[dexArr.length-2] ||
+                //     pkmnString===dexArr[dexArr.length-3]
+                //     ) { // if duplicate, do nothing
+                //     dupeTracker.push(count);
+                //     console.log("Duplicate: "+pkmnString);
+                // }
+                // else {
+                //     dexArr.push(pkmnString);
+                // }            
                 count++;
             });
         }
         else {
-            count = dexLimit+1;
-            while(dexArr.length<dexLimit){
-                await getPkmnNameByDexNo(dexArr.length).then(pkmnName => {
-                    dexArr.push(pkmnName);
-                    dispatch({type: 'UPDATE_USER', payload: user});
-                });
-            }
-            console.log(dexArr.length, dexCaughtStates.length, count);
+            // count = dexLimit+1;
+            // while(dexArr.length<dexLimit){
+            //     await getPkmnNameByDexNo(dexArr.length).then(pkmnName => {
+            //         dexArr.push(pkmnName);
+            //         dispatch({type: 'UPDATE_USER', payload: user});
+            //     });
+            // }
+            // console.log(dexArr.length, dexCaughtStates.length, count);
         }
     }
     
@@ -79,17 +94,24 @@ const PokedexList = () => { // variable outside this function executes once; avo
     let url3:string = "https://pokemondb.net/pokedex/";
     let url4:string = "https://archives.bulbagarden.net/media/upload/8/8e/Spr_3r_000.png";
 
-    function getFrontSprite(dexNo:number, forceShowSprite:boolean):JSX.Element {
-        if(forceShowSprite || spriteOfUncaught || isRegistered(dexNo)) {
-            return <img src={url1+dexNo+url2} alt={""+dexNo+".png"}/>;
+    function getFrontSprite(pkmn:ICaughtState, forceShowSprite:boolean):JSX.Element {
+        if(forceShowSprite || pkmn.isCaught) {
+            return <img src={url1+pkmn.dexNo+url2} alt={""+pkmn.dexNo+".png"}/>;
         }
         else {
             return <img src={questionMark} alt="not registered"/>
         }
     }
-
-    function isRegisteredIcon(dexNo:number):JSX.Element {
-        if(isRegistered(dexNo)) {
+    
+    // function isRegisteredIcon(dexNo:number):JSX.Element {
+    //     if(isRegistered(dexNo)) {
+    //         return(<img src={pokeball1s} alt="*" />);
+    //     }
+    //     else { return(<img src={pokeball2s} alt="_" />); }
+    // }
+    
+    function isRegisteredIcon(bool:boolean):JSX.Element {
+        if(bool) {
             return(<img src={pokeball1s} alt="*" />);
         }
         else { return(<img src={pokeball2s} alt="_" />); }
@@ -119,7 +141,7 @@ const PokedexList = () => { // variable outside this function executes once; avo
     }
     
     function loadingBar() { // TODO: onClick stop loading
-        if(count>dexLimit) { // disappears at 101
+        if(count>=dexLimit) { // disappears at 101
             return <></>;
         }
         else {
@@ -143,22 +165,24 @@ const PokedexList = () => { // variable outside this function executes once; avo
             alert("Dex number out of range");
         }
     }
+    
     return(
         <div className="dex">
             <span className="loading">
                 <input type="number" onChange={(event) => addDebugPkmnHandler1(event)} placeholder="Dex number"/>
                 <button onClick={addDebugPkmnHandler2}>add to Pokedex</button><br/>
-                <button onClick={() => console.log(dexArr)}>print to console</button><br/>
+                <button onClick={() => console.log(dexCaughtStates)}>print to console</button><br/>
                 <>{user.pokemon.length} of {dexLimit} Pokémon caught</> <br/>
                 <button className="button" onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button><br/>
                 <>{loadingBar()}</>
             </span><br/>
             <ul className="checklist"> 
-                {dexArr.map((value, id) => {
+                {/* {dexEntries} */}
+                {dexCaughtStates.map((value:ICaughtState) => {
                     return <li className="dexEntry">
-                        #{id+1} <br/>
-                        {getFrontSprite(id+1, false)} <br/>
-                        {isRegisteredIcon(id+1)} {" "} {capFirstLetter(value)} <br/><br/>
+                        #{value.dexNo} <br/>
+                        {getFrontSprite(value, spriteOfUncaught)} <br/>
+                        {isRegisteredIcon(value.isCaught)} {" "} {capFirstLetter(value.name)} <br/><br/>
                     </li>;
                 })}
             </ul>
