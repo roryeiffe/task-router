@@ -9,7 +9,7 @@ What began as a task manager application quickly became a simple social media si
 * MySQL
 * HTML
 * CSS
-* JavaScript
+* TypeScript
 * ReactJS
 * Bootstrap
 * Maven
