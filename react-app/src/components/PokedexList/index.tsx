@@ -7,6 +7,7 @@ import pokeball2s from "../../images/pokeball2-small.png";
 import questionMark from "../../images/question_mark.png"
 import axios from "axios";
 // editable parameters =======================================
+let debugMode = false;
 export let dexLimit = 898; // 898 total Pokemon
 //============================================================
 let hadCaughtANewPokemon:boolean = false;
@@ -59,9 +60,11 @@ const PokedexList = () => { // variable outside this function executes once; avo
         if(count<=dexLimit) {
             await getPkmnNameByDexNo(count).then(pkmnString => {
                 setDummyArray([...dummyArray, count]);
-                let temp2:ICaughtState = {dexNo: count, name: pkmnString, isCaught: isRegistered(count)};
-                dexCaughtStates.push(temp2);
-                
+                if(count===dexCaughtStates.length+1) {
+                    let temp2:ICaughtState = {dexNo: count, name: pkmnString, isCaught: isRegistered(count)};
+                    dexCaughtStates.push(temp2);
+                    count++;
+                }   
                 // if(pkmnString===dexArr[dexArr.length-1] ||
                 //     pkmnString===dexArr[dexArr.length-2] ||
                 //     pkmnString===dexArr[dexArr.length-3]
@@ -72,10 +75,11 @@ const PokedexList = () => { // variable outside this function executes once; avo
                 // else {
                 //     dexArr.push(pkmnString);
                 // }            
-                count++;
+                // count++;
             });
         }
         else {
+            console.log(dummyArray);
             // count = dexLimit+1;
             // while(dexArr.length<dexLimit){
             //     await getPkmnNameByDexNo(dexArr.length).then(pkmnName => {
@@ -169,19 +173,18 @@ const PokedexList = () => { // variable outside this function executes once; avo
     return(
         <div className="dex">
             <span className="loading">
-                <input type="number" onChange={(event) => addDebugPkmnHandler1(event)} placeholder="Dex number"/>
-                <button onClick={addDebugPkmnHandler2}>add to Pokedex</button><br/>
-                <button onClick={() => console.log(dexCaughtStates)}>print to console</button><br/>
+                {debugMode ?
+                    <span><input type="number" onChange={(event) => addDebugPkmnHandler1(event)} placeholder="Dex number"/>
+                    <button onClick={addDebugPkmnHandler2}>add to Pokedex</button><br/>
+                    <button onClick={() => console.log(dexCaughtStates)}>print to console</button><br/></span>
+                : <></>}
                 <>{user.pokemon.length} of {dexLimit} Pokémon caught</> <br/>
-                {/* {showOnlyCaught ? <button className="button" onClick={() => setShowOnlyCaught(false)}>show all</button> 
-                    :  */}
-                <span> 
-                    {/* <button className="button" onClick={() => setShowOnlyCaught(true)}>show caught only</button><br/> */}
+                {/* <button className="button" onClick={() => setShowOnlyCaught(true)}>show caught only</button><br/> */}
+                {count>=dexLimit ? <span> 
                     <button className="button" onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button>
                 </span>
-                {/* }  */}
-                <br/>
-                <>{loadingBar()}</>
+                :
+                <>{loadingBar()}</>}
             </span><br/>
             {/* {showOnlyCaught ?
                 <ul className="checklist">

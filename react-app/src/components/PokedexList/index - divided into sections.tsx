@@ -312,4 +312,4 @@ const PokedexList = () => {
     );
 }
 
-export default PokedexList;
+// export default PokedexList;
