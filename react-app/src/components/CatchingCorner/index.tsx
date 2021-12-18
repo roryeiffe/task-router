@@ -76,7 +76,7 @@ function CatchingCorner(props: any):JSX.Element {
             }
         }
     }
-    let repeats:number[] = [];
+    // let repeats:number[] = [];
     function getPkmnDexNo():number {
         let tempNum = 1+Math.floor(dexLimit*Math.random());
         if(user.pokemon.length === 0) {
@@ -90,7 +90,7 @@ function CatchingCorner(props: any):JSX.Element {
         else { // check if random number is already in user's dex
             user.pokemon.forEach((entry:any) => { 
                 if(entry.pokemonId===tempNum) {
-                    repeats.push(tempNum);
+                    // repeats.push(tempNum);
                     return getPkmnDexNo();
                 }
             });
@@ -159,11 +159,12 @@ function CatchingCorner(props: any):JSX.Element {
             {((storedPoints<1)||inBall) ? <button onClick = {() => {props.setCatchPokemon(<div></div>)}}>Close</button> : 
             <div>
                 {console.log(newPkmnAppeared, storedPoints)}
-                {storedPoints>0 ? 
-                    <span><button onClick={() => {throwPokeball(storedPoints); setStoredPoints(storedPoints-1);}}>throw 1 of {storedPoints} Pokéballs</button>
-                    <button onClick={() => {refresh(); setStoredPoints(storedPoints-1);}}>refresh</button></span>
-                    : <></>
-                }
+                {storedPoints>1 ? 
+                    <button onClick={() => {throwPokeball(storedPoints); setStoredPoints(storedPoints-1);}}>throw 1 of {storedPoints} Pokéballs</button>
+                : <></>}
+                {storedPoints===1 ? 
+                    <button onClick={() => {throwPokeball(storedPoints); setStoredPoints(storedPoints-1);}}>throw 1 of 1 Pokéball</button>
+                : <button onClick={() => {refresh(); setStoredPoints(storedPoints-1);}}>{"refresh (-1)"}</button>}
             </div>
             // {catchOptions} // moving the div to a function above doesn't work
             }
