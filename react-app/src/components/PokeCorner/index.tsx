@@ -1,4 +1,5 @@
 // also a factory / tool set ?
+import axios from 'axios';
 import { PokemonClient } from 'pokenode-ts';
 
 export const pokeApi = new PokemonClient();
@@ -10,6 +11,13 @@ export async function getPkmnNameByDexNo(dexNo:number):Promise<string> {
     .catch(error => { console.error(error); });
     
     return name as string;
+}
+export async function getPokemonNameDb() {
+    let names:string[];
+    for(let i=1;i<=898;i++) {
+        getPkmnNameByDexNo(i).then(a => names.push(a));
+    }
+    axios.put('http://localhost:9001/pokemon/addPokemonNameDb', names);  
 }
 
 let urlA:string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
