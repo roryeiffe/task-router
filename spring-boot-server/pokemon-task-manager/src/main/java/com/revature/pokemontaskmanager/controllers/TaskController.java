@@ -5,6 +5,7 @@ import com.revature.pokemontaskmanager.entities.Task;
 import com.revature.pokemontaskmanager.entities.User;
 import com.revature.pokemontaskmanager.repositories.TaskRepository;
 import com.revature.pokemontaskmanager.repositories.UserRepository;
+import com.revature.pokemontaskmanager.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +16,7 @@ import java.util.List;
 @RequestMapping("/tasks")
 public class TaskController {
 
-    @Autowired
-    private TaskRepository taskRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    private TaskService service;
 
 //    //create task
 //    @PostMapping("/add")
@@ -31,32 +28,23 @@ public class TaskController {
 
     @PutMapping("/add/{id}")
     public void updateTask(@PathVariable("id") Long userId, @RequestBody Task task) {
-        // get the posts from the request:
-        User user = userRepository.findById(userId).get();
-        List<Task> tasks = user.getTasks();
-        tasks.add(task);
-        user.setTasks(tasks);
-        userRepository.save(user);
+        service.updateTask(userId, task);
     }
 
     @GetMapping("/get/{id}")
     public List<Task> getTasks(@PathVariable("id") Long userId) {
-        User user = userRepository.getById(userId);
-        List<Task> tasks = user.getTasks();
-        return tasks;
+        return service.getTasks(userId);
     }
 
     //delete task
     @DeleteMapping("/remove/{id}")
     public void deleteTask(@PathVariable("id") int taskId){
-        taskRepository.deleteById(taskId);
+        service.deleteTask(taskId);
     }
 
     // Complete task:
     @PutMapping("/complete/{id}")
     public void completeTask(@PathVariable("id") int taskId) {
-        Task task = taskRepository.getById(taskId);
-        task.setCompleted(true);
-        taskRepository.save(task);
+        service.completeTask(taskId);
     }
 }
