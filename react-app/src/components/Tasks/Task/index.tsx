@@ -16,7 +16,10 @@ const Task = ({task, onDelete, onComplete}: any) => {
     // console.log(date2)
     var date = Date.now();
     var d = new Date(date);
-    // console.log(d)
+    console.log("Now: " + d)
+    console.log("Task.date: " + task.date)
+    console.log("dateTask: " + dateTask)
+    console.log("\n")
     // var ds = d.toLocaleString();
     // console.log(ds)
     

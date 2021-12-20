@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { PokemonClient } from "pokenode-ts";
 import styles from './style.module.css';
 import PostItem from "../../Posts/PostItem";
-
 const FriendItem = (props: any) => {
   const [user, setUser] = useState<any>({});
   const [posts, setPosts] = useState([]);

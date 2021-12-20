@@ -8,9 +8,11 @@ import TaskHeader from "../../components/Tasks/TaskHeader"
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import CatchingCorner from '../../components/CatchingCorner'
+import Alert from '../../components/Alert';
 
 const TaskPage = () => {
     const [showAddTask, setShowAddTask] = useState(false)
+    const [alert, setAlert] = useState(<div></div>)
     const [tasks, setTasks] = useState([
         // {
         //     id: '',
@@ -65,11 +67,13 @@ const TaskPage = () => {
         dispatch({type: 'UPDATE_TASK', payload: tasks});
         axios.put('http://localhost:9001/tasks/add/'+ user.id, task)
         .then((response) => {
-            alert("Task added successfully")
+            setAlert(<div></div>)
+            setAlert(<Alert message = 'Task added successfully!' type = 'success'/>);
         })
         .catch((error) => {
             console.log(error);
-            alert("Task failed to add")
+            setAlert(<div></div>)
+            setAlert(<Alert message = 'Task failed to add.' type = 'danger'/>);
         });
         // task.preventDefault();
     }
@@ -81,11 +85,13 @@ const TaskPage = () => {
         dispatch({type: 'UPDATE_TASK', payload: tasks});
         axios.delete('http://localhost:9001/tasks/remove/'+ id)
         .then((response) => {
-            // alert("Task removed successfully")
+            setAlert(<div></div>)
+            setAlert(<Alert message = 'Task removed successfully!' type = 'success'/>);
         })
         .catch((error) => {
             console.log(error);
-            alert("Task failed to remove")
+            setAlert(<div></div>)
+            setAlert(<Alert message = 'Task failed to remove' type = 'danger'/>);
         });
         // id.preventDefault();
     }
@@ -96,13 +102,13 @@ const TaskPage = () => {
         dispatch({type: 'UPDATE_TASK', payload: tasks});
         axios.put('http://localhost:9001/tasks/complete/'+ task.id)
         .then((response) => {
-            // alert("Task updated successfully");
             user.points += task.points;
             // check level:
             let prevLevel = user.level;
             user.level = Math.floor(user.points/50) + 5
+            var messageToShow = '';
             if(user.level > prevLevel) {
-                alert('You leveled up! Your new level is ' + user.level + '!');
+                messageToShow += 'You leveled up! Your new level is ' + user.level + '!';
             }
             // check evolution:
             if (user.level >= 16 && prevLevel < 16){
@@ -112,7 +118,7 @@ const TaskPage = () => {
                 axios.put('http://localhost:9001/pokemon/update/'+user.id, {'pokemonId': user.starterId})
                 .then(response => dispatch({type: 'ADD_POKEMON', payload: response.data}))
                 .catch(error => console.error(error));
-                alert('Your pokemon evolved!')
+                messageToShow += '\n Your pokemon evolved!';
             }
             if(user.level >= 36 && prevLevel < 36){
                 user.starterId += 1;
@@ -120,7 +126,11 @@ const TaskPage = () => {
                 axios.put('http://localhost:9001/pokemon/update/'+user.id, {'pokemonId': user.starterId})
                 .then(response => dispatch({type: 'ADD_POKEMON', payload: response.data}))
                 .catch(error => console.error(error));
-                alert('Your pokemon evolved!')
+                messageToShow += 'Your pokemon evolved!';
+            }
+            if (messageToShow !== ''){
+                setAlert(<div></div>)
+                setAlert(<Alert message = {messageToShow} type = 'success'/>);
             }
             dispatch({type: 'UPDATE_USER', payload: user});
             // TODO save this user to database
@@ -131,7 +141,8 @@ const TaskPage = () => {
         })
         .catch((error) => {
             console.log(error);
-            alert("Task failed to update")
+            setAlert(<div></div>)
+            setAlert(<Alert message = 'Task failed to update.' type = 'danger'/>);
         });
         // task.preventDefault();
     }
@@ -145,6 +156,7 @@ const TaskPage = () => {
 
     return <div className={styles.background}>
         <Navbar/>
+        {alert}
         <div className={styles.container}>
         <TaskHeader onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
         {showAddTask && <AddTask onAdd={addTask}/>}

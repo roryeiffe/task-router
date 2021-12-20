@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import FriendItem from "./FriendItem";
 import FriendRequest from "./FriendRequest";
+import Alert from '../Alert';
 import styles from "./style.module.css";
 
 // TODO: get list of friends from database
@@ -15,6 +16,8 @@ const FriendList = () => {
   const [user] = useState(temp);
   const [email, setEmail] = useState("");
   const [showFriends, setShowFriends] = useState(true);
+  // show alert upon success/failure
+  const [alert, setAlert] = useState(<div></div>);
   // testing ======================================================
   // let howManyFriends = 5;
   // for(let i=1; i<=howManyFriends; i++) {
@@ -33,9 +36,15 @@ const FriendList = () => {
     console.log(req);
     axios
       .post(req)
-      .then((response) => alert("Friend request sent!"))
-      .catch((error) =>
-        alert("There was an error submitting your friend request.")
+      .then((response) => {
+        setAlert(<div></div>)
+        setAlert(<Alert message = 'Friend request sent!' type = 'success'/>)
+      })
+      .catch((error) =>{
+        
+        setAlert(<div></div>)
+        setAlert(<Alert message = 'There was an error submitting your friend request.' type = 'danger'/>)
+      }
       );
     // // setNewFriend({
     // //     ...newFriend,
@@ -72,6 +81,7 @@ const FriendList = () => {
   //================================================================
   return (
     <div className={styles.container}>
+      {alert}
         <div>
           <ul className="nav nav-pills nav-justified">
             <li className="nav-item" onClick = {() => setShowFriends(true)}>
