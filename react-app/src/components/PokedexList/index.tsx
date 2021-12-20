@@ -10,8 +10,8 @@ import axios from "axios";
 let debugMode = false;
 export let dexLimit = 898; // 898 total Pokemon
 //============================================================
-let hadCaughtANewPokemon:boolean = false;
 let count:number = 1;
+let hadCaughtANewPokemon:boolean = false;
 // let dupeTracker:number[] = []; // for debugging
 // let dexArr:string[] = [];
 let dexCaughtStates:ICaughtState[] = [];
@@ -26,7 +26,7 @@ export function setHadCaughtANewPokemon(bool:boolean):void {
     hadCaughtANewPokemon = bool;
 }
 
-const PokedexList = () => { // variable outside this function executes once; avoid using for loops
+const PokedexList = (props: any) => { // variable outside this function executes once; avoid using for loops
     const temp1 = useSelector((state: any) => state.user);
     const [user, ] = useState(temp1);
     let [spriteOfUncaught, setSpriteOfUncaught] = useState(false);
@@ -36,11 +36,16 @@ const PokedexList = () => { // variable outside this function executes once; avo
     // let [dexEntries, setDexEntries] = useState<JSX.Element[]>([]);
     // let [pkmnName3, setPkmnName3] = useState("");
     
+    // let [count, setCount] = useState(props.start);
+    // let [dexLimit, setDexLimit] = useState(props.end);
+    
     useEffect(() => {
         if(hadCaughtANewPokemon) {
             dispatch({type: 'UPDATE_USER', payload: user});
             setHadCaughtANewPokemon(false);
         }
+        // count = props.start;
+        // dexLimit = props.end;
         loadDex();
         // for(let i=1; i<=dexLimit; i++) {
         //     getPkmnNameByDexNo(i).then(pkmnName2 => {
@@ -57,6 +62,8 @@ const PokedexList = () => { // variable outside this function executes once; avo
     });
 
     async function loadDex() {
+        // dexCaughtStates.length = 0;
+        // count=1;
         if(count<=dexLimit) {
             await getPkmnNameByDexNo(count).then(pkmnString => {
                 setDummyArray([...dummyArray, count]);
@@ -149,8 +156,8 @@ const PokedexList = () => { // variable outside this function executes once; avo
             return <></>;
         }
         else {
-            let percentage:number = Math.round(100*(count/dexLimit));
-            return <>{"Loading... " + percentage + "% ["+count+ "/"+dexLimit+"]"}</>;
+            let percentage:number = Math.round(100*((count-1)/dexLimit));
+            return <>{"Loading... " + percentage + "% ["+(count-1)+ "/"+dexLimit+"]"}</>;
         }
     }
     let [tempDexNo, setTempDexNo] = useState(0);
@@ -180,8 +187,12 @@ const PokedexList = () => { // variable outside this function executes once; avo
                 : <></>}
                 <>{user.pokemon.length} of {dexLimit} Pokémon caught</> <br/>
                 {/* <button className="button" onClick={() => setShowOnlyCaught(true)}>show caught only</button><br/> */}
+                {/* {props.start-1+count>=props.end  */}
                 {count>=dexLimit ? <span> 
-                    <button className="button" onClick={() => setSpriteOfUncaught(!spriteOfUncaught)}>show/hide uncaught</button>
+                    {spriteOfUncaught 
+                        ? <button className="button" onClick={() => setSpriteOfUncaught(false)}>hide uncaught</button>
+                        : <button className="button" onClick={() => setSpriteOfUncaught(true)}>show uncaught</button>
+                    }
                 </span>
                 :
                 <>{loadingBar()}</>}
@@ -205,12 +216,14 @@ const PokedexList = () => { // variable outside this function executes once; avo
                 :  */}
             <ul className="checklist"> 
                 {/* {dexEntries} */}
-                {dexCaughtStates.map((value:ICaughtState) => {
-                    return <li className="dexEntry">
-                        #{value.dexNo} <br/>
-                        {getFrontSprite(value, spriteOfUncaught)} <br/>
-                        {isRegisteredIcon(value.isCaught)} {" "} {capFirstLetter(value.name)} <br/><br/>
-                    </li>;
+                {props.start===0 || props.end===0 ? <></> : dexCaughtStates.map((value:ICaughtState, id:number) => {
+                    if(value.dexNo>=props.start && value.dexNo<=props.end) {
+                        return <li className="dexEntry" key={value.dexNo}>
+                            #{value.dexNo} <br/>
+                            {getFrontSprite(value, spriteOfUncaught)} <br/>
+                            {isRegisteredIcon(value.isCaught)} {" "} {capFirstLetter(value.name)} <br/><br/>
+                        </li>;
+                    }
                 })}
             </ul>
             {/* } */}
