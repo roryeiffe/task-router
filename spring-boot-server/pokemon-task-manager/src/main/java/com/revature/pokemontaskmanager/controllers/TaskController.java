@@ -16,6 +16,7 @@ import java.util.List;
 @RequestMapping("/tasks")
 public class TaskController {
 
+    @Autowired
     private TaskService service;
 
 //    //create task

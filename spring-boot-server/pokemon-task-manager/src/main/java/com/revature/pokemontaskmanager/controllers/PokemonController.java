@@ -14,6 +14,7 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class PokemonController {
 
+    @Autowired
     private PokemonService service;
 
     // given a user id and a new post, add the pokemon to user
